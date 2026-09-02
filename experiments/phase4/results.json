@@ -23,9 +23,9 @@
       "decoy_rejection_rate_pct": 100.0,
       "total_provenance_verified": 10,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.07172000041464344,
-      "median_latency_ms": 0.06630000007135095,
-      "max_latency_ms": 0.16010000035748817
+      "avg_latency_ms": 0.06371000035869656,
+      "median_latency_ms": 0.05805000000691507,
+      "max_latency_ms": 0.14310000005934853
     },
     "ATTRIBUTE": {
       "strategy": "ATTRIBUTE",
@@ -41,9 +41,9 @@
       "decoy_rejection_rate_pct": 25.0,
       "total_provenance_verified": 10,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.031829999716137536,
-      "median_latency_ms": 0.030699999115313403,
-      "max_latency_ms": 0.06029999894963112
+      "avg_latency_ms": 0.02783999971143203,
+      "median_latency_ms": 0.031800000215298496,
+      "max_latency_ms": 0.04789999911736231
     },
     "RELATIONSHIP": {
       "strategy": "RELATIONSHIP",
@@ -59,9 +59,9 @@
       "decoy_rejection_rate_pct": 75.0,
       "total_provenance_verified": 10,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.06340999989333795,
-      "median_latency_ms": 0.06049999956303509,
-      "max_latency_ms": 0.11749999976018444
+      "avg_latency_ms": 0.06446000006690156,
+      "median_latency_ms": 0.06004999977449188,
+      "max_latency_ms": 0.12800000149582047
     },
     "TYPED_PROVENANCE": {
       "strategy": "TYPED_PROVENANCE",
@@ -77,9 +77,9 @@
       "decoy_rejection_rate_pct": 75.0,
       "total_provenance_verified": 10,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.08333999994647456,
-      "median_latency_ms": 0.08395000077143777,
-      "max_latency_ms": 0.12299999980314169
+      "avg_latency_ms": 0.07871999987401068,
+      "median_latency_ms": 0.07504999939556001,
+      "max_latency_ms": 0.12260000039532315
     },
     "TEMPORAL_RELATIONSHIP": {
       "strategy": "TEMPORAL_RELATIONSHIP",
@@ -95,9 +95,9 @@
       "decoy_rejection_rate_pct": 100.0,
       "total_provenance_verified": 10,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.0773499999922933,
-      "median_latency_ms": 0.08019999950192869,
-      "max_latency_ms": 0.12210000022605527
+      "avg_latency_ms": 0.07414999981847359,
+      "median_latency_ms": 0.07714999992458615,
+      "max_latency_ms": 0.119099999210448
     },
     "UPI_EVENT": {
       "strategy": "UPI_EVENT",
@@ -113,9 +113,9 @@
       "decoy_rejection_rate_pct": 75.0,
       "total_provenance_verified": 10,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.8557999999538879,
-      "median_latency_ms": 0.020349999431346077,
-      "max_latency_ms": 8.28670000009879
+      "avg_latency_ms": 0.9263700001611141,
+      "median_latency_ms": 0.02195000070059905,
+      "max_latency_ms": 8.919300000343355
     }
   },
   "scenario_matrix": [
@@ -134,7 +134,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.16010000035748817,
+      "latency_ms": 0.14310000005934853,
       "notes": ""
     },
     {
@@ -152,7 +152,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.053899999329587445,
+      "latency_ms": 0.04789999911736231,
       "notes": ""
     },
     {
@@ -170,7 +170,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.11749999976018444,
+      "latency_ms": 0.12800000149582047,
       "notes": ""
     },
     {
@@ -188,7 +188,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.12299999980314169,
+      "latency_ms": 0.12169999899924733,
       "notes": ""
     },
     {
@@ -206,7 +206,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.09590000081516337,
+      "latency_ms": 0.09569999929226469,
       "notes": ""
     },
     {
@@ -224,7 +224,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.01630000042496249,
+      "latency_ms": 0.01809999957913533,
       "notes": ""
     },
     {
@@ -242,7 +242,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06209999992279336,
+      "latency_ms": 0.059899999541812576,
       "notes": ""
     },
     {
@@ -260,7 +260,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.03499999911582563,
+      "latency_ms": 0.03769999966607429,
       "notes": "Decoys captured: ['rfnd_scen_002_decoy_8046']"
     },
     {
@@ -278,7 +278,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06089999988034833,
+      "latency_ms": 0.06360000043059699,
       "notes": ""
     },
     {
@@ -296,7 +296,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.08160000106727239,
+      "latency_ms": 0.07960000039020088,
       "notes": ""
     },
     {
@@ -314,7 +314,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.07789999835949857,
+      "latency_ms": 0.07679999907850288,
       "notes": ""
     },
     {
@@ -332,7 +332,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.013499999113264494,
+      "latency_ms": 0.020400000721565448,
       "notes": ""
     },
     {
@@ -350,7 +350,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.052200000936863944,
+      "latency_ms": 0.0729000003047986,
       "notes": ""
     },
     {
@@ -368,7 +368,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.026399999114801176,
+      "latency_ms": 0.038300000596791506,
       "notes": ""
     },
     {
@@ -386,7 +386,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05019999844080303,
+      "latency_ms": 0.10890000157814939,
       "notes": ""
     },
     {
@@ -404,7 +404,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.07089999962772708,
+      "latency_ms": 0.11719999929482583,
       "notes": ""
     },
     {
@@ -422,7 +422,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.07029999869700987,
+      "latency_ms": 0.11369999992894009,
       "notes": ""
     },
     {
@@ -440,7 +440,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.013900000340072438,
+      "latency_ms": 0.02350000067963265,
       "notes": ""
     },
     {
@@ -458,7 +458,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.07020000157353934,
+      "latency_ms": 0.1033000007737428,
       "notes": ""
     },
     {
@@ -476,7 +476,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.02029999996011611,
+      "latency_ms": 0.032500000088475645,
       "notes": ""
     },
     {
@@ -494,7 +494,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05560000136028975,
+      "latency_ms": 0.08239999988290947,
       "notes": ""
     },
     {
@@ -512,7 +512,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.08009999874047935,
+      "latency_ms": 0.12260000039532315,
       "notes": ""
     },
     {
@@ -530,7 +530,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.0698000003467314,
+      "latency_ms": 0.119099999210448,
       "notes": ""
     },
     {
@@ -548,7 +548,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.013299999409355223,
+      "latency_ms": 0.02370000038354192,
       "notes": ""
     },
     {
@@ -566,7 +566,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.041500001316308044,
+      "latency_ms": 0.056200000472017564,
       "notes": ""
     },
     {
@@ -584,7 +584,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.006099999154685065,
+      "latency_ms": 0.009399998816661537,
       "notes": ""
     },
     {
@@ -602,7 +602,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05539999983739108,
+      "latency_ms": 0.06089999988034833,
       "notes": ""
     },
     {
@@ -620,7 +620,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.0655999992886791,
+      "latency_ms": 0.07840000034775585,
       "notes": ""
     },
     {
@@ -638,7 +638,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05830000009154901,
+      "latency_ms": 0.07750000077066943,
       "notes": ""
     },
     {
@@ -656,7 +656,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.1315000008617062,
+      "latency_ms": 0.18730000010691583,
       "notes": ""
     },
     {
@@ -674,7 +674,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.003200000719516538,
+      "latency_ms": 0.00399999953515362,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -692,7 +692,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.006000000212225132,
+      "latency_ms": 0.009299999874201603,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -710,7 +710,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.0020000006770715117,
+      "latency_ms": 0.0022999993234407157,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -728,7 +728,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.006100000973674469,
+      "latency_ms": 0.00940000063565094,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -746,7 +746,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.0015000005078036338,
+      "latency_ms": 0.002200000380980782,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -764,7 +764,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 8.28670000009879,
+      "latency_ms": 8.919300000343355,
       "notes": "Decoys captured: ['upi_scen_006_5564']"
     },
     {
@@ -782,7 +782,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.12689999857684597,
+      "latency_ms": 0.07710000136285089,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -800,7 +800,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.011699999959091656,
+      "latency_ms": 0.00670000008540228,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -818,7 +818,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.08689999958733097,
+      "latency_ms": 0.05919999966863543,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -836,7 +836,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.10409999958937988,
+      "latency_ms": 0.07000000005064066,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -854,7 +854,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.09779999891179614,
+      "latency_ms": 0.06460000076913275,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -872,7 +872,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.021100000594742596,
+      "latency_ms": 0.015399999028886668,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -890,7 +890,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06750000102329068,
+      "latency_ms": 0.04140000055485871,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -908,7 +908,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.051900000471505336,
+      "latency_ms": 0.031100000342121348,
       "notes": "Decoys captured: ['rfnd_scen_008_decoy_7566']"
     },
     {
@@ -926,7 +926,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.07420000110869296,
+      "latency_ms": 0.04939999962516595,
       "notes": "Decoys captured: ['rfnd_scen_008_decoy_7566']"
     },
     {
@@ -944,7 +944,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.12249999963387381,
+      "latency_ms": 0.07169999844336417,
       "notes": "Decoys captured: ['rfnd_scen_008_decoy_7566']"
     },
     {
@@ -962,7 +962,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.12210000022605527,
+      "latency_ms": 0.07849999929021578,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -980,7 +980,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.020899999071843922,
+      "latency_ms": 0.015800000255694613,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -998,7 +998,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.0684000006003771,
+      "latency_ms": 0.0411000000895001,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1016,7 +1016,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06029999894963112,
+      "latency_ms": 0.037299998439266346,
       "notes": "Decoys captured: ['disp_scen_009_decoy_8432']"
     },
     {
@@ -1034,7 +1034,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.07129999903554562,
+      "latency_ms": 0.04979999903298449,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1052,7 +1052,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.0932000002649147,
+      "latency_ms": 0.06520000169984996,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1070,7 +1070,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.097400001322967,
+      "latency_ms": 0.0610999995842576,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1088,7 +1088,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.019799999790848233,
+      "latency_ms": 0.013700000636163168,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1106,7 +1106,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06509999911941122,
+      "latency_ms": 0.038100000892882235,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1124,7 +1124,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.04670000089390669,
+      "latency_ms": 0.028200000087963417,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1142,7 +1142,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06009999924572185,
+      "latency_ms": 0.040099999750964344,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1160,7 +1160,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.08630000047560316,
+      "latency_ms": 0.051399998483248055,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1178,7 +1178,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.0825000006443588,
+      "latency_ms": 0.05229999987932388,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1196,7 +1196,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.02099999983329326,
+      "latency_ms": 0.026499999876250513,
       "notes": "Unexplained/No-cause scenario"
     }
   ]

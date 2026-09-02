@@ -144,3 +144,38 @@ class RetrievalBenchmarkRunner:
                     )
 
         return report
+
+
+def main() -> None:
+    from neofinesse.generator.config import GeneratorConfig
+    from neofinesse.generator.exporter import DataExporter
+    from neofinesse.generator.synthetic import FinancialDataGenerator
+    from neofinesse.ingestion.pipeline import IngestionPipeline
+
+    print("=== NeoFinesse: Phase 4 Retrieval Benchmark ===")
+    config = GeneratorConfig(seed=42)
+    world = FinancialDataGenerator(config).generate()
+    exporter = DataExporter(world, config)
+    res = exporter.export_all()
+
+    pipeline = IngestionPipeline(data_dir=res["data_dir"])
+    dataset = pipeline.run()
+
+    runner = RetrievalBenchmarkRunner()
+    report = runner.run_all_experiments(
+        dataset=dataset,
+        ground_truth_path=res["ground_truth_path"],
+        export_dir="experiments/phase4",
+    )
+
+    print(f"\nTotal Experiments: {report.total_experiments_run}")
+    print("-" * 80)
+    for strat, metrics in report.strategy_metrics.items():
+        print(f"Strategy: {strat:<22} | Recall: {metrics.evidence_recall_pct:5.1f}% | Precision: {metrics.candidate_precision_pct:5.1f}% | Decoy Rejection: {metrics.decoy_rejection_rate_pct:5.1f}% | Avg Latency: {metrics.avg_latency_ms:.3f}ms")
+    print("-" * 80)
+    print("Exported results to 'experiments/phase4/results.json' and 'experiments/phase4/results.csv'.")
+
+
+if __name__ == "__main__":
+    main()
+

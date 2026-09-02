@@ -15,6 +15,12 @@ class RetrievalStrategy(str, Enum):
     UPI_EVENT = "UPI_EVENT"
 
 
+class InvestigationTaskCategory(str, Enum):
+    SETTLEMENT_RCA = "SETTLEMENT_RCA"
+    UPI_STATE_INVESTIGATION = "UPI_STATE_INVESTIGATION"
+    BANK_SETTLEMENT_STATE = "BANK_SETTLEMENT_STATE"
+
+
 class TemporalRetrievalStatus(str, Enum):
     TEMPORALLY_VALID = "TEMPORALLY_VALID"
     OUTSIDE_WINDOW = "OUTSIDE_WINDOW"
@@ -26,7 +32,7 @@ class EvidenceCandidate(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     candidate_id: str
-    entity_type: str  # payment, refund, dispute, adjustment, transfer, upi_transaction, upi_event, settlement_line
+    entity_type: str  # payment, refund, dispute, adjustment, transfer, upi_transaction, settlement_line
     entity_id: str
     amount: int  # Gross amount in paise
     net_financial_effect: Optional[int] = None  # Signed contribution in paise
@@ -36,6 +42,8 @@ class EvidenceCandidate(BaseModel):
     provenance: Optional[ProvenanceReference] = None
     is_provenance_complete: bool = False
     is_decoy: bool = False
+    identity_confidence: str = "HIGH"  # HIGH, MEDIUM, LOW
+    supporting_events: List[Dict[str, Any]] = Field(default_factory=list)
     evidence_metadata: Dict[str, Any] = Field(default_factory=dict)
 
 
@@ -63,6 +71,7 @@ class RetrievalResult(BaseModel):
     candidates: List[EvidenceCandidate] = Field(default_factory=list)
     rejected_candidates: List[RejectedEvidenceCandidate] = Field(default_factory=list)
     retrieval_latency_ms: float = 0.0
+    is_applicable: bool = True
     retrieval_metadata: Dict[str, Any] = Field(default_factory=dict)
 
 
@@ -71,5 +80,22 @@ class BaseRetrievalStrategy:
 
     strategy_name: RetrievalStrategy
 
-    def retrieve(self, case_id: str, settlement_id: str, target_variance: int, dataset: Any) -> RetrievalResult:
+    def is_strategy_applicable(self, task_category: InvestigationTaskCategory) -> bool:
+        """Determines if this strategy is intended for the specified task category."""
+        if self.strategy_name == RetrievalStrategy.UPI_EVENT:
+            return task_category == InvestigationTaskCategory.UPI_STATE_INVESTIGATION
+        else:
+            return task_category in (
+                InvestigationTaskCategory.SETTLEMENT_RCA,
+                InvestigationTaskCategory.BANK_SETTLEMENT_STATE,
+            )
+
+    def retrieve(
+        self,
+        case_id: str,
+        settlement_id: str,
+        target_variance: int,
+        dataset: Any,
+        task_category: InvestigationTaskCategory = InvestigationTaskCategory.SETTLEMENT_RCA,
+    ) -> RetrievalResult:
         raise NotImplementedError

@@ -3,7 +3,21 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, ConfigDict, Field
 
 from neofinesse.models.ground_truth import CaseGroundTruth
-from neofinesse.retrieval.base import RetrievalResult, RetrievalStrategy
+from neofinesse.retrieval.base import (
+    InvestigationTaskCategory,
+    RetrievalResult,
+    RetrievalStrategy,
+)
+
+
+def get_scenario_task_category(scenario_value: str) -> InvestigationTaskCategory:
+    """Classifies ground truth scenario into its primary investigation task category."""
+    if "UPI" in scenario_value:
+        return InvestigationTaskCategory.UPI_STATE_INVESTIGATION
+    elif "DELAYED_BANK_CREDIT" in scenario_value:
+        return InvestigationTaskCategory.BANK_SETTLEMENT_STATE
+    else:
+        return InvestigationTaskCategory.SETTLEMENT_RCA
 
 
 class StrategyMetrics(BaseModel):
@@ -11,20 +25,22 @@ class StrategyMetrics(BaseModel):
 
     strategy: RetrievalStrategy
     total_cases_evaluated: int
+    applicable_cases: int
+    na_cases: int
     true_causes_expected: int
     true_causes_retrieved: int
-    evidence_recall_pct: float
+    evidence_recall_pct: Optional[float] = None
     total_candidates_retrieved: int
     true_candidates_count: int
-    candidate_precision_pct: float
+    candidate_precision_pct: Optional[float] = None
     total_known_decoys: int
     decoys_rejected: int
-    decoy_rejection_rate_pct: float
+    decoy_rejection_rate_pct: Optional[float] = None
     total_provenance_verified: int
-    provenance_coverage_pct: float
-    avg_latency_ms: float
-    median_latency_ms: float
-    max_latency_ms: float
+    provenance_coverage_pct: Optional[float] = None
+    avg_latency_ms: float = 0.0
+    median_latency_ms: float = 0.0
+    max_latency_ms: float = 0.0
 
 
 class ScenarioEvaluationRow(BaseModel):
@@ -32,48 +48,94 @@ class ScenarioEvaluationRow(BaseModel):
 
     scenario_id: str
     strategy: RetrievalStrategy
+    task_category: InvestigationTaskCategory
     case_id: str
     settlement_id: str
     target_variance_inr: float
+    is_applicable: bool = True
     true_causes_expected: int
     true_causes_retrieved: int
-    recall_pct: float
+    recall_pct: Optional[float] = None
     candidates_retrieved: int
-    precision_pct: float
+    precision_pct: Optional[float] = None
     decoys_present: int
     decoys_rejected: int
-    decoy_rejection_pct: float
-    provenance_coverage_pct: float
-    latency_ms: float
-    notes: str
+    decoy_rejection_pct: Optional[float] = None
+    provenance_coverage_pct: Optional[float] = None
+    latency_ms: float = 0.0
+    notes: str = ""
 
 
 class RetrievalEvaluator:
-    """Evaluates retrieval results against Ground Truth across all performance dimensions."""
+    """Evaluates retrieval results against Ground Truth with strict applicability and N/A semantics."""
 
     @staticmethod
     def evaluate_scenario(
         result: RetrievalResult, ground_truth: CaseGroundTruth
     ) -> ScenarioEvaluationRow:
+        task_category = get_scenario_task_category(ground_truth.scenario.value)
+
+        # Check if strategy is applicable to this task category
+        is_applicable = result.is_applicable
+
         expected_cause_ids = {c.entity_id for c in ground_truth.true_causes}
         retrieved_ids = {c.entity_id for c in result.candidates}
+        decoy_ids = {d.entity_id for d in ground_truth.decoys}
 
         # Check true causes retrieved
         true_retrieved = expected_cause_ids.intersection(retrieved_ids)
-        recall = (len(true_retrieved) / max(1, len(expected_cause_ids))) * 100.0 if expected_cause_ids else 100.0
 
-        # Precision calculation
-        precision = (len(true_retrieved) / max(1, len(result.candidates))) * 100.0 if result.candidates else (100.0 if not expected_cause_ids else 0.0)
+        if not is_applicable:
+            return ScenarioEvaluationRow(
+                scenario_id=ground_truth.scenario.value,
+                strategy=result.strategy,
+                task_category=task_category,
+                case_id=result.case_id,
+                settlement_id=result.settlement_id,
+                target_variance_inr=result.target_variance / 100.0,
+                is_applicable=False,
+                true_causes_expected=len(expected_cause_ids),
+                true_causes_retrieved=len(true_retrieved),
+                recall_pct=None,
+                candidates_retrieved=len(result.candidates),
+                precision_pct=None,
+                decoys_present=len(decoy_ids),
+                decoys_rejected=0,
+                decoy_rejection_pct=None,
+                provenance_coverage_pct=None,
+                latency_ms=result.retrieval_latency_ms,
+                notes=f"Strategy {result.strategy.value} not applicable to {task_category.value}",
+            )
 
-        # Decoy rejection calculation
-        decoy_ids = {d.entity_id for d in ground_truth.decoys}
+        # 1. Evidence Recall: Only defined if expected causes > 0
+        if len(expected_cause_ids) > 0:
+            recall: Optional[float] = (len(true_retrieved) / len(expected_cause_ids)) * 100.0
+        else:
+            recall = None  # N/A
+
+        # 2. Candidate Precision:
+        if len(result.candidates) > 0:
+            precision: Optional[float] = (len(true_retrieved) / len(result.candidates)) * 100.0
+        else:
+            if len(expected_cause_ids) > 0:
+                precision = 0.0  # Failed to retrieve anything when causes were expected
+            else:
+                precision = None  # N/A: No causes expected and no candidates retrieved
+
+        # 3. Decoy Rejection Rate: Only defined if known decoys exist
         decoys_in_candidates = decoy_ids.intersection(retrieved_ids)
         decoys_rejected_count = len(decoy_ids) - len(decoys_in_candidates)
-        decoy_rejection_pct = (decoys_rejected_count / max(1, len(decoy_ids))) * 100.0 if decoy_ids else 100.0
+        if len(decoy_ids) > 0:
+            decoy_rejection_pct: Optional[float] = (decoys_rejected_count / len(decoy_ids)) * 100.0
+        else:
+            decoy_rejection_pct = None  # N/A
 
-        # Provenance coverage
-        prov_complete_count = sum(1 for c in result.candidates if c.is_provenance_complete)
-        prov_coverage = (prov_complete_count / max(1, len(result.candidates))) * 100.0 if result.candidates else 100.0
+        # 4. Provenance Coverage: Only defined if candidates exist
+        if len(result.candidates) > 0:
+            prov_complete_count = sum(1 for c in result.candidates if c.is_provenance_complete)
+            prov_coverage: Optional[float] = (prov_complete_count / len(result.candidates)) * 100.0
+        else:
+            prov_coverage = None  # N/A
 
         notes = ""
         if decoy_ids and len(decoys_in_candidates) > 0:
@@ -84,9 +146,11 @@ class RetrievalEvaluator:
         return ScenarioEvaluationRow(
             scenario_id=ground_truth.scenario.value,
             strategy=result.strategy,
+            task_category=task_category,
             case_id=result.case_id,
             settlement_id=result.settlement_id,
             target_variance_inr=result.target_variance / 100.0,
+            is_applicable=True,
             true_causes_expected=len(expected_cause_ids),
             true_causes_retrieved=len(true_retrieved),
             recall_pct=recall,
@@ -109,55 +173,86 @@ class RetrievalEvaluator:
             return StrategyMetrics(
                 strategy=strategy,
                 total_cases_evaluated=0,
+                applicable_cases=0,
+                na_cases=0,
                 true_causes_expected=0,
                 true_causes_retrieved=0,
-                evidence_recall_pct=0.0,
+                evidence_recall_pct=None,
                 total_candidates_retrieved=0,
                 true_candidates_count=0,
-                candidate_precision_pct=0.0,
+                candidate_precision_pct=None,
                 total_known_decoys=0,
                 decoys_rejected=0,
-                decoy_rejection_rate_pct=0.0,
+                decoy_rejection_rate_pct=None,
                 total_provenance_verified=0,
-                provenance_coverage_pct=0.0,
+                provenance_coverage_pct=None,
                 avg_latency_ms=0.0,
                 median_latency_ms=0.0,
                 max_latency_ms=0.0,
             )
 
-        total_expected = sum(r.true_causes_expected for r in strat_rows)
-        total_retrieved = sum(r.true_causes_retrieved for r in strat_rows)
-        total_cands = sum(r.candidates_retrieved for r in strat_rows)
-        total_decoys = sum(r.decoys_present for r in strat_rows)
-        total_decoys_rej = sum(r.decoys_rejected for r in strat_rows)
+        app_rows = [r for r in strat_rows if r.is_applicable]
+        na_count = len(strat_rows) - len(app_rows)
 
-        recall = (total_retrieved / max(1, total_expected)) * 100.0 if total_expected > 0 else 100.0
-        precision = (total_retrieved / max(1, total_cands)) * 100.0 if total_cands > 0 else 100.0
-        decoy_rej = (total_decoys_rej / max(1, total_decoys)) * 100.0 if total_decoys > 0 else 100.0
+        # Aggregate Recall: over applicable rows where true_causes_expected > 0
+        recall_rows = [r for r in app_rows if r.true_causes_expected > 0]
+        total_expected_causes = sum(r.true_causes_expected for r in recall_rows)
+        total_retrieved_causes = sum(r.true_causes_retrieved for r in recall_rows)
+        agg_recall = (
+            (total_retrieved_causes / total_expected_causes) * 100.0
+            if total_expected_causes > 0
+            else None
+        )
+
+        # Aggregate Precision: over applicable rows where candidates_retrieved > 0
+        prec_rows = [r for r in app_rows if r.candidates_retrieved > 0]
+        total_cands = sum(r.candidates_retrieved for r in prec_rows)
+        total_true_cands = sum(r.true_causes_retrieved for r in prec_rows)
+        agg_prec = (
+            (total_true_cands / total_cands) * 100.0
+            if total_cands > 0
+            else None
+        )
+
+        # Aggregate Decoy Rejection: over applicable rows where decoys_present > 0
+        decoy_rows = [r for r in app_rows if r.decoys_present > 0]
+        total_decoys = sum(r.decoys_present for r in decoy_rows)
+        total_decoys_rej = sum(r.decoys_rejected for r in decoy_rows)
+        agg_decoy_rej = (
+            (total_decoys_rej / total_decoys) * 100.0
+            if total_decoys > 0
+            else None
+        )
+
+        # Aggregate Provenance Coverage: average over applicable rows with candidates
+        prov_rows = [r for r in app_rows if r.provenance_coverage_pct is not None]
+        agg_prov = (
+            statistics.mean([r.provenance_coverage_pct for r in prov_rows])
+            if prov_rows
+            else None
+        )
 
         latencies = [r.latency_ms for r in strat_rows]
         avg_lat = statistics.mean(latencies) if latencies else 0.0
         med_lat = statistics.median(latencies) if latencies else 0.0
         max_lat = max(latencies) if latencies else 0.0
 
-        # Provenance coverage calculation
-        prov_pcts = [r.provenance_coverage_pct for r in strat_rows]
-        avg_prov = statistics.mean(prov_pcts) if prov_pcts else 100.0
-
         return StrategyMetrics(
             strategy=strategy,
             total_cases_evaluated=len(strat_rows),
-            true_causes_expected=total_expected,
-            true_causes_retrieved=total_retrieved,
-            evidence_recall_pct=recall,
-            total_candidates_retrieved=total_cands,
-            true_candidates_count=total_retrieved,
-            candidate_precision_pct=precision,
+            applicable_cases=len(app_rows),
+            na_cases=na_count,
+            true_causes_expected=total_expected_causes,
+            true_causes_retrieved=total_retrieved_causes,
+            evidence_recall_pct=agg_recall,
+            total_candidates_retrieved=sum(r.candidates_retrieved for r in app_rows),
+            true_candidates_count=total_retrieved_causes,
+            candidate_precision_pct=agg_prec,
             total_known_decoys=total_decoys,
             decoys_rejected=total_decoys_rej,
-            decoy_rejection_rate_pct=decoy_rej,
-            total_provenance_verified=sum(1 for r in strat_rows if r.provenance_coverage_pct == 100.0),
-            provenance_coverage_pct=avg_prov,
+            decoy_rejection_rate_pct=agg_decoy_rej,
+            total_provenance_verified=sum(1 for r in app_rows if r.provenance_coverage_pct == 100.0),
+            provenance_coverage_pct=agg_prov,
             avg_latency_ms=avg_lat,
             median_latency_ms=med_lat,
             max_latency_ms=max_lat,
