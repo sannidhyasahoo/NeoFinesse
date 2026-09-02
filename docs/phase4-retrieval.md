@@ -1,72 +1,56 @@
-# Phase 4 — Evidence Retrieval Experiments
+# Phase 4 — Evidence Retrieval Experiments (Corrected)
 
 ## 1. Overview & Objective
 
-Phase 4 evaluates and benchmarks **six progressively stronger evidence-retrieval strategies** for settlement variance investigation.
+Phase 4 evaluates and benchmarks **six evidence-retrieval strategies** for financial investigation across three explicit task categories:
+1. **`SETTLEMENT_RCA`**: Root-cause analysis of settlement batch variances (`VAR-001`, `VAR-002`, `VAR-003`, `VAR-004`, `VAR-008`, `VAR-009`, `VAR-010`).
+2. **`UPI_STATE_INVESTIGATION`**: Multi-state lifecycle, callback timing, and auto-reversal investigation (`VAR-005`, `VAR-006`).
+3. **`BANK_SETTLEMENT_STATE`**: Bank clearing delay and UTR credit validation (`VAR-007`).
 
-### Fundamental Principle
-> **Retrieval ≠ Verification.**  
-> Retrieval answers: *"What candidate evidence should an investigator inspect?"*  
-> Verification remains the deterministic responsibility of the Phase 3 solver. Retrieval never concludes that a candidate is a proven cause.
+### Strict Evaluator Semantics
+- **No False 100% Scores on 0/0**: If expected causes = 0, recall is reported as `N/A` rather than `100.0%`.
+- **Applicability Filtering**: Non-applicable strategies report `is_applicable = False` and `N/A` metrics, preventing distortion of aggregate scores.
+- **Identity-First UPI Retrieval**: UPI transactions are retrieved as coherent root candidates containing their discrete transition histories rather than exploding into hundreds of unlinked event candidates.
 
 ---
 
 ## 2. The Six Retrieval Strategies
 
-| Strategy | Enum | Scope & Mechanism | Intended Behavior & Tradeoffs |
+| Strategy | Enum | Scope & Mechanism | Primary Applicable Task |
 |---|---|---|---|
-| **Strategy 1** | `DIRECT_ID` | Exact primary / foreign key matching (`settlement_id`, `payment_id`, `line_id`, `UTR`). | Highly specific, zero false positives, but cannot discover external unassigned deductions. |
-| **Strategy 2** | `ATTRIBUTE` | Global scan matching financial attributes (`amount`, `transaction type`, `provider`). | Highest recall, but **worst precision**; intentionally captures same-amount decoys across the entire database. |
-| **Strategy 3** | `RELATIONSHIP` | Traverses explicit graph: `Settlement → Line → Event` and `Payment → Event`. | High recall, rejects unrelated payment/settlement decoys, but cannot detect temporal cutoff violations. |
-| **Strategy 4** | `TYPED_PROVENANCE` | Relationship traversal + deep audit verification (`File → Sheet → Row → Cell` + dual SHA-256 hashes). | 100% provenance coverage; guarantees every candidate is verifiable down to specific spreadsheet cells. |
-| **Strategy 5** | `TEMPORAL_RELATIONSHIP` | Relational candidates + Phase 3 temporal cutoff constraint filter (`event.timestamp <= cutoff`). | Rejects post-cutoff decoys (e.g. `VAR-008` 20-day late refund) and explicitly records rejection reasons. |
-| **Strategy 6** | `UPI_EVENT` | Extracts complete chronological state transitions (`INITIATED → PENDING → FAILED → CAPTURED`) + debit/reversal proof. | Essential for UPI late authorizations and auto-reversals; preserves full event history rather than collapsed status. |
+| **Strategy 1** | `DIRECT_ID` | Exact primary / foreign key matching (`settlement_id`, `payment_id`, `line_id`, `UTR`). | `SETTLEMENT_RCA`, `BANK_SETTLEMENT_STATE` |
+| **Strategy 2** | `ATTRIBUTE` | Global scan matching financial attributes (`amount`, `transaction type`, `provider`). | `SETTLEMENT_RCA`, `BANK_SETTLEMENT_STATE` |
+| **Strategy 3** | `RELATIONSHIP` | Traverses explicit graph: `Settlement → Line → Event` and `Payment → Event`. | `SETTLEMENT_RCA`, `BANK_SETTLEMENT_STATE` |
+| **Strategy 4** | `TYPED_PROVENANCE` | Relationship traversal + deep audit verification (`File → Sheet → Row → Cell` + dual SHA-256 hashes). | `SETTLEMENT_RCA`, `BANK_SETTLEMENT_STATE` |
+| **Strategy 5** | `TEMPORAL_RELATIONSHIP` | Relational candidates + Phase 3 temporal cutoff constraint filter (`event.timestamp <= cutoff`). | `SETTLEMENT_RCA`, `BANK_SETTLEMENT_STATE` |
+| **Strategy 6** | `UPI_EVENT` | Extracts coherent UPI transaction root candidates with chronological state transition histories + reversal proof. | `UPI_STATE_INVESTIGATION` |
 
 ---
 
 ## 3. Aggregate Strategy Performance Metrics
 
-Evaluated across all 10 ground truth scenarios ($6 \times 10 = 60$ experiment runs):
+Evaluated across all 10 ground truth scenarios ($6 \times 10 = 60$ experiment runs) with strict N/A handling:
 
-| Strategy | Evidence Recall (%) | Candidate Precision (%) | Decoy Rejection Rate (%) | Provenance Coverage (%) | Avg Latency (ms) | Median Latency (ms) |
+| Strategy | Applicable Cases | Evidence Recall (%) | Candidate Precision (%) | Decoy Rejection Rate (%) | Provenance Coverage (%) | Avg Latency (ms) |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **`DIRECT_ID`** | 83.3% | 18.5% | 100.0% | 100.0% | 0.08 ms | 0.08 ms |
-| **`ATTRIBUTE`** | **100.0%** | 12.8% | **0.0%** | 100.0% | 0.12 ms | 0.11 ms |
-| **`RELATIONSHIP`** | 83.3% | 33.3% | 75.0% | 100.0% | 0.07 ms | 0.07 ms |
-| **`TYPED_PROVENANCE`** | 83.3% | 33.3% | 75.0% | **100.0%** | 0.09 ms | 0.09 ms |
-| **`TEMPORAL_RELATIONSHIP`**| 83.3% | **35.7%** | **75.0%** | 100.0% | 0.08 ms | 0.08 ms |
-| **`UPI_EVENT`** | 100.0%* | 20.0% | 100.0% | 100.0% | 0.15 ms | 0.14 ms |
-
-*\* Note: `UPI_EVENT` achieves 100% recall on UPI-related cases with full discrete state transition capture.*
+| **`DIRECT_ID`** | 8 / 10 | **100.0%** | 14.7% | **100.0%** | 100.0% | 0.07 ms |
+| **`ATTRIBUTE`** | 8 / 10 | 40.0% | 25.0% | **0.0%** *(Captures Decoys!)* | 100.0% | 0.03 ms |
+| **`RELATIONSHIP`** | 8 / 10 | **100.0%** | 35.7% | 66.7% *(Rejects Relational Decoys)* | 100.0% | 0.06 ms |
+| **`TYPED_PROVENANCE`** | 8 / 10 | **100.0%** | 35.7% | 66.7% | **100.0%** | 0.07 ms |
+| **`TEMPORAL_RELATIONSHIP`**| 8 / 10 | **100.0%** | **38.5%** | **100.0%** *(Rejects Temporal Decoys)*| 100.0% | 0.07 ms |
+| **`UPI_EVENT`** | 2 / 10 | **100.0%** | **50.0%** | 0.0% | 100.0% | 0.06 ms |
 
 ---
 
-## 4. Scenario-by-Scenario Retrieval Matrix (60 Runs)
+## 4. Key Empirical Findings
 
-| Scenario ID | Name | `DIRECT_ID` | `ATTRIBUTE` | `RELATIONSHIP` | `TYPED_PROVENANCE` | `TEMPORAL_RELATIONSHIP` | `UPI_EVENT` |
-|---|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **VAR-001** | `REFUND_VARIANCE` | Found | Found | Found | Found + Prov Verified | Found + Valid Time | N/A |
-| **VAR-002** | `SAME_AMOUNT_DECOY` | Found Real | Found Real + Decoy | Found Real (Rejected Decoy) | Found Real (Prov Verified) | Found Real (Rejected Decoy) | N/A |
-| **VAR-003** | `PARTIAL_EXPLANATION` | Found ₹3k | Found ₹3k | Found ₹3k | Found ₹3k (Prov Verified) | Found ₹3k (Valid Time) | N/A |
-| **VAR-004** | `MULTIPLE_EVENT` | Found Both | Found Both | Found Both (₹700 + ₹300) | Found Both (Prov Verified) | Found Both (Valid Time) | N/A |
-| **VAR-005** | `UPI_LATE_SUCCESS` | Found Pay | Found Pay | Found Pay | Found Pay (Prov Verified) | Found Pay (Valid Time) | Found 3 Events + State |
-| **VAR-006** | `UPI_DEBIT_REVERSAL`| Found | Found | Found | Found (Prov Verified) | Found (Valid Time) | Found Reversal + ₹0 Net |
-| **VAR-007** | `DELAYED_CREDIT` | Found Bank | Found Bank | Found Bank | Found Bank (Prov Verified) | Found Bank (Valid Time) | N/A |
-| **VAR-008** | `WRONG_DATE_DECOY` | Found Pay | Found Decoy | Found Decoy | Found Decoy (Prov Verified)| **Rejected Decoy (OUTSIDE_WINDOW)** | N/A |
-| **VAR-009** | `WRONG_PAYMENT_DECOY`| Found Pay | Found Decoy | **Rejected Decoy (RELATIONSHIP)** | **Rejected Decoy** | **Rejected Decoy** | N/A |
-| **VAR-010** | `UNEXPLAINED` | 0 Causes | Found False Matches | **0 Causes (Clean)** | **0 Causes (Clean)** | **0 Causes (Clean)** | N/A |
-
----
-
-## 5. Key Empirical Findings
-
-1. **Why Pure Attribute Matching Fails in Financial Ops:**  
-   `ATTRIBUTE` achieves 100% recall but has a **0.0% decoy rejection rate**, capturing false positives in `VAR-002`, `VAR-008`, and `VAR-009`. Treating amount matches as candidates creates noisy investigation queues.
+1. **Why Pure Attribute Matching Fails in Finance Operations:**  
+   `ATTRIBUTE` has a **0.0% decoy rejection rate**, capturing false positives across `VAR-002`, `VAR-008`, and `VAR-009`. Treating exact amount matches as proof generates severe noise in finance queues.
 2. **Relational Traversals Eliminate Spurious Amount Matches:**  
-   `RELATIONSHIP` eliminates unrelated payment and settlement decoys, increasing precision by +160% compared to `ATTRIBUTE`.
-3. **Temporal Cutoff Pruning is Essential for Late Events:**  
-   In `VAR-008`, a refund of exact matching amount occurred 20 days after batch cutoff. `RELATIONSHIP` alone could not reject it because it shared batch keys; only `TEMPORAL_RELATIONSHIP` successfully rejected it as `OUTSIDE_WINDOW`.
-4. **Discrete UPI Event Chains Prevent State Misattribution:**  
-   In `VAR-005` and `VAR-006`, querying the static payment record alone returns incomplete information. `UPI_EVENT` reconstructs the discrete intermediate states (`INITIATED → PENDING → FAILED → CAPTURED`) and auto-reversal events.
-5. **Exact Cell Provenance Enables Instant Auditability:**  
+   `RELATIONSHIP` eliminates unrelated payment and settlement decoys (`VAR-002`, `VAR-009`), boosting candidate precision significantly (+43% over attribute matching).
+3. **Temporal Cutoffs Prune Post-Cutoff Decoys:**  
+   In `VAR-008`, a refund occurred 20 days after batch cutoff. `RELATIONSHIP` alone retrieved it because it shared batch keys; only `TEMPORAL_RELATIONSHIP` rejected it as `OUTSIDE_WINDOW`.
+4. **Coherent Root Candidates for UPI Lifecycles:**  
+   In `VAR-005` and `VAR-006`, querying the static payment record alone returns incomplete information. `UPI_EVENT` retrieves the single root UPI transaction with its complete transition timeline (`INITIATED → PENDING → FAILED → CAPTURED`) and auto-reversal confirmations without candidate explosion.
+5. **100% Provenance Coverage:**  
    `TYPED_PROVENANCE` verified 100% of candidate attributes down to exact Excel cells (`D193`) and row-level SHA-256 hashes, ensuring zero ungrounded claims reach downstream controllers.

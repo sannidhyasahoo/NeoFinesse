@@ -6,6 +6,7 @@ from neofinesse.reconciliation.temporal import TemporalConstraintFilter, Tempora
 from neofinesse.retrieval.base import (
     BaseRetrievalStrategy,
     EvidenceCandidate,
+    InvestigationTaskCategory,
     RejectedEvidenceCandidate,
     RetrievalResult,
     RetrievalStrategy,
@@ -24,9 +25,28 @@ class TemporalRelationshipRetrievalStrategy(BaseRetrievalStrategy):
         self.temporal_filter = TemporalConstraintFilter(allowable_lead_buffer_hours=allowable_lead_buffer_hours)
 
     def retrieve(
-        self, case_id: str, settlement_id: str, target_variance: int, dataset: IngestedDataset
+        self,
+        case_id: str,
+        settlement_id: str,
+        target_variance: int,
+        dataset: IngestedDataset,
+        task_category: InvestigationTaskCategory = InvestigationTaskCategory.SETTLEMENT_RCA,
     ) -> RetrievalResult:
         start_time = time.perf_counter()
+
+        if not self.is_strategy_applicable(task_category):
+            latency = (time.perf_counter() - start_time) * 1000.0
+            return RetrievalResult(
+                case_id=case_id,
+                settlement_id=settlement_id,
+                strategy=self.strategy_name,
+                target_variance=target_variance,
+                candidates=[],
+                rejected_candidates=[],
+                is_applicable=False,
+                retrieval_latency_ms=latency,
+                retrieval_metadata={"status": "NOT_APPLICABLE_FOR_TASK", "task_category": task_category.value},
+            )
 
         settlement = next((s for s in dataset.settlements if s.id == settlement_id), None)
         if not settlement:
@@ -38,12 +58,13 @@ class TemporalRelationshipRetrievalStrategy(BaseRetrievalStrategy):
                 target_variance=target_variance,
                 candidates=[],
                 rejected_candidates=[],
+                is_applicable=True,
                 retrieval_latency_ms=latency,
                 retrieval_metadata={"error": "Settlement not found"},
             )
 
         # 1. Retrieve base relationship candidates
-        base_result = self._rel_strategy.retrieve(case_id, settlement_id, target_variance, dataset)
+        base_result = self._rel_strategy.retrieve(case_id, settlement_id, target_variance, dataset, task_category)
 
         valid_candidates: List[EvidenceCandidate] = []
         rejected_candidates: List[RejectedEvidenceCandidate] = list(base_result.rejected_candidates)

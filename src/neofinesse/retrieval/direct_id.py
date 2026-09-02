@@ -6,6 +6,7 @@ from neofinesse.models.base import SourceEventType
 from neofinesse.retrieval.base import (
     BaseRetrievalStrategy,
     EvidenceCandidate,
+    InvestigationTaskCategory,
     RetrievalResult,
     RetrievalStrategy,
     TemporalRetrievalStatus,
@@ -18,9 +19,29 @@ class DirectIdRetrievalStrategy(BaseRetrievalStrategy):
     strategy_name = RetrievalStrategy.DIRECT_ID
 
     def retrieve(
-        self, case_id: str, settlement_id: str, target_variance: int, dataset: IngestedDataset
+        self,
+        case_id: str,
+        settlement_id: str,
+        target_variance: int,
+        dataset: IngestedDataset,
+        task_category: InvestigationTaskCategory = InvestigationTaskCategory.SETTLEMENT_RCA,
     ) -> RetrievalResult:
         start_time = time.perf_counter()
+
+        if not self.is_strategy_applicable(task_category):
+            latency = (time.perf_counter() - start_time) * 1000.0
+            return RetrievalResult(
+                case_id=case_id,
+                settlement_id=settlement_id,
+                strategy=self.strategy_name,
+                target_variance=target_variance,
+                candidates=[],
+                rejected_candidates=[],
+                is_applicable=False,
+                retrieval_latency_ms=latency,
+                retrieval_metadata={"status": "NOT_APPLICABLE_FOR_TASK", "task_category": task_category.value},
+            )
+
         candidates: List[EvidenceCandidate] = []
 
         # Find target settlement

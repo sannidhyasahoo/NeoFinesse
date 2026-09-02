@@ -7,12 +7,18 @@ from pydantic import BaseModel, ConfigDict, Field
 from neofinesse.ingestion.pipeline import IngestedDataset
 from neofinesse.models.ground_truth import CaseGroundTruth
 from neofinesse.retrieval.attribute import AttributeRetrievalStrategy
-from neofinesse.retrieval.base import BaseRetrievalStrategy, RetrievalResult, RetrievalStrategy
+from neofinesse.retrieval.base import (
+    BaseRetrievalStrategy,
+    InvestigationTaskCategory,
+    RetrievalResult,
+    RetrievalStrategy,
+)
 from neofinesse.retrieval.direct_id import DirectIdRetrievalStrategy
 from neofinesse.retrieval.evaluator import (
     RetrievalEvaluator,
     ScenarioEvaluationRow,
     StrategyMetrics,
+    get_scenario_task_category,
 )
 from neofinesse.retrieval.provenance import TypedProvenanceRetrievalStrategy
 from neofinesse.retrieval.relationship import RelationshipAwareRetrievalStrategy
@@ -55,12 +61,12 @@ class RetrievalBenchmarkRunner:
         ground_truths = [CaseGroundTruth.model_validate(item) for item in gt_data]
 
         all_rows: List[ScenarioEvaluationRow] = []
-        raw_results: List[RetrievalResult] = []
 
         # Run each strategy against each ground truth scenario
         for gt in ground_truths:
             setl_id = gt.settlement_id
             variance = gt.expected_variance
+            task_category = get_scenario_task_category(gt.scenario.value)
 
             for strat_enum, strat_impl in self.strategies.items():
                 res = strat_impl.retrieve(
@@ -68,8 +74,8 @@ class RetrievalBenchmarkRunner:
                     settlement_id=setl_id,
                     target_variance=variance,
                     dataset=dataset,
+                    task_category=task_category,
                 )
-                raw_results.append(res)
                 eval_row = RetrievalEvaluator.evaluate_scenario(res, gt)
                 all_rows.append(eval_row)
 
@@ -105,9 +111,11 @@ class RetrievalBenchmarkRunner:
                     [
                         "Scenario",
                         "Strategy",
+                        "Task Category",
                         "Case ID",
                         "Settlement ID",
                         "Variance (INR)",
+                        "Applicable",
                         "True Causes Expected",
                         "True Causes Retrieved",
                         "Recall (%)",
@@ -122,22 +130,29 @@ class RetrievalBenchmarkRunner:
                     ]
                 )
                 for r in all_rows:
+                    recall_str = f"{r.recall_pct:.1f}%" if r.recall_pct is not None else "N/A"
+                    prec_str = f"{r.precision_pct:.1f}%" if r.precision_pct is not None else "N/A"
+                    decoy_rej_str = f"{r.decoy_rejection_pct:.1f}%" if r.decoy_rejection_pct is not None else "N/A"
+                    prov_cov_str = f"{r.provenance_coverage_pct:.1f}%" if r.provenance_coverage_pct is not None else "N/A"
+
                     writer.writerow(
                         [
                             r.scenario_id,
                             r.strategy.value,
+                            r.task_category.value,
                             r.case_id,
                             r.settlement_id,
                             f"{r.target_variance_inr:.2f}",
-                            r.true_causes_expected,
-                            r.true_causes_retrieved,
-                            f"{r.recall_pct:.1f}%",
+                            "YES" if r.is_applicable else "NO (N/A)",
+                            r.true_causes_expected if r.is_applicable else "N/A",
+                            r.true_causes_retrieved if r.is_applicable else "N/A",
+                            recall_str,
                             r.candidates_retrieved,
-                            f"{r.precision_pct:.1f}%",
-                            r.decoys_present,
-                            r.decoys_rejected,
-                            f"{r.decoy_rejection_pct:.1f}%",
-                            f"{r.provenance_coverage_pct:.1f}%",
+                            prec_str,
+                            r.decoys_present if r.is_applicable else "N/A",
+                            r.decoys_rejected if r.is_applicable else "N/A",
+                            decoy_rej_str,
+                            prov_cov_str,
                             f"{r.latency_ms:.2f}",
                             r.notes,
                         ]
@@ -168,14 +183,20 @@ def main() -> None:
         export_dir="experiments/phase4",
     )
 
-    print(f"\nTotal Experiments: {report.total_experiments_run}")
-    print("-" * 80)
+    print(f"\nTotal Experiments Run: {report.total_experiments_run}")
+    print("=" * 110)
+    print(f"{'Strategy':<22} | {'Applicable':<10} | {'Recall (%)':<12} | {'Precision (%)':<14} | {'Decoy Rej (%)':<14} | {'Prov Cov (%)':<12} | {'Latency':<8}")
+    print("-" * 110)
     for strat, metrics in report.strategy_metrics.items():
-        print(f"Strategy: {strat:<22} | Recall: {metrics.evidence_recall_pct:5.1f}% | Precision: {metrics.candidate_precision_pct:5.1f}% | Decoy Rejection: {metrics.decoy_rejection_rate_pct:5.1f}% | Avg Latency: {metrics.avg_latency_ms:.3f}ms")
-    print("-" * 80)
+        rec = f"{metrics.evidence_recall_pct:.1f}%" if metrics.evidence_recall_pct is not None else "N/A"
+        prec = f"{metrics.candidate_precision_pct:.1f}%" if metrics.candidate_precision_pct is not None else "N/A"
+        decoy = f"{metrics.decoy_rejection_rate_pct:.1f}%" if metrics.decoy_rejection_rate_pct is not None else "N/A"
+        prov = f"{metrics.provenance_coverage_pct:.1f}%" if metrics.provenance_coverage_pct is not None else "N/A"
+        app_str = f"{metrics.applicable_cases}/{metrics.total_cases_evaluated}"
+        print(f"{strat:<22} | {app_str:<10} | {rec:<12} | {prec:<14} | {decoy:<14} | {prov:<12} | {metrics.avg_latency_ms:.2f}ms")
+    print("=" * 110)
     print("Exported results to 'experiments/phase4/results.json' and 'experiments/phase4/results.csv'.")
 
 
 if __name__ == "__main__":
     main()
-
