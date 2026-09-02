@@ -1,0 +1,195 @@
+[
+  {
+    "case_id": "CASE-001",
+    "settlement_id": "setl_scen_001_9984",
+    "scenario": "VAR-001_REFUND_VARIANCE",
+    "expected_variance": -200000,
+    "true_causes": [
+      {
+        "entity_type": "refund",
+        "entity_id": "rfnd_scen_001_5505",
+        "settlement_line_id": "line_scen_001_r_7240",
+        "amount": -200000
+      }
+    ],
+    "decoys": [],
+    "explained_amount": -200000,
+    "unexplained_amount": 0,
+    "expected_outcome": "RESOLVED",
+    "notes": "Legitimate processed refund rfnd_scen_001 deducted from batch explains the settlement deficit."
+  },
+  {
+    "case_id": "CASE-002",
+    "settlement_id": "setl_scen_002_8398",
+    "scenario": "VAR-002_SAME_AMOUNT_DECOY",
+    "expected_variance": -250000,
+    "true_causes": [
+      {
+        "entity_type": "refund",
+        "entity_id": "rfnd_scen_002_real_4522",
+        "settlement_line_id": "line_scen_002_r_6553",
+        "amount": -250000
+      }
+    ],
+    "decoys": [
+      {
+        "decoy_type": "same_amount",
+        "entity_type": "refund",
+        "entity_id": "rfnd_scen_002_decoy_8046",
+        "amount": 250000,
+        "rejection_reason": "Belongs to payment pay_scen_002_d settled in batch setl_scen_002_other, not target settlement."
+      }
+    ],
+    "explained_amount": -250000,
+    "unexplained_amount": 0,
+    "expected_outcome": "RESOLVED",
+    "notes": "Decoy refund has identical \u20b92,500 amount but belongs to another settlement batch."
+  },
+  {
+    "case_id": "CASE-003",
+    "settlement_id": "setl_scen_003_7992",
+    "scenario": "VAR-003_PARTIAL_EXPLANATION",
+    "expected_variance": 200000,
+    "true_causes": [
+      {
+        "entity_type": "refund",
+        "entity_id": "rfnd_scen_003_6120",
+        "settlement_line_id": "line_scen_003_r_5176",
+        "amount": -300000
+      }
+    ],
+    "decoys": [],
+    "explained_amount": 300000,
+    "unexplained_amount": 200000,
+    "expected_outcome": "PARTIALLY_RESOLVED",
+    "notes": "Refund explains \u20b93,000 of \u20b95,000 variance; remaining \u20b92,000 has no matching event and must be escalated."
+  },
+  {
+    "case_id": "CASE-004",
+    "settlement_id": "setl_scen_004_2582",
+    "scenario": "VAR-004_MULTIPLE_EVENT_EXPLANATION",
+    "expected_variance": -100000,
+    "true_causes": [
+      {
+        "entity_type": "refund",
+        "entity_id": "rfnd_scen_004_2527",
+        "settlement_line_id": "line_scen_004_r_3131",
+        "amount": -70000
+      },
+      {
+        "entity_type": "adjustment",
+        "entity_id": "adj_scen_004_8075",
+        "settlement_line_id": "line_scen_004_a_1982",
+        "amount": -30000
+      }
+    ],
+    "decoys": [],
+    "explained_amount": -100000,
+    "unexplained_amount": 0,
+    "expected_outcome": "RESOLVED",
+    "notes": "Joint attribution: \u20b9700 refund + \u20b9300 risk hold adjustment = \u20b91,000 total variance."
+  },
+  {
+    "case_id": "CASE-005",
+    "settlement_id": "setl_scen_005_6761",
+    "scenario": "VAR-005_UPI_LATE_SUCCESS",
+    "expected_variance": 0,
+    "true_causes": [
+      {
+        "entity_type": "upi_transaction",
+        "entity_id": "upi_scen_005_5712",
+        "settlement_line_id": "line_scen_005_p_2697",
+        "amount": 341740
+      }
+    ],
+    "decoys": [],
+    "explained_amount": 341740,
+    "unexplained_amount": 0,
+    "expected_outcome": "RESOLVED",
+    "notes": "UPI transaction initially failed but achieved late success at T+27m; event history confirms settlement inclusion."
+  },
+  {
+    "case_id": "CASE-006",
+    "settlement_id": "N/A",
+    "scenario": "VAR-006_UPI_DEBIT_REVERSAL",
+    "expected_variance": 0,
+    "true_causes": [],
+    "decoys": [
+      {
+        "decoy_type": "reversal_net_zero",
+        "entity_type": "upi_transaction",
+        "entity_id": "upi_scen_006_5564",
+        "amount": 500000,
+        "rejection_reason": "Customer was debited but auto-reversal completed at T+15m. Net financial effect = 0, so cannot explain settlement deficit."
+      }
+    ],
+    "explained_amount": 0,
+    "unexplained_amount": 0,
+    "expected_outcome": "RESOLVED",
+    "notes": "Failed UPI payment with debit and confirmed reversal produces net financial effect of \u20b90."
+  },
+  {
+    "case_id": "CASE-007",
+    "settlement_id": "setl_scen_007_3955",
+    "scenario": "VAR-007_DELAYED_BANK_CREDIT",
+    "expected_variance": 0,
+    "true_causes": [],
+    "decoys": [],
+    "explained_amount": 1952800,
+    "unexplained_amount": 0,
+    "expected_outcome": "VALID_DELAYED_CREDIT",
+    "notes": "Settlement processed at gateway; bank credit arrived 36 hours later within normal clearing window."
+  },
+  {
+    "case_id": "CASE-008",
+    "settlement_id": "setl_scen_008_2140",
+    "scenario": "VAR-008_WRONG_DATE_DECOY",
+    "expected_variance": 400000,
+    "true_causes": [],
+    "decoys": [
+      {
+        "decoy_type": "wrong_date",
+        "entity_type": "refund",
+        "entity_id": "rfnd_scen_008_decoy_7566",
+        "amount": 400000,
+        "rejection_reason": "Refund processed on T+21 days, well after batch settlement cutoff at T+1 day."
+      }
+    ],
+    "explained_amount": 0,
+    "unexplained_amount": 400000,
+    "expected_outcome": "ESCALATE",
+    "notes": "Decoy refund matches \u20b94,000 amount but occurred 20 days after settlement cutoff; must be rejected."
+  },
+  {
+    "case_id": "CASE-009",
+    "settlement_id": "setl_scen_009_6585",
+    "scenario": "VAR-009_WRONG_PAYMENT_DECOY",
+    "expected_variance": 350000,
+    "true_causes": [],
+    "decoys": [
+      {
+        "decoy_type": "wrong_payment",
+        "entity_type": "dispute",
+        "entity_id": "disp_scen_009_decoy_8432",
+        "amount": 350000,
+        "rejection_reason": "Dispute belongs to pay_2 and settlement setl_scen_009_other, not pay_1 in target settlement."
+      }
+    ],
+    "explained_amount": 0,
+    "unexplained_amount": 350000,
+    "expected_outcome": "ESCALATE",
+    "notes": "Dispute of \u20b93,500 belongs to a different payment; case has no valid cause and must be escalated."
+  },
+  {
+    "case_id": "CASE-010",
+    "settlement_id": "setl_scen_010_1815",
+    "scenario": "VAR-010_COMPLETELY_UNEXPLAINED",
+    "expected_variance": 1500000,
+    "true_causes": [],
+    "decoys": [],
+    "explained_amount": 0,
+    "unexplained_amount": 1500000,
+    "expected_outcome": "ESCALATE",
+    "notes": "Completely unexplained \u20b915,000 variance with zero supporting records; system must honestly escalate without guessing."
+  }
+]
