@@ -51,9 +51,26 @@ def main() -> None:
     )
     print(f"Total Retrieval Experiments Run: {exp_report.total_experiments_run}")
     for strat, metrics in exp_report.strategy_metrics.items():
-        print(f" - [{strat:21s}] Recall: {metrics.evidence_recall_pct:5.1f}% | Precision: {metrics.candidate_precision_pct:5.1f}% | Decoy Rej: {metrics.decoy_rejection_rate_pct:5.1f}% | Latency: {metrics.avg_latency_ms:.2f}ms")
-    print("Results exported to 'experiments/phase4/results.json' and 'experiments/phase4/results.csv'.")
-    print("[SUCCESS] Phase 4 Evidence Retrieval Experiments ready.")
+        rec = f"{metrics.evidence_recall_pct:.1f}%" if metrics.evidence_recall_pct is not None else "N/A"
+        prec = f"{metrics.candidate_precision_pct:.1f}%" if metrics.candidate_precision_pct is not None else "N/A"
+        decoy = f"{metrics.decoy_rejection_rate_pct:.1f}%" if metrics.decoy_rejection_rate_pct is not None else "N/A"
+        print(f" - [{strat:21s}] Applicable: {metrics.applicable_cases}/10 | Recall: {rec:>6} | Precision: {prec:>6} | Decoy Rej: {decoy:>6} | Latency: {metrics.avg_latency_ms:.2f}ms")
+
+    print("\n[Phase 5] Running Deterministic Financial Investigation Engine...")
+    from neofinesse.investigation.benchmark import InvestigationBenchmarkRunner
+    inv_runner = InvestigationBenchmarkRunner()
+    inv_scorecard = inv_runner.run_benchmark(
+        dataset=dataset,
+        ground_truth_path=res["ground_truth_path"],
+        export_dir="experiments/phase5",
+    )
+    print(f"Investigation Accuracy: {inv_scorecard.root_cause_accuracy_pct:.1f}% ({inv_scorecard.correct_outcomes}/{inv_scorecard.total_scenarios_evaluated})")
+    print(f"False Closure Rate:     {inv_scorecard.false_closure_rate_pct:.1f}% ({inv_scorecard.false_closures} false closures)")
+    print(f"Partial Attribution:    {inv_scorecard.partial_attribution_accuracy_pct:.1f}%")
+    print(f"Honest Exception Rate:  {inv_scorecard.honest_exception_rate_pct:.1f}%")
+    print(f"Average Latency:        {inv_scorecard.avg_latency_ms:.2f}ms")
+    print("Results exported to 'experiments/phase5/results.json' and 'experiments/phase5/results.csv'.")
+    print("[SUCCESS] Phase 5 Settlement Variance Investigator ready.")
 
 
 if __name__ == "__main__":
