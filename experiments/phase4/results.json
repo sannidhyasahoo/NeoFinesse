@@ -25,9 +25,9 @@
       "decoy_rejection_rate_pct": 100.0,
       "total_provenance_verified": 8,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.05436999981611734,
-      "median_latency_ms": 0.0457500000266009,
-      "max_latency_ms": 0.1868999988801079
+      "avg_latency_ms": 0.05485999990924029,
+      "median_latency_ms": 0.04865000028075883,
+      "max_latency_ms": 0.17699999989417847
     },
     "ATTRIBUTE": {
       "strategy": "ATTRIBUTE",
@@ -45,9 +45,9 @@
       "decoy_rejection_rate_pct": 0.0,
       "total_provenance_verified": 6,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.02432000001135748,
-      "median_latency_ms": 0.027100000806967728,
-      "max_latency_ms": 0.06269999903452117
+      "avg_latency_ms": 0.025749999622348696,
+      "median_latency_ms": 0.028449999263102654,
+      "max_latency_ms": 0.06339999890769832
     },
     "RELATIONSHIP": {
       "strategy": "RELATIONSHIP",
@@ -65,9 +65,9 @@
       "decoy_rejection_rate_pct": 66.66666666666666,
       "total_provenance_verified": 8,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.04650999999284977,
-      "median_latency_ms": 0.04644999989977805,
-      "max_latency_ms": 0.1283999990846496
+      "avg_latency_ms": 0.04302000015741214,
+      "median_latency_ms": 0.04394999996293336,
+      "max_latency_ms": 0.09510000018053688
     },
     "TYPED_PROVENANCE": {
       "strategy": "TYPED_PROVENANCE",
@@ -85,9 +85,9 @@
       "decoy_rejection_rate_pct": 66.66666666666666,
       "total_provenance_verified": 8,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.06008000018482562,
-      "median_latency_ms": 0.06310000026132911,
-      "max_latency_ms": 0.12910000077681616
+      "avg_latency_ms": 0.0623800002358621,
+      "median_latency_ms": 0.06335000034596305,
+      "max_latency_ms": 0.13180000132706482
     },
     "TEMPORAL_RELATIONSHIP": {
       "strategy": "TEMPORAL_RELATIONSHIP",
@@ -105,9 +105,9 @@
       "decoy_rejection_rate_pct": 100.0,
       "total_provenance_verified": 8,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.059249999685562216,
-      "median_latency_ms": 0.06295000002864981,
-      "max_latency_ms": 0.103599999420112
+      "avg_latency_ms": 0.059050000163551886,
+      "median_latency_ms": 0.06535000011353986,
+      "max_latency_ms": 0.10420000035082921
     },
     "UPI_EVENT": {
       "strategy": "UPI_EVENT",
@@ -125,9 +125,9 @@
       "decoy_rejection_rate_pct": 0.0,
       "total_provenance_verified": 2,
       "provenance_coverage_pct": 100.0,
-      "avg_latency_ms": 0.021910000214120373,
+      "avg_latency_ms": 0.021710000146413222,
       "median_latency_ms": 0.0005500005499925464,
-      "max_latency_ms": 0.12989999959245324
+      "max_latency_ms": 0.1274999995075632
     }
   },
   "scenario_matrix": [
@@ -148,7 +148,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.1868999988801079,
+      "latency_ms": 0.17699999989417847,
       "notes": ""
     },
     {
@@ -168,7 +168,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06269999903452117,
+      "latency_ms": 0.06339999890769832,
       "notes": ""
     },
     {
@@ -188,7 +188,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.1283999990846496,
+      "latency_ms": 0.09510000018053688,
       "notes": ""
     },
     {
@@ -208,7 +208,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.12910000077681616,
+      "latency_ms": 0.13180000132706482,
       "notes": ""
     },
     {
@@ -228,7 +228,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.103599999420112,
+      "latency_ms": 0.10420000035082921,
       "notes": ""
     },
     {
@@ -248,7 +248,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.0011000010999850929,
+      "latency_ms": 0.0009000013960758224,
       "notes": "Strategy UPI_EVENT not applicable to SETTLEMENT_RCA"
     },
     {
@@ -268,7 +268,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06229999962670263,
+      "latency_ms": 0.06799999937356915,
       "notes": ""
     },
     {
@@ -288,7 +288,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.03679999826999847,
+      "latency_ms": 0.04179999996267725,
       "notes": "Decoys captured: ['rfnd_scen_002_decoy_8046']"
     },
     {
@@ -308,7 +308,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06340000072668772,
+      "latency_ms": 0.06629999916185625,
       "notes": ""
     },
     {
@@ -328,7 +328,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.08860000161803328,
+      "latency_ms": 0.08939999861468095,
       "notes": ""
     },
     {
@@ -348,7 +348,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.07929999992484227,
+      "latency_ms": 0.08589999924879521,
       "notes": ""
     },
     {
@@ -368,7 +368,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.0010999992809956893,
+      "latency_ms": 0.0012999989849049598,
       "notes": "Strategy UPI_EVENT not applicable to SETTLEMENT_RCA"
     },
     {
@@ -388,7 +388,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05169999894860666,
+      "latency_ms": 0.05849999979545828,
       "notes": ""
     },
     {
@@ -408,7 +408,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.02570000106061343,
+      "latency_ms": 0.02829999903042335,
       "notes": ""
     },
     {
@@ -428,7 +428,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.04830000034417026,
+      "latency_ms": 0.052400000640773214,
       "notes": ""
     },
     {
@@ -448,7 +448,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06940000093891285,
+      "latency_ms": 0.07360000017797574,
       "notes": ""
     },
     {
@@ -468,7 +468,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06899999971210491,
+      "latency_ms": 0.07310000000870787,
       "notes": ""
     },
     {
@@ -508,7 +508,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06829999983892776,
+      "latency_ms": 0.07010000081209,
       "notes": ""
     },
     {
@@ -528,7 +528,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.018200000340584666,
+      "latency_ms": 0.01849999898695387,
       "notes": ""
     },
     {
@@ -548,7 +548,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05210000017541461,
+      "latency_ms": 0.051700000767596066,
       "notes": ""
     },
     {
@@ -568,7 +568,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.07829999958630651,
+      "latency_ms": 0.09700000009615906,
       "notes": ""
     },
     {
@@ -588,7 +588,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.09059999865712598,
+      "latency_ms": 0.08279999929072801,
       "notes": ""
     },
     {
@@ -628,7 +628,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.0007999988156370819,
+      "latency_ms": 0.0008999995770864189,
       "notes": "Strategy DIRECT_ID not applicable to UPI_STATE_INVESTIGATION"
     },
     {
@@ -648,7 +648,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.0006000009307172149,
+      "latency_ms": 0.0005000001692678779,
       "notes": "Strategy ATTRIBUTE not applicable to UPI_STATE_INVESTIGATION"
     },
     {
@@ -728,7 +728,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.12989999959245324,
+      "latency_ms": 0.1274999995075632,
       "notes": ""
     },
     {
@@ -748,7 +748,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.0010000003385357559,
+      "latency_ms": 0.0008999995770864189,
       "notes": "Strategy DIRECT_ID not applicable to UPI_STATE_INVESTIGATION"
     },
     {
@@ -808,7 +808,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.0005000001692678779,
+      "latency_ms": 0.0004000012268079445,
       "notes": "Strategy TYPED_PROVENANCE not applicable to UPI_STATE_INVESTIGATION"
     },
     {
@@ -828,7 +828,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.00419999923906289,
+      "latency_ms": 0.004600000465870835,
       "notes": "Strategy TEMPORAL_RELATIONSHIP not applicable to UPI_STATE_INVESTIGATION"
     },
     {
@@ -848,7 +848,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.08400000115216244,
+      "latency_ms": 0.08440000055998098,
       "notes": "Decoys captured: ['upi_scen_006_5564']"
     },
     {
@@ -868,7 +868,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05720000081055332,
+      "latency_ms": 0.059300000430084765,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -888,7 +888,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.006999998731771484,
+      "latency_ms": 0.007099999493220821,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -908,7 +908,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.04760000047099311,
+      "latency_ms": 0.04540000009001233,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -928,7 +928,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06050000047252979,
+      "latency_ms": 0.056400000175926834,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -948,7 +948,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05690000034519471,
+      "latency_ms": 0.05480000072566327,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -988,7 +988,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.0380000001314329,
+      "latency_ms": 0.036899999031447805,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1008,7 +1008,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.028500000553322025,
+      "latency_ms": 0.03139999898849055,
       "notes": "Decoys captured: ['rfnd_scen_008_decoy_7566']"
     },
     {
@@ -1028,7 +1028,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.04529999932856299,
+      "latency_ms": 0.042499999835854396,
       "notes": "Decoys captured: ['rfnd_scen_008_decoy_7566']"
     },
     {
@@ -1048,7 +1048,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.06570000005012844,
+      "latency_ms": 0.06600000051548705,
       "notes": "Decoys captured: ['rfnd_scen_008_decoy_7566']"
     },
     {
@@ -1068,7 +1068,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.07840000034775585,
+      "latency_ms": 0.07379999988188501,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1088,7 +1088,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.0006000009307172149,
+      "latency_ms": 0.0005000001692678779,
       "notes": "Strategy UPI_EVENT not applicable to SETTLEMENT_RCA"
     },
     {
@@ -1108,7 +1108,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.03980000110459514,
+      "latency_ms": 0.038800000766059384,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1128,7 +1128,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": 0.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.034300001061637886,
+      "latency_ms": 0.03730000025825575,
       "notes": "Decoys captured: ['disp_scen_009_decoy_8432']"
     },
     {
@@ -1148,7 +1148,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.04350000017439015,
+      "latency_ms": 0.04240000089339446,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1168,7 +1168,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05849999979545828,
+      "latency_ms": 0.06070000017643906,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1188,7 +1188,7 @@
       "decoys_rejected": 1,
       "decoy_rejection_pct": 100.0,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05599999894911889,
+      "latency_ms": 0.05760000021837186,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1208,7 +1208,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.0004999983502784744,
+      "latency_ms": 0.0006000009307172149,
       "notes": "Strategy UPI_EVENT not applicable to SETTLEMENT_RCA"
     },
     {
@@ -1228,7 +1228,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.03769999966607429,
+      "latency_ms": 0.03819999983534217,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1248,7 +1248,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.02879999919969123,
+      "latency_ms": 0.028599999495781958,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1268,7 +1268,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.03549999928509351,
+      "latency_ms": 0.03339999966556206,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1288,7 +1288,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.04979999903298449,
+      "latency_ms": 0.04810000064026099,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1308,7 +1308,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": 100.0,
-      "latency_ms": 0.05400000009103678,
+      "latency_ms": 0.0532000012753997,
       "notes": "Unexplained/No-cause scenario"
     },
     {
@@ -1328,7 +1328,7 @@
       "decoys_rejected": 0,
       "decoy_rejection_pct": null,
       "provenance_coverage_pct": null,
-      "latency_ms": 0.0004000012268079445,
+      "latency_ms": 0.00039999940781854093,
       "notes": "Strategy UPI_EVENT not applicable to SETTLEMENT_RCA"
     }
   ]

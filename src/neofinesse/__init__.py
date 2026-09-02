@@ -70,7 +70,23 @@ def main() -> None:
     print(f"Honest Exception Rate:  {inv_scorecard.honest_exception_rate_pct:.1f}%")
     print(f"Average Latency:        {inv_scorecard.avg_latency_ms:.2f}ms")
     print("Results exported to 'experiments/phase5/results.json' and 'experiments/phase5/results.csv'.")
-    print("[SUCCESS] Phase 5 Settlement Variance Investigator ready.")
+
+    print("\n[Phase 6] Running AI Evidence-Constrained Financial Investigator...")
+    from neofinesse.ai_investigation.benchmark import AIBenchmarkRunner
+    ai_runner = AIBenchmarkRunner()
+    ai_summary = ai_runner.run_benchmark(
+        dataset=dataset,
+        ground_truth_path=res["ground_truth_path"],
+        export_dir="experiments/phase6",
+    )
+    print(f"AI Root Cause Accuracy: {ai_summary.phase6_accuracy_pct:.1f}%")
+    print(f"AI False Closure Rate:  {ai_summary.phase6_false_closure_rate_pct:.1f}% ({ai_summary.phase6_false_closures} false closures)")
+    print(f"Conflicts Surfaced:     {ai_summary.total_conflicts_surfaced}")
+    print(f"Missing Ev. Surfaced:   {ai_summary.total_missing_evidence_surfaced}")
+    print(f"AI Helped Cases:        {ai_summary.ai_helped_count}")
+    print(f"Average AI Latency:     {ai_summary.avg_phase6_latency_ms:.2f}ms")
+    print("Results exported to 'experiments/phase6/results.json' and 'experiments/phase6/results.csv'.")
+    print("[SUCCESS] Phase 6 AI Evidence-Constrained Financial Investigator ready.")
 
 
 if __name__ == "__main__":
