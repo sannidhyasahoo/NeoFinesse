@@ -6,6 +6,7 @@ from neofinesse.agentic_investigation.models import (
     AgentInvestigationStatus,
     AgentRoundResponse,
     AgenticInvestigationResult,
+    CategoryEvaluationMetrics,
     InvestigationBudget,
     ToolRequest,
     ToolResult,
@@ -17,6 +18,7 @@ from neofinesse.agentic_investigation.state import InvestigationRoundRecord, Inv
 from neofinesse.agentic_investigation.tool_registry import ToolDefinition, ToolRegistry
 from neofinesse.agentic_investigation.tool_validator import ToolRequestValidator
 from neofinesse.agentic_investigation.tools import InvestigationTools
+from neofinesse.agentic_investigation.trace import InvestigationTraceFormatter
 from neofinesse.agentic_investigation.validator import AgentResponseValidator
 
 __all__ = [
@@ -27,6 +29,7 @@ __all__ = [
     "AgentInvestigationStatus",
     "AgentRoundResponse",
     "AgenticInvestigationResult",
+    "CategoryEvaluationMetrics",
     "InvestigationBudget",
     "ToolRequest",
     "ToolResult",
@@ -41,5 +44,6 @@ __all__ = [
     "ToolRegistry",
     "ToolRequestValidator",
     "InvestigationTools",
+    "InvestigationTraceFormatter",
     "AgentResponseValidator",
 ]

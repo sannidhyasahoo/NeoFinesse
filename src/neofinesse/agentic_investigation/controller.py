@@ -1,5 +1,5 @@
 import time
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from neofinesse.agentic_investigation.audit import AgenticAuditBuilder
 from neofinesse.agentic_investigation.evidence_manager import AgentEvidenceManager
@@ -35,10 +35,18 @@ class AgenticInvestigationController:
     def __init__(
         self,
         planner: Optional[BaseAgentPlanner] = None,
+        llm_client: Optional[Any] = None,
         registry: Optional[ToolRegistry] = None,
         budget: Optional[InvestigationBudget] = None,
     ):
-        self.planner = planner or MockAgentPlanner()
+        if planner is not None:
+            self.planner = planner
+        elif llm_client is not None:
+            from neofinesse.agentic_investigation.planner import LiveAgentPlanner
+            self.planner = LiveAgentPlanner(llm_client=llm_client)
+        else:
+            self.planner = MockAgentPlanner()
+
         self.registry = registry or ToolRegistry()
         self.default_budget = budget or InvestigationBudget()
 
@@ -113,8 +121,15 @@ class AgenticInvestigationController:
         winning_hypothesis: Optional[Hypothesis] = None
         final_status = InvestigationStatus.ESCALATE
         budget_exhausted = False
+        termination_reason = "RESOLVED"
         revisions_count = 0
         all_verified_hypotheses: List[Hypothesis] = []
+
+        accumulated_llm_latency_ms: float = 0.0
+        accumulated_tool_latency_ms: float = 0.0
+        accumulated_tokens: int = 0
+        llm_provider: str = "mock"
+        llm_model: str = "mock-agent-v1"
 
         # 5. Multi-Round Investigation Loop
         for round_num in range(1, active_budget.max_investigation_rounds + 1):
@@ -124,13 +139,50 @@ class AgenticInvestigationController:
             pack = AgentEvidenceManager.build_round_evidence_pack(state, dataset)
             round_prompt = build_agentic_round_prompt(state, pack, tool_descs)
 
-            # LLM Planner
-            raw_planner_text = self.planner.plan_round(
-                system_prompt=AGENTIC_SYSTEM_PROMPT,
-                user_prompt=round_prompt,
-                state=state,
-                pack=pack,
-            )
+            # LLM Planner with latency tracking and safe error isolation
+            t_llm_start = time.perf_counter()
+            try:
+                raw_planner_text = self.planner.plan_round(
+                    system_prompt=AGENTIC_SYSTEM_PROMPT,
+                    user_prompt=round_prompt,
+                    state=state,
+                    pack=pack,
+                )
+                accumulated_llm_latency_ms += (time.perf_counter() - t_llm_start) * 1000.0
+                if hasattr(self.planner, "last_response_metadata") and self.planner.last_response_metadata:
+                    meta = self.planner.last_response_metadata
+                    llm_provider = meta.provider
+                    llm_model = meta.model
+                    if meta.total_tokens:
+                        accumulated_tokens += meta.total_tokens
+            except TimeoutError as te:
+                accumulated_llm_latency_ms += (time.perf_counter() - t_llm_start) * 1000.0
+                state.record_round_snapshot(
+                    round_number=round_num,
+                    agent_response=None,
+                    tool_requests=[],
+                    tool_results=[],
+                    verified_hypotheses=[],
+                    rejected_reasons=[{"stage": "LLM_TIMEOUT", "error": str(te)}],
+                )
+                final_status = InvestigationStatus.ESCALATE
+                termination_reason = "LLM_TIMEOUT"
+                break
+            except Exception as exc:
+                accumulated_llm_latency_ms += (time.perf_counter() - t_llm_start) * 1000.0
+                is_timeout = "timeout" in str(exc).lower()
+                stage_name = "LLM_TIMEOUT" if is_timeout else "LLM_ERROR"
+                termination_reason = "LLM_TIMEOUT" if is_timeout else "INVALID_LLM_RESPONSE"
+                state.record_round_snapshot(
+                    round_number=round_num,
+                    agent_response=None,
+                    tool_requests=[],
+                    tool_results=[],
+                    verified_hypotheses=[],
+                    rejected_reasons=[{"stage": stage_name, "error": str(exc)}],
+                )
+                final_status = InvestigationStatus.ESCALATE
+                break
 
             # Parse response
             agent_resp, parse_error = AgentResponseParser.parse_response(raw_planner_text)
@@ -144,6 +196,7 @@ class AgenticInvestigationController:
                     rejected_reasons=[{"stage": "PARSE_ERROR", "error": parse_error}],
                 )
                 final_status = InvestigationStatus.ESCALATE
+                termination_reason = "INVALID_LLM_RESPONSE"
                 break
 
             # Check conflicts & missing evidence
@@ -183,11 +236,13 @@ class AgenticInvestigationController:
                         )
                     else:
                         next_idx = len(state.current_evidence) + len(round_tool_results) + 1
+                        t_tool_start = time.perf_counter()
                         res = self.registry.execute_tool(
                             request=req,
                             dataset=dataset,
                             next_ev_idx=next_idx,
                         )
+                        accumulated_tool_latency_ms += (time.perf_counter() - t_tool_start) * 1000.0
                         state.completed_requests.append(req)
                         executed_requests.append(req)
 
@@ -287,10 +342,20 @@ class AgenticInvestigationController:
                 )
                 break
 
-        # 6. Check Budget Exhaustion
-        if final_status == InvestigationStatus.ESCALATE and not winning_hypothesis:
-            if len(state.rounds) >= active_budget.max_investigation_rounds:
-                budget_exhausted = True
+        # 6. Check Budget Exhaustion & Termination Reason
+        if termination_reason not in ("LLM_TIMEOUT", "INVALID_LLM_RESPONSE"):
+            if final_status == InvestigationStatus.ESCALATE and not winning_hypothesis:
+                if len(state.rounds) >= active_budget.max_investigation_rounds or len(state.completed_requests) >= active_budget.max_tool_calls:
+                    budget_exhausted = True
+                    termination_reason = "BUDGET_EXHAUSTED"
+                else:
+                    termination_reason = "INVESTIGATION_TERMINATED_NO_PROGRESS"
+            elif winning_hypothesis:
+                termination_reason = "RESOLVED"
+            else:
+                termination_reason = "COMPLETED"
+        state.budget_exhausted = budget_exhausted
+        state.termination_reason = termination_reason
 
         # 7. Final Accounting
         if winning_hypothesis:
@@ -312,6 +377,7 @@ class AgenticInvestigationController:
         )
 
         latency = (time.perf_counter() - start_time) * 1000.0
+        orchestration_latency = max(0.0, latency - accumulated_llm_latency_ms - accumulated_tool_latency_ms)
 
         return AgenticInvestigationResult(
             case_id=case_id,
@@ -325,8 +391,15 @@ class AgenticInvestigationController:
             total_tool_calls=len(state.completed_requests),
             total_evidence_collected=len(state.current_evidence),
             budget_exhausted=budget_exhausted,
+            termination_reason=termination_reason,
             revisions_count=revisions_count,
             audit_record=audit_rec,
             state_snapshot=state.model_dump(mode="json"),
             investigation_latency_ms=latency,
+            orchestration_latency_ms=orchestration_latency,
+            llm_latency_ms=accumulated_llm_latency_ms,
+            tool_latency_ms=accumulated_tool_latency_ms,
+            llm_provider=llm_provider,
+            llm_model=llm_model,
+            llm_tokens_used=accumulated_tokens if accumulated_tokens > 0 else None,
         )

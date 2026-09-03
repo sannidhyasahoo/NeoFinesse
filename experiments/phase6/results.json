@@ -10,8 +10,8 @@
   "total_missing_evidence_surfaced": 3,
   "verifier_corrections_count": 0,
   "ai_helped_count": 10,
-  "avg_phase5_latency_ms": 0.205599999981132,
-  "avg_phase6_latency_ms": 0.43971999998575484,
+  "avg_phase5_latency_ms": 0.24541000002500368,
+  "avg_phase6_latency_ms": 0.5837999999130261,
   "comparison_rows": [
     {
       "scenario_id": "VAR-001_REFUND_VARIANCE",
@@ -28,10 +28,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 0,
       "missing_evidence_count": 0,
-      "phase5_latency_ms": 0.3723999998328509,
-      "phase6_total_latency_ms": 0.9678000001258624,
-      "phase6_llm_latency_ms": 0.02700000004551839,
-      "phase6_verif_latency_ms": 0.10120000024471665
+      "phase5_latency_ms": 0.4546000000118511,
+      "phase6_total_latency_ms": 1.123899999583955,
+      "phase6_llm_latency_ms": 0.031200000194075983,
+      "phase6_verif_latency_ms": 0.1191000001199427
     },
     {
       "scenario_id": "VAR-002_SAME_AMOUNT_DECOY",
@@ -48,10 +48,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 1,
       "missing_evidence_count": 0,
-      "phase5_latency_ms": 0.24260000009235227,
-      "phase6_total_latency_ms": 0.4758999998557556,
-      "phase6_llm_latency_ms": 0.02700000004551839,
-      "phase6_verif_latency_ms": 0.06339999981719302
+      "phase5_latency_ms": 0.2635000000736909,
+      "phase6_total_latency_ms": 0.5447000003186986,
+      "phase6_llm_latency_ms": 0.031399999897985253,
+      "phase6_verif_latency_ms": 0.07480000022042077
     },
     {
       "scenario_id": "VAR-003_PARTIAL_EXPLANATION",
@@ -68,10 +68,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 0,
       "missing_evidence_count": 1,
-      "phase5_latency_ms": 0.1851000001806824,
-      "phase6_total_latency_ms": 0.4063999999743828,
-      "phase6_llm_latency_ms": 0.02280000035170815,
-      "phase6_verif_latency_ms": 0.05989999999655993
+      "phase5_latency_ms": 0.20929999936925014,
+      "phase6_total_latency_ms": 0.48119999974005623,
+      "phase6_llm_latency_ms": 0.026300000172341242,
+      "phase6_verif_latency_ms": 0.07219999952212675
     },
     {
       "scenario_id": "VAR-004_MULTIPLE_EVENT_EXPLANATION",
@@ -88,10 +88,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 0,
       "missing_evidence_count": 0,
-      "phase5_latency_ms": 0.2898999996432394,
-      "phase6_total_latency_ms": 0.44579999985217,
-      "phase6_llm_latency_ms": 0.019999999949504854,
-      "phase6_verif_latency_ms": 0.062200000229495345
+      "phase5_latency_ms": 0.3255000001445296,
+      "phase6_total_latency_ms": 0.9175999994113226,
+      "phase6_llm_latency_ms": 0.04290000015316764,
+      "phase6_verif_latency_ms": 0.13839999974152306
     },
     {
       "scenario_id": "VAR-005_UPI_LATE_SUCCESS",
@@ -108,10 +108,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 0,
       "missing_evidence_count": 0,
-      "phase5_latency_ms": 0.17900000011650263,
-      "phase6_total_latency_ms": 0.3501999999571126,
-      "phase6_llm_latency_ms": 0.016800000139483018,
-      "phase6_verif_latency_ms": 0.05599999985861359
+      "phase5_latency_ms": 0.3555000002961606,
+      "phase6_total_latency_ms": 0.7087999993018457,
+      "phase6_llm_latency_ms": 0.03509999987727497,
+      "phase6_verif_latency_ms": 0.11320000066916691
     },
     {
       "scenario_id": "VAR-006_UPI_DEBIT_REVERSAL",
@@ -128,10 +128,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 0,
       "missing_evidence_count": 0,
-      "phase5_latency_ms": 0.16419999974459643,
-      "phase6_total_latency_ms": 0.28920000022480963,
-      "phase6_llm_latency_ms": 0.01669999983278103,
-      "phase6_verif_latency_ms": 0.045199999931355705
+      "phase5_latency_ms": 0.3136000004815287,
+      "phase6_total_latency_ms": 0.5154999998921994,
+      "phase6_llm_latency_ms": 0.03310000010969816,
+      "phase6_verif_latency_ms": 0.04160000025876798
     },
     {
       "scenario_id": "VAR-007_DELAYED_BANK_CREDIT",
@@ -148,10 +148,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 0,
       "missing_evidence_count": 0,
-      "phase5_latency_ms": 0.14419999979509157,
-      "phase6_total_latency_ms": 0.37810000003446476,
-      "phase6_llm_latency_ms": 0.015699999948992627,
-      "phase6_verif_latency_ms": 0.06189999976413674
+      "phase5_latency_ms": 0.14100000043981709,
+      "phase6_total_latency_ms": 0.6438000000343891,
+      "phase6_llm_latency_ms": 0.028599999495781958,
+      "phase6_verif_latency_ms": 0.11520000043674372
     },
     {
       "scenario_id": "VAR-008_WRONG_DATE_DECOY",
@@ -168,10 +168,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 1,
       "missing_evidence_count": 1,
-      "phase5_latency_ms": 0.18829999999070424,
-      "phase6_total_latency_ms": 0.41809999993347446,
-      "phase6_llm_latency_ms": 0.023099999907572055,
-      "phase6_verif_latency_ms": 0.0766999996812956
+      "phase5_latency_ms": 0.1519999996162369,
+      "phase6_total_latency_ms": 0.33520000033604447,
+      "phase6_llm_latency_ms": 0.017800000023271423,
+      "phase6_verif_latency_ms": 0.06370000028255163
     },
     {
       "scenario_id": "VAR-009_WRONG_PAYMENT_DECOY",
@@ -188,10 +188,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 1,
       "missing_evidence_count": 0,
-      "phase5_latency_ms": 0.15470000016648555,
-      "phase6_total_latency_ms": 0.35919999982070294,
-      "phase6_llm_latency_ms": 0.02009999980145949,
-      "phase6_verif_latency_ms": 0.07159999995565158
+      "phase5_latency_ms": 0.12489999971876387,
+      "phase6_total_latency_ms": 0.30849999984639,
+      "phase6_llm_latency_ms": 0.017800000023271423,
+      "phase6_verif_latency_ms": 0.05669999973179074
     },
     {
       "scenario_id": "VAR-010_COMPLETELY_UNEXPLAINED",
@@ -208,10 +208,10 @@
       "verifier_corrected_ai": false,
       "conflicts_count": 0,
       "missing_evidence_count": 1,
-      "phase5_latency_ms": 0.13560000024881447,
-      "phase6_total_latency_ms": 0.3065000000788132,
-      "phase6_llm_latency_ms": 0.017300000308750896,
-      "phase6_verif_latency_ms": 0.03889999970851932
+      "phase5_latency_ms": 0.11420000009820797,
+      "phase6_total_latency_ms": 0.25880000066536013,
+      "phase6_llm_latency_ms": 0.014199999895936344,
+      "phase6_verif_latency_ms": 0.030899999728717376
     }
   ]
 }

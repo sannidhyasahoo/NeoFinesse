@@ -1,0 +1,216 @@
+[
+  {
+    "request_id": "REQ-AG001-1",
+    "scenario_id": "AG-001_MISSING_MEMBERSHIP",
+    "tool": "verify_membership",
+    "arguments": {
+      "event_id": "adj_scen_004_8075",
+      "settlement_id": "setl_scen_004_2582"
+    },
+    "is_valid": true,
+    "is_duplicate": false,
+    "rejection_reason": null,
+    "executed": true,
+    "execution_error": null
+  },
+  {
+    "request_id": "REQ-AG002-1",
+    "scenario_id": "AG-002_WRONG_MEMBERSHIP",
+    "tool": "verify_membership",
+    "arguments": {
+      "event_id": "adj_decoy_unrelated",
+      "settlement_id": "setl_scen_002_8398"
+    },
+    "is_valid": true,
+    "is_duplicate": false,
+    "rejection_reason": null,
+    "executed": true,
+    "execution_error": null
+  },
+  {
+    "request_id": "REQ-AG003-1",
+    "scenario_id": "AG-003_MISSING_UPI_HISTORY",
+    "tool": "retrieve_upi_history",
+    "arguments": {
+      "upi_transaction_id": "upi_scen_006_5564"
+    },
+    "is_valid": true,
+    "is_duplicate": false,
+    "rejection_reason": null,
+    "executed": true,
+    "execution_error": null
+  },
+  {
+    "request_id": "REQ-AG004-1",
+    "scenario_id": "AG-004_LATE_UPI_SUCCESS",
+    "tool": "retrieve_upi_history",
+    "arguments": {
+      "upi_transaction_id": "upi_scen_005_5712"
+    },
+    "is_valid": true,
+    "is_duplicate": false,
+    "rejection_reason": null,
+    "executed": true,
+    "execution_error": null
+  },
+  {
+    "request_id": "REQ-AG005-1",
+    "scenario_id": "AG-005_CONFLICTING_REFUND",
+    "tool": "retrieve_source_record",
+    "arguments": {
+      "source_id": "SRC-REFUNDS",
+      "record_id": "rfnd_failed_candidate"
+    },
+    "is_valid": false,
+    "is_duplicate": false,
+    "rejection_reason": "Provenance record not found for rfnd_failed_candidate",
+    "executed": false,
+    "execution_error": "Provenance record not found for rfnd_failed_candidate"
+  },
+  {
+    "request_id": "REQ-AG006-1",
+    "scenario_id": "AG-006_TRULY_UNEXPLAINED",
+    "tool": "retrieve_temporal_neighbors",
+    "arguments": {
+      "entity_id": "setl_scen_010_1815",
+      "reference_timestamp": "2026-08-20T12:00:00",
+      "window_before_minutes": 120,
+      "window_after_minutes": 120
+    },
+    "is_valid": true,
+    "is_duplicate": false,
+    "rejection_reason": null,
+    "executed": true,
+    "execution_error": null
+  },
+  {
+    "request_id": "REQ-AG007-1",
+    "scenario_id": "AG-007_DECOY_EXPLOSION",
+    "tool": "verify_membership",
+    "arguments": {
+      "event_id": "rfnd_scen_002_real_4522",
+      "settlement_id": "setl_scen_002_8398"
+    },
+    "is_valid": true,
+    "is_duplicate": false,
+    "rejection_reason": null,
+    "executed": true,
+    "execution_error": null
+  },
+  {
+    "request_id": "REQ-AG008-1",
+    "scenario_id": "AG-008_MULTI_STEP_FLAGSHIP",
+    "tool": "retrieve_related_evidence",
+    "arguments": {
+      "entity_type": "settlement_line",
+      "entity_id": "line_pay_setl_scen_004_2582",
+      "relationship": "source_event"
+    },
+    "is_valid": false,
+    "is_duplicate": false,
+    "rejection_reason": "No entity found for settlement_line:line_pay_setl_scen_004_2582",
+    "executed": false,
+    "execution_error": "No entity found for settlement_line:line_pay_setl_scen_004_2582"
+  },
+  {
+    "request_id": "REQ-AG008-2",
+    "scenario_id": "AG-008_MULTI_STEP_FLAGSHIP",
+    "tool": "verify_membership",
+    "arguments": {
+      "event_id": "adj_scen_004_8075",
+      "settlement_id": "setl_scen_004_2582"
+    },
+    "is_valid": true,
+    "is_duplicate": false,
+    "rejection_reason": null,
+    "executed": true,
+    "execution_error": null
+  },
+  {
+    "request_id": "REQ-AG009-1",
+    "scenario_id": "AG-009_REDUNDANT_TOOL_LOOP",
+    "tool": "verify_membership",
+    "arguments": {
+      "event_id": "adj_scen_004",
+      "settlement_id": "setl_scen_004_2582"
+    },
+    "is_valid": true,
+    "is_duplicate": false,
+    "rejection_reason": null,
+    "executed": true,
+    "execution_error": null
+  },
+  {
+    "request_id": "REQ-AG010-1",
+    "scenario_id": "AG-010_IRRELEVANT_EVIDENCE_TRAP",
+    "tool": "verify_membership",
+    "arguments": {
+      "event_id": "rfnd_unrelated_trap",
+      "settlement_id": "setl_scen_002_8398"
+    },
+    "is_valid": true,
+    "is_duplicate": false,
+    "rejection_reason": null,
+    "executed": true,
+    "execution_error": null
+  },
+  {
+    "request_id": "REQ-AG011-1",
+    "scenario_id": "AG-011_CONTRADICTORY_TOOL_RESULTS",
+    "tool": "retrieve_source_record",
+    "arguments": {
+      "source_id": "SRC-DISPUTES",
+      "record_id": "disp_contradictory_record"
+    },
+    "is_valid": false,
+    "is_duplicate": false,
+    "rejection_reason": "Provenance record not found for disp_contradictory_record",
+    "executed": false,
+    "execution_error": "Provenance record not found for disp_contradictory_record"
+  },
+  {
+    "request_id": "REQ-AG013-1",
+    "scenario_id": "AG-013_BUDGET_EXHAUSTION",
+    "tool": "retrieve_related_evidence",
+    "arguments": {
+      "entity_type": "settlement_line",
+      "entity_id": "line_hop_1_setl_scen_004_2582",
+      "relationship": "source_event"
+    },
+    "is_valid": false,
+    "is_duplicate": false,
+    "rejection_reason": "No entity found for settlement_line:line_hop_1_setl_scen_004_2582",
+    "executed": false,
+    "execution_error": "No entity found for settlement_line:line_hop_1_setl_scen_004_2582"
+  },
+  {
+    "request_id": "REQ-AG013-2",
+    "scenario_id": "AG-013_BUDGET_EXHAUSTION",
+    "tool": "retrieve_related_evidence",
+    "arguments": {
+      "entity_type": "settlement_line",
+      "entity_id": "line_hop_2_setl_scen_004_2582",
+      "relationship": "source_event"
+    },
+    "is_valid": false,
+    "is_duplicate": false,
+    "rejection_reason": "No entity found for settlement_line:line_hop_2_setl_scen_004_2582",
+    "executed": false,
+    "execution_error": "No entity found for settlement_line:line_hop_2_setl_scen_004_2582"
+  },
+  {
+    "request_id": "REQ-AG013-3",
+    "scenario_id": "AG-013_BUDGET_EXHAUSTION",
+    "tool": "retrieve_related_evidence",
+    "arguments": {
+      "entity_type": "settlement_line",
+      "entity_id": "line_hop_3_setl_scen_004_2582",
+      "relationship": "source_event"
+    },
+    "is_valid": false,
+    "is_duplicate": false,
+    "rejection_reason": "No entity found for settlement_line:line_hop_3_setl_scen_004_2582",
+    "executed": false,
+    "execution_error": "No entity found for settlement_line:line_hop_3_setl_scen_004_2582"
+  }
+]

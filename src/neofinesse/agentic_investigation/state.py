@@ -42,6 +42,8 @@ class InvestigationState(BaseModel):
     conflicts: List[ConflictItem] = Field(default_factory=list)
     missing_evidence: List[str] = Field(default_factory=list)
     rounds: List[InvestigationRoundRecord] = Field(default_factory=list)
+    budget_exhausted: bool = False
+    termination_reason: str = "COMPLETED"
     final_status: Optional[InvestigationStatus] = None
     winning_hypothesis: Optional[Hypothesis] = None
 

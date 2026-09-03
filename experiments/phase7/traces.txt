@@ -1,0 +1,789 @@
+=== INVESTIGATION TRACE: CASE-001 ===
+Target Settlement: setl_scen_001_9984
+Target Variance:   -2000.00 INR (-200000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      1
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: SUFFICIENT
+Agent Reasoning: Verified single refund.
+Proposed Hypotheses (1):
+  - hyp_var001_single_refund: REFUND | Claimed: ₹-2000.00 | Evidence: EV-2
+Deterministic Constraint Verification:
+  - hyp_var001_single_refund: VERIFIED (Explained: ₹-2000.00)
+    [PASS] RelationshipConstraint: All 1 candidate events have verified foreign-key relationships to settlement setl_scen_001_9984.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-04T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Candidate sum exactly matches target variance of ₹2000.00.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_var001_single_refund (REFUND)
+Explained: ₹-2000.00 | Unexplained: ₹0.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-002 ===
+Target Settlement: setl_scen_002_8398
+Target Variance:   -2500.00 INR (-250000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      1
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: SUFFICIENT
+Agent Reasoning: Real refund verified; decoy rejected.
+Identified Conflicts: 1
+  - [MEMBERSHIP_MISMATCH] Decoy refund belongs to another settlement batch. (Evidence: )
+Proposed Hypotheses (1):
+  - hyp_var002_real_refund: REFUND | Claimed: ₹-2500.00 | Evidence: EV-2
+Deterministic Constraint Verification:
+  - hyp_var002_real_refund: VERIFIED (Explained: ₹-2500.00)
+    [PASS] RelationshipConstraint: All 1 candidate events have verified foreign-key relationships to settlement setl_scen_002_8398.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-07T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Candidate sum exactly matches target variance of ₹2500.00.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_var002_real_refund (REFUND)
+Explained: ₹-2500.00 | Unexplained: ₹0.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-003 ===
+Target Settlement: setl_scen_003_7992
+Target Variance:   -5000.00 INR (-500000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      1
+Final Status:      PARTIALLY_RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: SUFFICIENT
+Agent Reasoning: Partial attribution: 3,000 INR refund explained, 2,000 INR escalated.
+Identified Missing Evidence: Remaining residual deduction records
+Proposed Hypotheses (1):
+  - hyp_var003_partial: REFUND | Claimed: ₹-3000.00 | Evidence: EV-2
+Deterministic Constraint Verification:
+  - hyp_var003_partial: PARTIALLY_VERIFIED (Explained: ₹-3000.00)
+    [PASS] RelationshipConstraint: All 1 candidate events have verified foreign-key relationships to settlement setl_scen_003_7992.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-10T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Candidate partially explains variance (₹3000.00 / ₹5000.00). Residual unexplained = ₹2000.00.
+
+============================================================
+FINAL DETERMINATION: PARTIALLY_RESOLVED
+Winning Hypothesis: hyp_var003_partial (REFUND)
+Explained: ₹-3000.00 | Unexplained: ₹-2000.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-004 ===
+Target Settlement: setl_scen_004_2582
+Target Variance:   -1000.00 INR (-100000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      1
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2, EV-3
+Agent Status: SUFFICIENT
+Agent Reasoning: Composite multi-event explanation verified.
+Proposed Hypotheses (1):
+  - hyp_var004_composite: COMPOSITE | Claimed: ₹-1000.00 | Evidence: EV-2, EV-3
+Deterministic Constraint Verification:
+  - hyp_var004_composite: VERIFIED (Explained: ₹-1000.00)
+    [PASS] RelationshipConstraint: All 2 candidate events have verified foreign-key relationships to settlement setl_scen_004_2582.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-13T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 2 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Candidate sum exactly matches target variance of ₹1000.00.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_var004_composite (COMPOSITE)
+Explained: ₹-1000.00 | Unexplained: ₹0.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-005 ===
+Target Settlement: setl_scen_005_6761
+Target Variance:   0.00 INR (0 paise)
+Task Category:     UPI_STATE_INVESTIGATION
+Total Rounds:      1
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1
+Agent Status: SUFFICIENT
+Agent Reasoning: Late authorization callback verified.
+Proposed Hypotheses (1):
+  - hyp_var005_late_success: UPI_STATE | Claimed: ₹0.00 | Evidence: EV-1
+Deterministic Constraint Verification:
+  - hyp_var005_late_success: VERIFIED (Explained: ₹3500.00)
+    [PASS] RelationshipConstraint: All 1 candidate events have verified foreign-key relationships to settlement setl_scen_005_6761.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-16T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Net financial effect matches zero variance target.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_var005_late_success (UPI_STATE)
+Explained: ₹3500.00 | Unexplained: ₹-3500.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-006 ===
+Target Settlement: N/A
+Target Variance:   0.00 INR (0 paise)
+Task Category:     UPI_STATE_INVESTIGATION
+Total Rounds:      1
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1
+Agent Status: SUFFICIENT
+Agent Reasoning: UPI debit reversal confirmed.
+Proposed Hypotheses (1):
+  - hyp_var006_reversal: UPI_STATE | Claimed: ₹0.00 | Evidence: EV-1
+Deterministic Constraint Verification:
+  - hyp_var006_reversal: VERIFIED (Explained: ₹0.00)
+    [PASS] RelationshipConstraint: All 1 candidate events have verified foreign-key relationships to settlement N/A.
+    [PASS] TemporalConstraint: Unsettled investigation case.
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Net financial effect matches zero variance target.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_var006_reversal (UPI_STATE)
+Explained: ₹0.00 | Unexplained: ₹0.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-007 ===
+Target Settlement: setl_scen_007_3955
+Target Variance:   0.00 INR (0 paise)
+Task Category:     BANK_SETTLEMENT_STATE
+Total Rounds:      1
+Final Status:      VALID_DELAYED_CREDIT
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2, EV-3
+Agent Status: SUFFICIENT
+Agent Reasoning: Delayed bank settlement credit verified.
+Proposed Hypotheses (1):
+  - hyp_var007_delayed_credit: DELAYED_SETTLEMENT | Claimed: ₹0.00 | Evidence: EV-1, EV-2, EV-3
+Deterministic Constraint Verification:
+  - hyp_var007_delayed_credit: VERIFIED (Explained: ₹58584.00)
+    [PASS] RelationshipConstraint: All 3 candidate events have verified foreign-key relationships to settlement setl_scen_007_3955.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-22T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 3 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Net financial effect matches zero variance target.
+
+============================================================
+FINAL DETERMINATION: VALID_DELAYED_CREDIT
+Winning Hypothesis: hyp_var007_delayed_credit (DELAYED_SETTLEMENT)
+Explained: ₹58584.00 | Unexplained: ₹-58584.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-008 ===
+Target Settlement: setl_scen_008_2140
+Target Variance:   4000.00 INR (400000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      1
+Final Status:      ESCALATE
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1
+Agent Status: ESCALATE
+Agent Reasoning: Candidate decoy fails constraints. Escalating to human controller.
+Identified Missing Evidence: No valid deduction records in ledger
+Identified Conflicts: 1
+  - [TIMING_MISMATCH] Candidate rejected due to relational or temporal constraint failure. (Evidence: EV-1)
+
+[TERMINATION SUMMARY]
+Investigation Rounds Executed: 1
+Stop Reason: Investigation terminated because no further progress was possible (INVESTIGATION_TERMINATED_NO_PROGRESS).
+Safety Action: Escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-009 ===
+Target Settlement: setl_scen_009_6585
+Target Variance:   3500.00 INR (350000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      1
+Final Status:      ESCALATE
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1
+Agent Status: ESCALATE
+Agent Reasoning: Candidate decoy fails constraints. Escalating to human controller.
+Identified Missing Evidence: No valid deduction records in ledger
+Identified Conflicts: 1
+  - [MEMBERSHIP_MISMATCH] Candidate rejected due to relational or temporal constraint failure. (Evidence: EV-1)
+
+[TERMINATION SUMMARY]
+Investigation Rounds Executed: 1
+Stop Reason: Investigation terminated because no further progress was possible (INVESTIGATION_TERMINATED_NO_PROGRESS).
+Safety Action: Escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-010 ===
+Target Settlement: setl_scen_010_1815
+Target Variance:   15000.00 INR (1500000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      1
+Final Status:      ESCALATE
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1
+Agent Status: ESCALATE
+Agent Reasoning: Candidate decoy fails constraints. Escalating to human controller.
+Identified Missing Evidence: No valid deduction records in ledger
+
+[TERMINATION SUMMARY]
+Investigation Rounds Executed: 1
+Stop Reason: Investigation terminated because no further progress was possible (INVESTIGATION_TERMINATED_NO_PROGRESS).
+Safety Action: Escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-001 ===
+Target Settlement: setl_scen_004_2582
+Target Variance:   -1000.00 INR (-100000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      2
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2, EV-3, EV-T4
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Identified candidate adjustment; requesting membership verification before attributing variance.
+Identified Missing Evidence: Settlement membership for candidate adjustment
+Tools Requested (1):
+  - [REQ-AG001-1] verify_membership with {'event_id': 'adj_scen_004_8075', 'settlement_id': 'setl_scen_004_2582'} (Reason: Verify if candidate adjustment belongs to target settlement batch.)
+Tool Execution Outcomes (1):
+  - [REQ-AG001-1] verify_membership: SUCCESS -> Yielded 1 new evidence items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-2, EV-3, EV-T4
+Agent Status: SUFFICIENT
+Agent Reasoning: Membership verified via tool; proposing composite resolution.
+Proposed Hypotheses (1):
+  - hyp_ag001_composite: COMPOSITE | Claimed: ₹-1000.00 | Evidence: EV-2, EV-3
+Deterministic Constraint Verification:
+  - hyp_ag001_composite: VERIFIED (Explained: ₹-1000.00)
+    [PASS] RelationshipConstraint: All 2 candidate events have verified foreign-key relationships to settlement setl_scen_004_2582.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-13T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 2 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Candidate sum exactly matches target variance of ₹1000.00.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_ag001_composite (COMPOSITE)
+Explained: ₹-1000.00 | Unexplained: ₹0.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-002 ===
+Target Settlement: setl_scen_002_8398
+Target Variance:   -2500.00 INR (-250000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      2
+Final Status:      ESCALATE
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Candidate adjustment requires membership verification.
+Identified Missing Evidence: Membership confirmation
+Proposed Hypotheses (1):
+  - hyp_ag002_initial: ADJUSTMENT | Claimed: ₹-2500.00 | Evidence: EV-1
+Tools Requested (1):
+  - [REQ-AG002-1] verify_membership with {'event_id': 'adj_decoy_unrelated', 'settlement_id': 'setl_scen_002_8398'} (Reason: Check if adjustment is a member of this settlement batch.)
+Tool Execution Outcomes (1):
+  - [REQ-AG002-1] verify_membership: SUCCESS -> No new items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: ESCALATE
+Agent Reasoning: Earlier adjustment hypothesis rejected due to confirmed non-membership. Escalating.
+Identified Missing Evidence: No valid deduction records exist for target batch.
+Identified Conflicts: 1
+  - [MEMBERSHIP_MISMATCH] Tool confirmed candidate adjustment is NOT_MEMBER of target settlement batch. (Evidence: EV-1)
+
+[TERMINATION SUMMARY]
+Investigation Rounds Executed: 2
+Stop Reason: Investigation terminated because no further progress was possible (INVESTIGATION_TERMINATED_NO_PROGRESS).
+Safety Action: Escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-003 ===
+Target Settlement: N/A
+Target Variance:   0.00 INR (0 paise)
+Task Category:     UPI_STATE_INVESTIGATION
+Total Rounds:      2
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-T2
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Initial evidence indicates failed payment; requesting full lifecycle history.
+Identified Missing Evidence: UPI state transition sequence
+Tools Requested (1):
+  - [REQ-AG003-1] retrieve_upi_history with {'upi_transaction_id': 'upi_scen_006_5564'} (Reason: Fetch full chronological lifecycle and reversal state.)
+Tool Execution Outcomes (1):
+  - [REQ-AG003-1] retrieve_upi_history: SUCCESS -> Yielded 1 new evidence items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-T2
+Agent Status: SUFFICIENT
+Agent Reasoning: Reconstructed lifecycle proves net zero effect.
+Proposed Hypotheses (1):
+  - hyp_ag003_reversal: UPI_STATE | Claimed: ₹0.00 | Evidence: EV-1
+Deterministic Constraint Verification:
+  - hyp_ag003_reversal: VERIFIED (Explained: ₹0.00)
+    [PASS] RelationshipConstraint: All 1 candidate events have verified foreign-key relationships to settlement N/A.
+    [PASS] TemporalConstraint: Unsettled investigation case.
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Net financial effect matches zero variance target.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_ag003_reversal (UPI_STATE)
+Explained: ₹0.00 | Unexplained: ₹0.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-004 ===
+Target Settlement: setl_scen_005_6761
+Target Variance:   0.00 INR (0 paise)
+Task Category:     UPI_STATE_INVESTIGATION
+Total Rounds:      2
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-T2
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Requesting full callback history for timeout payment.
+Identified Missing Evidence: UPI callback history
+Tools Requested (1):
+  - [REQ-AG004-1] retrieve_upi_history with {'upi_transaction_id': 'upi_scen_005_5712'} (Reason: Investigate late authorization callback.)
+Tool Execution Outcomes (1):
+  - [REQ-AG004-1] retrieve_upi_history: SUCCESS -> Yielded 1 new evidence items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-T2
+Agent Status: SUFFICIENT
+Agent Reasoning: Late success verified.
+Proposed Hypotheses (1):
+  - hyp_ag004_late_success: UPI_STATE | Claimed: ₹0.00 | Evidence: EV-1
+Deterministic Constraint Verification:
+  - hyp_ag004_late_success: VERIFIED (Explained: ₹3500.00)
+    [PASS] RelationshipConstraint: All 1 candidate events have verified foreign-key relationships to settlement setl_scen_005_6761.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-16T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Net financial effect matches zero variance target.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_ag004_late_success (UPI_STATE)
+Explained: ₹3500.00 | Unexplained: ₹-3500.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-005 ===
+Target Settlement: setl_scen_002_8398
+Target Variance:   -2500.00 INR (-250000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      2
+Final Status:      ESCALATE
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Refund amount matches variance, but status is unconfirmed.
+Identified Missing Evidence: Refund status confirmation
+Tools Requested (1):
+  - [REQ-AG005-1] retrieve_source_record with {'source_id': 'SRC-REFUNDS', 'record_id': 'rfnd_failed_candidate'} (Reason: Inspect underlying refund lifecycle state.)
+Tool Execution Outcomes (1):
+  - [REQ-AG005-1] retrieve_source_record: REJECTED (Provenance record not found for rfnd_failed_candidate) -> No new items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: ESCALATE
+Agent Reasoning: Candidate refund failed; cannot explain settlement deduction. Escalating.
+Identified Missing Evidence: No valid processed refund exists.
+Identified Conflicts: 1
+  - [STATE_MISMATCH] Underlying refund record confirmed status FAILED. (Evidence: )
+
+[TERMINATION SUMMARY]
+Investigation Rounds Executed: 2
+Stop Reason: Investigation terminated because no further progress was possible (INVESTIGATION_TERMINATED_NO_PROGRESS).
+Safety Action: Escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-006 ===
+Target Settlement: setl_scen_010_1815
+Target Variance:   -15000.00 INR (-1500000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      2
+Final Status:      ESCALATE
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Searching temporal neighbors.
+Identified Missing Evidence: No candidate deduction events
+Tools Requested (1):
+  - [REQ-AG006-1] retrieve_temporal_neighbors with {'entity_id': 'setl_scen_010_1815', 'reference_timestamp': '2026-08-20T12:00:00', 'window_before_minutes': 120, 'window_after_minutes': 120} (Reason: Search temporal window for untracked deductions.)
+Tool Execution Outcomes (1):
+  - [REQ-AG006-1] retrieve_temporal_neighbors: SUCCESS -> No new items
+
+[ROUND 2]
+Available Evidence IDs: EV-1
+Agent Status: ESCALATE
+Agent Reasoning: Temporal search returned no matching events. Variance is genuinely unexplained. Escalating.
+Identified Missing Evidence: Zero matching deduction records in ledger
+
+[TERMINATION SUMMARY]
+Investigation Rounds Executed: 2
+Stop Reason: Investigation terminated because no further progress was possible (INVESTIGATION_TERMINATED_NO_PROGRESS).
+Safety Action: Escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-007 ===
+Target Settlement: setl_scen_002_8398
+Target Variance:   -2500.00 INR (-250000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      2
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2, EV-T3
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Multiple same-amount candidates found; requesting membership verification to prune decoys.
+Identified Missing Evidence: Membership verification for candidate
+Identified Conflicts: 1
+  - [MEMBERSHIP_MISMATCH] Multiple same-amount candidates detected across different batches. (Evidence: )
+Tools Requested (1):
+  - [REQ-AG007-1] verify_membership with {'event_id': 'rfnd_scen_002_real_4522', 'settlement_id': 'setl_scen_002_8398'} (Reason: Distinguish genuine deduction from decoy candidates by checking settlement line foreign key.)
+Tool Execution Outcomes (1):
+  - [REQ-AG007-1] verify_membership: SUCCESS -> Yielded 1 new evidence items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-2, EV-T3
+Agent Status: SUFFICIENT
+Agent Reasoning: Decoys pruned successfully; real refund verified.
+Proposed Hypotheses (1):
+  - hyp_ag007_resolved: REFUND | Claimed: ₹-2500.00 | Evidence: EV-2
+Deterministic Constraint Verification:
+  - hyp_ag007_resolved: VERIFIED (Explained: ₹-2500.00)
+    [PASS] RelationshipConstraint: All 1 candidate events have verified foreign-key relationships to settlement setl_scen_002_8398.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-07T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Candidate sum exactly matches target variance of ₹2500.00.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_ag007_resolved (REFUND)
+Explained: ₹-2500.00 | Unexplained: ₹0.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-008 ===
+Target Settlement: setl_scen_004_2582
+Target Variance:   -1000.00 INR (-100000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      3
+Final Status:      RESOLVED
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2, EV-3
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Step 1: Retrieving related settlement events.
+Identified Missing Evidence: Constituent deductions
+Tools Requested (1):
+  - [REQ-AG008-1] retrieve_related_evidence with {'entity_type': 'settlement_line', 'entity_id': 'line_pay_setl_scen_004_2582', 'relationship': 'source_event'} (Reason: Retrieve constituent deductions attached to settlement lines.)
+Tool Execution Outcomes (1):
+  - [REQ-AG008-1] retrieve_related_evidence: REJECTED (No entity found for settlement_line:line_pay_setl_scen_004_2582) -> No new items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-2, EV-3, EV-T4
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Step 2: Verifying membership of retrieved adjustment candidate.
+Identified Missing Evidence: Adjustment membership
+Tools Requested (1):
+  - [REQ-AG008-2] verify_membership with {'event_id': 'adj_scen_004_8075', 'settlement_id': 'setl_scen_004_2582'} (Reason: Step 2: Confirm adjustment membership.)
+Tool Execution Outcomes (1):
+  - [REQ-AG008-2] verify_membership: SUCCESS -> Yielded 1 new evidence items
+
+[ROUND 3]
+Available Evidence IDs: EV-1, EV-2, EV-3, EV-T4
+Agent Status: SUFFICIENT
+Agent Reasoning: Multi-step verification complete.
+Proposed Hypotheses (1):
+  - hyp_ag008_composite: COMPOSITE | Claimed: ₹-1000.00 | Evidence: EV-2, EV-3
+Deterministic Constraint Verification:
+  - hyp_ag008_composite: VERIFIED (Explained: ₹-1000.00)
+    [PASS] RelationshipConstraint: All 2 candidate events have verified foreign-key relationships to settlement setl_scen_004_2582.
+    [PASS] TemporalConstraint: All candidate timestamps occurred on or before cutoff (2026-08-13T11:00:00 + 2.0h buffer).
+    [PASS] StateConstraint: All candidate entities have confirmed financially effective lifecycle states.
+    [PASS] ProvenanceConstraint: All 2 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.
+    [PASS] MonetaryConstraint: Candidate sum exactly matches target variance of ₹1000.00.
+
+============================================================
+FINAL DETERMINATION: RESOLVED
+Winning Hypothesis: hyp_ag008_composite (COMPOSITE)
+Explained: ₹-1000.00 | Unexplained: ₹0.00
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-009 ===
+Target Settlement: setl_scen_004_2582
+Target Variance:   -1000.00 INR (-100000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      3
+Final Status:      ESCALATE
+Budget Exhausted:  TRUE (Execution halted at limit to prevent unbounded recursion)
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2, EV-3
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Attempting redundant query.
+Identified Missing Evidence: Adjustment membership confirmation
+Tools Requested (1):
+  - [REQ-AG009-1] verify_membership with {'event_id': 'adj_scen_004', 'settlement_id': 'setl_scen_004_2582'} (Reason: Redundant check: verify membership of adjustment.)
+Tool Execution Outcomes (1):
+  - [REQ-AG009-1] verify_membership: SUCCESS -> No new items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-2, EV-3
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Attempting redundant query.
+Identified Missing Evidence: Adjustment membership confirmation
+Tool Execution Outcomes (1):
+  - [REQ-AG009-2] verify_membership: REJECTED (Duplicate tool call: 'verify_membership' with identical arguments already executed in this investigation) -> No new items
+
+[ROUND 3]
+Available Evidence IDs: EV-1, EV-2, EV-3
+Agent Status: ESCALATE
+Agent Reasoning: Duplicate tool call was caught and blocked by validator. Escalating safely.
+Identified Missing Evidence: Tool request rejected as duplicate
+Identified Conflicts: 1
+  - [STATE_MISMATCH] Investigation loop prevented infinite recursion on duplicate tool call. (Evidence: )
+
+[BUDGET ENFORCEMENT SUMMARY]
+Investigation Rounds Executed: 3
+Stop Reason: Bounded recursion budget exhausted without definitive proof (BUDGET_EXHAUSTED).
+Safety Action: Automatic escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-010 ===
+Target Settlement: setl_scen_002_8398
+Target Variance:   -2500.00 INR (-250000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      2
+Final Status:      ESCALATE
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Flooded with decoy candidates; requesting membership verification.
+Identified Missing Evidence: Verified batch line linkage
+Identified Conflicts: 1
+  - [MEMBERSHIP_MISMATCH] High volume of same-amount decoys from external settlements. (Evidence: )
+Tools Requested (1):
+  - [REQ-AG010-1] verify_membership with {'event_id': 'rfnd_unrelated_trap', 'settlement_id': 'setl_scen_002_8398'} (Reason: Verify candidate from flooded decoy candidates.)
+Tool Execution Outcomes (1):
+  - [REQ-AG010-1] verify_membership: SUCCESS -> No new items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: ESCALATE
+Agent Reasoning: All candidates were proven to be decoys. Escalating honestly.
+Identified Missing Evidence: No valid deduction member found
+Identified Conflicts: 1
+  - [MEMBERSHIP_MISMATCH] All flooded decoy candidates belong to other settlements. (Evidence: )
+
+[TERMINATION SUMMARY]
+Investigation Rounds Executed: 2
+Stop Reason: Investigation terminated because no further progress was possible (INVESTIGATION_TERMINATED_NO_PROGRESS).
+Safety Action: Escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-011 ===
+Target Settlement: setl_scen_002_8398
+Target Variance:   -2500.00 INR (-250000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      2
+Final Status:      ESCALATE
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Contradictory state between payment gateway and bank clearing logs.
+Identified Missing Evidence: Source record verification for chargeback
+Identified Conflicts: 1
+  - [STATE_MISMATCH] Gateway reports CAPTURED while bank feed reports CHARGEBACK_REVERSAL. (Evidence: )
+Tools Requested (1):
+  - [REQ-AG011-1] retrieve_source_record with {'source_id': 'SRC-DISPUTES', 'record_id': 'disp_contradictory_record'} (Reason: Verify conflicting gateway vs bank chargeback records.)
+Tool Execution Outcomes (1):
+  - [REQ-AG011-1] retrieve_source_record: REJECTED (Provenance record not found for disp_contradictory_record) -> No new items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-2
+Agent Status: ESCALATE
+Agent Reasoning: Irreconcilable contradiction detected across data sources. Mandatory escalation to human controller.
+Identified Missing Evidence: Audited bank settlement voucher
+Identified Conflicts: 1
+  - [STATE_MISMATCH] Contradictory evidence cannot be reconciled automatically. (Evidence: )
+
+[TERMINATION SUMMARY]
+Investigation Rounds Executed: 2
+Stop Reason: Investigation terminated because no further progress was possible (INVESTIGATION_TERMINATED_NO_PROGRESS).
+Safety Action: Escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-012 ===
+Target Settlement: setl_scen_008_2140
+Target Variance:   -2000.00 INR (-200000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      3
+Final Status:      UNKNOWN
+Budget Exhausted:  TRUE (Execution halted at limit to prevent unbounded recursion)
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1
+Agent Status: SUFFICIENT
+Agent Reasoning: Proposing confident hypothesis.
+Proposed Hypotheses (1):
+  - hyp_ag012_confident_wrong: REFUND | Claimed: ₹-2000.00 | Evidence: EV-1
+Verification Rejections:
+  - Stage: PHASE5_CONSTRAINTS | Details: {'hypothesis_id': 'hyp_ag012_confident_wrong', 'stage': 'PHASE5_CONSTRAINTS', 'results': [{'constraint_name': 'RelationshipConstraint', 'status': 'PASS', 'expected': 'Connected to settlement setl_scen_008_2140', 'observed': 'All candidates verified in settlement graph', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All 1 candidate events have verified foreign-key relationships to settlement setl_scen_008_2140.'}, {'constraint_name': 'TemporalConstraint', 'status': 'PASS', 'expected': '<= 2026-08-25T13:00:00', 'observed': 'All timestamps valid', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All candidate timestamps occurred on or before cutoff (2026-08-25T11:00:00 + 2.0h buffer).'}, {'constraint_name': 'StateConstraint', 'status': 'PASS', 'expected': 'Financially effective states', 'observed': 'All entity states verified', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All candidate entities have confirmed financially effective lifecycle states.'}, {'constraint_name': 'ProvenanceConstraint', 'status': 'PASS', 'expected': 'Complete dual-hash cell provenance', 'observed': '100% verified provenance', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.'}, {'constraint_name': 'MonetaryConstraint', 'status': 'FAIL', 'expected': '₹2000.00 (200000 paise)', 'observed': '₹12000.00 (1200000 paise)', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'Candidate sum (₹12000.00) exceeds target variance (₹2000.00).'}]}
+
+[ROUND 2]
+Available Evidence IDs: EV-1
+Agent Status: SUFFICIENT
+Agent Reasoning: Proposing confident hypothesis.
+Proposed Hypotheses (1):
+  - hyp_ag012_confident_wrong: REFUND | Claimed: ₹-2000.00 | Evidence: EV-1
+Verification Rejections:
+  - Stage: PHASE5_CONSTRAINTS | Details: {'hypothesis_id': 'hyp_ag012_confident_wrong', 'stage': 'PHASE5_CONSTRAINTS', 'results': [{'constraint_name': 'RelationshipConstraint', 'status': 'PASS', 'expected': 'Connected to settlement setl_scen_008_2140', 'observed': 'All candidates verified in settlement graph', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All 1 candidate events have verified foreign-key relationships to settlement setl_scen_008_2140.'}, {'constraint_name': 'TemporalConstraint', 'status': 'PASS', 'expected': '<= 2026-08-25T13:00:00', 'observed': 'All timestamps valid', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All candidate timestamps occurred on or before cutoff (2026-08-25T11:00:00 + 2.0h buffer).'}, {'constraint_name': 'StateConstraint', 'status': 'PASS', 'expected': 'Financially effective states', 'observed': 'All entity states verified', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All candidate entities have confirmed financially effective lifecycle states.'}, {'constraint_name': 'ProvenanceConstraint', 'status': 'PASS', 'expected': 'Complete dual-hash cell provenance', 'observed': '100% verified provenance', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.'}, {'constraint_name': 'MonetaryConstraint', 'status': 'FAIL', 'expected': '₹2000.00 (200000 paise)', 'observed': '₹12000.00 (1200000 paise)', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'Candidate sum (₹12000.00) exceeds target variance (₹2000.00).'}]}
+
+[ROUND 3]
+Available Evidence IDs: EV-1
+Agent Status: SUFFICIENT
+Agent Reasoning: Proposing confident hypothesis.
+Proposed Hypotheses (1):
+  - hyp_ag012_confident_wrong: REFUND | Claimed: ₹-2000.00 | Evidence: EV-1
+Verification Rejections:
+  - Stage: PHASE5_CONSTRAINTS | Details: {'hypothesis_id': 'hyp_ag012_confident_wrong', 'stage': 'PHASE5_CONSTRAINTS', 'results': [{'constraint_name': 'RelationshipConstraint', 'status': 'PASS', 'expected': 'Connected to settlement setl_scen_008_2140', 'observed': 'All candidates verified in settlement graph', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All 1 candidate events have verified foreign-key relationships to settlement setl_scen_008_2140.'}, {'constraint_name': 'TemporalConstraint', 'status': 'PASS', 'expected': '<= 2026-08-25T13:00:00', 'observed': 'All timestamps valid', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All candidate timestamps occurred on or before cutoff (2026-08-25T11:00:00 + 2.0h buffer).'}, {'constraint_name': 'StateConstraint', 'status': 'PASS', 'expected': 'Financially effective states', 'observed': 'All entity states verified', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All candidate entities have confirmed financially effective lifecycle states.'}, {'constraint_name': 'ProvenanceConstraint', 'status': 'PASS', 'expected': 'Complete dual-hash cell provenance', 'observed': '100% verified provenance', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'All 1 evidence records have complete cell coordinates, file versions, and SHA-256 dual hashes.'}, {'constraint_name': 'MonetaryConstraint', 'status': 'FAIL', 'expected': '₹2000.00 (200000 paise)', 'observed': '₹12000.00 (1200000 paise)', 'evidence_ids': ['pay_scen_008_3347'], 'reason': 'Candidate sum (₹12000.00) exceeds target variance (₹2000.00).'}]}
+
+[BUDGET ENFORCEMENT SUMMARY]
+Investigation Rounds Executed: 3
+Stop Reason: Bounded recursion budget exhausted without definitive proof (BUDGET_EXHAUSTED).
+Safety Action: Automatic escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================
+
+=== INVESTIGATION TRACE: CASE-AG-013 ===
+Target Settlement: setl_scen_004_2582
+Target Variance:   -1000.00 INR (-100000 paise)
+Task Category:     SETTLEMENT_RCA
+Total Rounds:      3
+Final Status:      UNKNOWN
+Budget Exhausted:  TRUE (Execution halted at limit to prevent unbounded recursion)
+------------------------------------------------------------
+
+[ROUND 1]
+Available Evidence IDs: EV-1, EV-2, EV-3
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Investigation hop 1 in progress.
+Identified Missing Evidence: Deep hop 1 evidence
+Tools Requested (1):
+  - [REQ-AG013-1] retrieve_related_evidence with {'entity_type': 'settlement_line', 'entity_id': 'line_hop_1_setl_scen_004_2582', 'relationship': 'source_event'} (Reason: Hop 1: Searching deep relational dependency.)
+Tool Execution Outcomes (1):
+  - [REQ-AG013-1] retrieve_related_evidence: REJECTED (No entity found for settlement_line:line_hop_1_setl_scen_004_2582) -> No new items
+
+[ROUND 2]
+Available Evidence IDs: EV-1, EV-2, EV-3
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Investigation hop 2 in progress.
+Identified Missing Evidence: Deep hop 2 evidence
+Tools Requested (1):
+  - [REQ-AG013-2] retrieve_related_evidence with {'entity_type': 'settlement_line', 'entity_id': 'line_hop_2_setl_scen_004_2582', 'relationship': 'source_event'} (Reason: Hop 2: Searching deep relational dependency.)
+Tool Execution Outcomes (1):
+  - [REQ-AG013-2] retrieve_related_evidence: REJECTED (No entity found for settlement_line:line_hop_2_setl_scen_004_2582) -> No new items
+
+[ROUND 3]
+Available Evidence IDs: EV-1, EV-2, EV-3
+Agent Status: NEEDS_EVIDENCE
+Agent Reasoning: Investigation hop 3 in progress.
+Identified Missing Evidence: Deep hop 3 evidence
+Tools Requested (1):
+  - [REQ-AG013-3] retrieve_related_evidence with {'entity_type': 'settlement_line', 'entity_id': 'line_hop_3_setl_scen_004_2582', 'relationship': 'source_event'} (Reason: Hop 3: Searching deep relational dependency.)
+Tool Execution Outcomes (1):
+  - [REQ-AG013-3] retrieve_related_evidence: REJECTED (No entity found for settlement_line:line_hop_3_setl_scen_004_2582) -> No new items
+
+[BUDGET ENFORCEMENT SUMMARY]
+Investigation Rounds Executed: 3
+Stop Reason: Bounded recursion budget exhausted without definitive proof (BUDGET_EXHAUSTED).
+Safety Action: Automatic escalation to human finance controller.
+
+============================================================
+FINAL DETERMINATION: ESCALATE
+============================================================

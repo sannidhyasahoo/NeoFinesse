@@ -24,11 +24,39 @@ class BaseAgentPlanner(ABC):
         pass
 
 
+class LiveAgentPlanner(BaseAgentPlanner):
+    """Live agent planner dispatching investigation prompts to a BaseLLMClient implementation."""
+
+    def __init__(self, llm_client: Optional[Any] = None):
+        if llm_client is None:
+            from neofinesse.agentic_investigation.llm_client import GenericLLMClient
+            self.llm_client = GenericLLMClient()
+        else:
+            self.llm_client = llm_client
+        self.last_response_metadata: Optional[Any] = None
+
+    def plan_round(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        state: InvestigationState,
+        pack: EvidencePack,
+    ) -> str:
+        meta = self.llm_client.generate_with_metadata(prompt=user_prompt, system_prompt=system_prompt)
+        self.last_response_metadata = meta
+        if meta.error:
+            if "timeout" in meta.error.lower():
+                raise TimeoutError(meta.error)
+            raise RuntimeError(f"LLM_GENERATION_FAILED: {meta.error}")
+        return meta.text
+
+
 class MockAgentPlanner(BaseAgentPlanner):
     """Deterministic mock agent planner for comprehensive offline testing of agentic loops."""
 
     def __init__(self, mode: MockMode = MockMode.NORMAL):
         self.mode = mode
+        self.last_response_metadata: Optional[Any] = None
 
     def plan_round(
         self,
@@ -522,6 +550,205 @@ class MockAgentPlanner(BaseAgentPlanner):
                         "reasoning": "Multi-step verification complete.",
                     }
                 )
+
+        # AG-009: Redundant Tool Loop (Adversarial)
+        if "AG-009" in case_id:
+            if current_round in (1, 2):
+                return json.dumps(
+                    {
+                        "status": "NEEDS_EVIDENCE",
+                        "hypotheses": [],
+                        "investigation_requests": [
+                            {
+                                "request_id": f"REQ-AG009-{current_round}",
+                                "tool": "verify_membership",
+                                "arguments": {
+                                    "event_id": "adj_scen_004",
+                                    "settlement_id": state.settlement_id,
+                                },
+                                "reason": "Redundant check: verify membership of adjustment.",
+                            }
+                        ],
+                        "recommended_hypothesis_id": None,
+                        "conflicts": [],
+                        "missing_evidence": ["Adjustment membership confirmation"],
+                        "reasoning": "Attempting redundant query.",
+                    }
+                )
+            else:
+                return json.dumps(
+                    {
+                        "status": "ESCALATE",
+                        "hypotheses": [],
+                        "investigation_requests": [],
+                        "recommended_hypothesis_id": None,
+                        "conflicts": [
+                            {
+                                "conflict_id": "CONF-REDUNDANT-LOOP",
+                                "conflict_type": "STATE_MISMATCH",
+                                "evidence_ids": [],
+                                "description": "Investigation loop prevented infinite recursion on duplicate tool call.",
+                            }
+                        ],
+                        "missing_evidence": ["Tool request rejected as duplicate"],
+                        "reasoning": "Duplicate tool call was caught and blocked by validator. Escalating safely.",
+                    }
+                )
+
+        # AG-010: Irrelevant Evidence Trap (Decoy Flooding)
+        if "AG-010" in case_id:
+            if current_round == 1:
+                return json.dumps(
+                    {
+                        "status": "NEEDS_EVIDENCE",
+                        "hypotheses": [],
+                        "investigation_requests": [
+                            {
+                                "request_id": "REQ-AG010-1",
+                                "tool": "verify_membership",
+                                "arguments": {
+                                    "event_id": "rfnd_unrelated_trap",
+                                    "settlement_id": state.settlement_id,
+                                },
+                                "reason": "Verify candidate from flooded decoy candidates.",
+                            }
+                        ],
+                        "recommended_hypothesis_id": None,
+                        "conflicts": [
+                            {
+                                "conflict_id": "CONF-DECOY-FLOOD",
+                                "conflict_type": "MEMBERSHIP_MISMATCH",
+                                "evidence_ids": [i.evidence_id for i in items if "decoy" in i.entity_id],
+                                "description": "High volume of same-amount decoys from external settlements.",
+                            }
+                        ],
+                        "missing_evidence": ["Verified batch line linkage"],
+                        "reasoning": "Flooded with decoy candidates; requesting membership verification.",
+                    }
+                )
+            else:
+                return json.dumps(
+                    {
+                        "status": "ESCALATE",
+                        "hypotheses": [],
+                        "investigation_requests": [],
+                        "recommended_hypothesis_id": None,
+                        "conflicts": [
+                            {
+                                "conflict_id": "CONF-AG010-REJECT",
+                                "conflict_type": "MEMBERSHIP_MISMATCH",
+                                "evidence_ids": [],
+                                "description": "All flooded decoy candidates belong to other settlements.",
+                            }
+                        ],
+                        "missing_evidence": ["No valid deduction member found"],
+                        "reasoning": "All candidates were proven to be decoys. Escalating honestly.",
+                    }
+                )
+
+        # AG-011: Contradictory Tool Results
+        if "AG-011" in case_id:
+            if current_round == 1:
+                return json.dumps(
+                    {
+                        "status": "NEEDS_EVIDENCE",
+                        "hypotheses": [],
+                        "investigation_requests": [
+                            {
+                                "request_id": "REQ-AG011-1",
+                                "tool": "retrieve_source_record",
+                                "arguments": {
+                                    "source_id": "SRC-DISPUTES",
+                                    "record_id": "disp_contradictory_record",
+                                },
+                                "reason": "Verify conflicting gateway vs bank chargeback records.",
+                            }
+                        ],
+                        "recommended_hypothesis_id": None,
+                        "conflicts": [
+                            {
+                                "conflict_id": "CONF-AG011-DISCREPANCY",
+                                "conflict_type": "STATE_MISMATCH",
+                                "evidence_ids": [],
+                                "description": "Gateway reports CAPTURED while bank feed reports CHARGEBACK_REVERSAL.",
+                            }
+                        ],
+                        "missing_evidence": ["Source record verification for chargeback"],
+                        "reasoning": "Contradictory state between payment gateway and bank clearing logs.",
+                    }
+                )
+            else:
+                return json.dumps(
+                    {
+                        "status": "ESCALATE",
+                        "hypotheses": [],
+                        "investigation_requests": [],
+                        "recommended_hypothesis_id": None,
+                        "conflicts": [
+                            {
+                                "conflict_id": "CONF-AG011-UNRESOLVED",
+                                "conflict_type": "STATE_MISMATCH",
+                                "evidence_ids": [],
+                                "description": "Contradictory evidence cannot be reconciled automatically.",
+                            }
+                        ],
+                        "missing_evidence": ["Audited bank settlement voucher"],
+                        "reasoning": "Irreconcilable contradiction detected across data sources. Mandatory escalation to human controller.",
+                    }
+                )
+
+        # AG-012: Confident But Wrong AI (Adversarial Verifier Override)
+        if "AG-012" in case_id:
+            # AI is 100% confident in an invalid candidate (decoy or unrelated batch member)
+            decoy_item = next((i for i in items if "decoy" in i.entity_id), items[-1] if items else None)
+            ev_ids = [decoy_item.evidence_id] if decoy_item else []
+            return json.dumps(
+                {
+                    "status": "SUFFICIENT",
+                    "hypotheses": [
+                        {
+                            "hypothesis_id": "hyp_ag012_confident_wrong",
+                            "cause_type": "REFUND",
+                            "evidence_ids": ev_ids,
+                            "claimed_explained_amount": target_var,
+                            "reasoning": "AI is 100% confident that this refund explains the variance despite post-cutoff timestamp.",
+                            "missing_evidence": [],
+                            "conflicts": [],
+                            "assumptions": ["Assuming post-cutoff date is an ignorable logging delay."],
+                        }
+                    ],
+                    "investigation_requests": [],
+                    "recommended_hypothesis_id": "hyp_ag012_confident_wrong",
+                    "conflicts": [],
+                    "missing_evidence": [],
+                    "reasoning": "Proposing confident hypothesis.",
+                }
+            )
+
+        # AG-013: Investigation Budget Exhaustion
+        if "AG-013" in case_id:
+            return json.dumps(
+                {
+                    "status": "NEEDS_EVIDENCE",
+                    "hypotheses": [],
+                    "investigation_requests": [
+                        {
+                            "request_id": f"REQ-AG013-{current_round}",
+                            "tool": "retrieve_related_evidence",
+                            "arguments": {
+                                "entity_type": "settlement_line",
+                                "entity_id": f"line_hop_{current_round}_{state.settlement_id}",
+                                "relationship": "source_event",
+                            },
+                            "reason": f"Hop {current_round}: Searching deep relational dependency.",
+                        }
+                    ],
+                    "recommended_hypothesis_id": None,
+                    "conflicts": [],
+                    "missing_evidence": [f"Deep hop {current_round} evidence"],
+                    "reasoning": f"Investigation hop {current_round} in progress.",
+                }
+            )
 
         # 3. Standard Scenarios (VAR-001 to VAR-010)
 
