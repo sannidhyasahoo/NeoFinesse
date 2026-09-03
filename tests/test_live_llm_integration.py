@@ -131,7 +131,7 @@ def test_generic_llm_client_http_dispatch(monkeypatch):
             pass
 
     with mock.patch("urllib.request.urlopen", return_value=FakeHTTPResponse()):
-        client = GenericLLMClient(provider="openai", model="gpt-4o", api_key="sk-test-mock-key")
+        client = GenericLLMClient(provider="openai", model="gpt-4o", api_key="sk-test-mock-key", force_live=True)
         resp = client.generate_with_metadata("Explain this deficit")
 
         assert "Mocked API answer" in resp.text
@@ -154,6 +154,39 @@ def test_generic_llm_client_endpoints(monkeypatch):
 
     c_custom = GenericLLMClient(provider="local", api_key="sk-4", base_url="http://localhost:11434/v1")
     assert c_custom._determine_endpoint() == "http://localhost:11434/v1/chat/completions"
+
+
+def test_model_name_normalization_and_provider_autodetection():
+    """Verifies Gemini 3.7/3.8 Flash, Groq OSS 20B/120B normalization and provider auto-detection."""
+    # 1. Gemini 3.7 Flash & 3.8 Flash variations
+    c_g37 = GenericLLMClient(provider="gemini", model="gemini 3.7 flah", api_key="dummy")
+    assert c_g37.model_name == "gemini-3.7-flash"
+    assert c_g37.provider_name == "gemini"
+
+    c_g38 = GenericLLMClient(provider="gemini", model="3.8 flash", api_key="dummy")
+    assert c_g38.model_name == "gemini-3.8-flash"
+
+    # Auto-detection from model name without explicit provider
+    c_auto_gemini = GenericLLMClient(model="gemini-3.7-flash", api_key="dummy")
+    assert c_auto_gemini.provider_name == "gemini"
+    assert "generativelanguage.googleapis.com" in c_auto_gemini._determine_endpoint()
+
+    # 2. Groq opennaioss-20b & 120b variations
+    c_groq_20b = GenericLLMClient(provider="groq", model="opennaioss-20b", api_key="dummy")
+    assert c_groq_20b.model_name == "openai/gpt-oss-20b"
+    assert c_groq_20b.provider_name == "groq"
+
+    c_groq_120b = GenericLLMClient(provider="groq", model="120b", api_key="dummy")
+    assert c_groq_120b.model_name == "openai/gpt-oss-120b"
+
+    c_groq_raw = GenericLLMClient(model="openaioss-20b", api_key="dummy")
+    assert c_groq_raw.provider_name == "groq"
+    assert c_groq_raw.model_name == "openai/gpt-oss-20b"
+    assert "api.groq.com" in c_groq_raw._determine_endpoint()
+
+    # 3. Arbitrary/custom model preservation
+    c_custom = GenericLLMClient(provider="groq", model="deepseek-r1-distill-llama-70b", api_key="dummy")
+    assert c_custom.model_name == "deepseek-r1-distill-llama-70b"
 
 
 def test_parser_alias_normalization():
@@ -252,3 +285,23 @@ def test_live_benchmark_runner(live_test_env):
     assert summary["correct_terminal_decision_rate_pct"] > 0.0
     assert (live_dir / "results.json").exists()
     assert (live_dir / "results.csv").exists()
+
+
+def test_dotenv_loading_into_generic_client(tmp_path, monkeypatch):
+    """Verifies that key-values in .env are picked up by GenericLLMClient."""
+    from neofinesse.agentic_investigation.llm_client import _load_dotenv_if_present
+
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        "NEOFINESSE_LLM_TEST_VAR=test_val_123\n"
+        "GEMINI_API_KEY=AIzaSy_fake_test_key\n",
+        encoding="utf-8",
+    )
+
+    monkeypatch.delenv("NEOFINESSE_LLM_TEST_VAR", raising=False)
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+
+    _load_dotenv_if_present(str(env_file))
+
+    assert os.getenv("NEOFINESSE_LLM_TEST_VAR") == "test_val_123"
+    assert os.getenv("GEMINI_API_KEY") == "AIzaSy_fake_test_key"
