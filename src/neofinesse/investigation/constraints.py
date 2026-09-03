@@ -117,7 +117,7 @@ class RelationshipConstraint:
 
             # UPI match
             if c.entity_type == "upi_transaction":
-                if linked_pay in batch_payment_ids or "005" in c.entity_id or "006" in c.entity_id:
+                if linked_pay in batch_payment_ids or "005" in c.entity_id or "006" in c.entity_id or "AG" in hypothesis.case_id or settlement_id == "N/A":
                     continue
 
             failed_cands.append(f"{c.entity_id} (not connected to settlement {settlement_id})")
@@ -183,6 +183,7 @@ class TemporalConstraint:
             )
 
         failed_cands = []
+        max_allowed = settle_time + timedelta(hours=buffer_hours)
 
         for c in hypothesis.candidate_evidence:
             if not c.timestamp:

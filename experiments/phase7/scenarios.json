@@ -1,0 +1,182 @@
+[
+  {
+    "scenario_id": "VAR-001_REFUND_VARIANCE",
+    "case_id": "CASE-001",
+    "settlement_id": "setl_scen_001_9984",
+    "target_variance_paise": -200000,
+    "target_variance_inr": -2000.0,
+    "expected_outcome": "RESOLVED",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "Legitimate processed refund rfnd_scen_001 deducted from batch explains the settlement deficit."
+  },
+  {
+    "scenario_id": "VAR-002_SAME_AMOUNT_DECOY",
+    "case_id": "CASE-002",
+    "settlement_id": "setl_scen_002_8398",
+    "target_variance_paise": -250000,
+    "target_variance_inr": -2500.0,
+    "expected_outcome": "RESOLVED",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "Decoy refund has identical \u20b92,500 amount but belongs to another settlement batch."
+  },
+  {
+    "scenario_id": "VAR-003_PARTIAL_EXPLANATION",
+    "case_id": "CASE-003",
+    "settlement_id": "setl_scen_003_7992",
+    "target_variance_paise": -500000,
+    "target_variance_inr": -5000.0,
+    "expected_outcome": "PARTIALLY_RESOLVED",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "Refund explains \u20b93,000 of \u20b95,000 variance; remaining \u20b92,000 has no matching event and must be escalated."
+  },
+  {
+    "scenario_id": "VAR-004_MULTIPLE_EVENT_EXPLANATION",
+    "case_id": "CASE-004",
+    "settlement_id": "setl_scen_004_2582",
+    "target_variance_paise": -100000,
+    "target_variance_inr": -1000.0,
+    "expected_outcome": "RESOLVED",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "Joint attribution: \u20b9700 refund + \u20b9300 risk hold adjustment = \u20b91,000 total variance."
+  },
+  {
+    "scenario_id": "VAR-005_UPI_LATE_SUCCESS",
+    "case_id": "CASE-005",
+    "settlement_id": "setl_scen_005_6761",
+    "target_variance_paise": 0,
+    "target_variance_inr": 0.0,
+    "expected_outcome": "RESOLVED",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "UPI transaction initially failed but achieved late success at T+27m; event history confirms settlement inclusion."
+  },
+  {
+    "scenario_id": "VAR-006_UPI_DEBIT_REVERSAL",
+    "case_id": "CASE-006",
+    "settlement_id": "N/A",
+    "target_variance_paise": 0,
+    "target_variance_inr": 0.0,
+    "expected_outcome": "RESOLVED",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "Failed UPI payment with debit and confirmed reversal produces net financial effect of \u20b90."
+  },
+  {
+    "scenario_id": "VAR-007_DELAYED_BANK_CREDIT",
+    "case_id": "CASE-007",
+    "settlement_id": "setl_scen_007_3955",
+    "target_variance_paise": 0,
+    "target_variance_inr": 0.0,
+    "expected_outcome": "VALID_DELAYED_CREDIT",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "Settlement processed at gateway; bank credit arrived 36 hours later within normal clearing window."
+  },
+  {
+    "scenario_id": "VAR-008_WRONG_DATE_DECOY",
+    "case_id": "CASE-008",
+    "settlement_id": "setl_scen_008_2140",
+    "target_variance_paise": 400000,
+    "target_variance_inr": 4000.0,
+    "expected_outcome": "ESCALATE",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "Decoy refund matches \u20b94,000 amount but occurred 20 days after settlement cutoff; must be rejected."
+  },
+  {
+    "scenario_id": "VAR-009_WRONG_PAYMENT_DECOY",
+    "case_id": "CASE-009",
+    "settlement_id": "setl_scen_009_6585",
+    "target_variance_paise": 350000,
+    "target_variance_inr": 3500.0,
+    "expected_outcome": "ESCALATE",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "Dispute of \u20b93,500 belongs to a different payment; case has no valid cause and must be escalated."
+  },
+  {
+    "scenario_id": "VAR-010_COMPLETELY_UNEXPLAINED",
+    "case_id": "CASE-010",
+    "settlement_id": "setl_scen_010_1815",
+    "target_variance_paise": 1500000,
+    "target_variance_inr": 15000.0,
+    "expected_outcome": "ESCALATE",
+    "type": "STANDARD_FAILURE_INJECTION",
+    "description": "Completely unexplained \u20b915,000 variance with zero supporting records; system must honestly escalate without guessing."
+  },
+  {
+    "scenario_id": "AG-001_MISSING_MEMBERSHIP",
+    "case_id": "CASE-AG-001",
+    "settlement_id": "setl_scen_004_2582",
+    "target_variance_paise": -100000,
+    "target_variance_inr": -1000.0,
+    "expected_outcome": "RESOLVED",
+    "type": "AGENTIC_ADAPTIVE_INVESTIGATION",
+    "description": "Initial refund \u20b9700 retrieved, candidate adjustment \u20b9300 verified via verify_membership tool."
+  },
+  {
+    "scenario_id": "AG-002_WRONG_MEMBERSHIP",
+    "case_id": "CASE-AG-002",
+    "settlement_id": "setl_scen_002_8398",
+    "target_variance_paise": -250000,
+    "target_variance_inr": -2500.0,
+    "expected_outcome": "ESCALATE",
+    "type": "AGENTIC_ADAPTIVE_INVESTIGATION",
+    "description": "Candidate adjustment verified as NOT_MEMBER; agent revises hypothesis and escalates."
+  },
+  {
+    "scenario_id": "AG-003_MISSING_UPI_HISTORY",
+    "case_id": "CASE-AG-003",
+    "settlement_id": "N/A",
+    "target_variance_paise": 0,
+    "target_variance_inr": 0.0,
+    "expected_outcome": "RESOLVED",
+    "type": "AGENTIC_ADAPTIVE_INVESTIGATION",
+    "description": "Failed UPI transaction; retrieve_upi_history tool reveals confirmed auto-reversal (\u20b90 net effect)."
+  },
+  {
+    "scenario_id": "AG-004_LATE_UPI_SUCCESS",
+    "case_id": "CASE-AG-004",
+    "settlement_id": "setl_scen_005_6761",
+    "target_variance_paise": 0,
+    "target_variance_inr": 0.0,
+    "expected_outcome": "RESOLVED",
+    "type": "AGENTIC_ADAPTIVE_INVESTIGATION",
+    "description": "Initial timeout state; retrieve_upi_history tool reveals late authorization callback."
+  },
+  {
+    "scenario_id": "AG-005_CONFLICTING_REFUND",
+    "case_id": "CASE-AG-005",
+    "settlement_id": "setl_scen_002_8398",
+    "target_variance_paise": -250000,
+    "target_variance_inr": -2500.0,
+    "expected_outcome": "ESCALATE",
+    "type": "AGENTIC_ADAPTIVE_INVESTIGATION",
+    "description": "Candidate refund matches amount but retrieve_source_record confirms status FAILED; agent escalates."
+  },
+  {
+    "scenario_id": "AG-006_TRULY_UNEXPLAINED",
+    "case_id": "CASE-AG-006",
+    "settlement_id": "setl_scen_010_1815",
+    "target_variance_paise": -1500000,
+    "target_variance_inr": -15000.0,
+    "expected_outcome": "ESCALATE",
+    "type": "AGENTIC_ADAPTIVE_INVESTIGATION",
+    "description": "Zero deduction records; retrieve_temporal_neighbors confirms empty window; agent escalates."
+  },
+  {
+    "scenario_id": "AG-007_DECOY_EXPLOSION",
+    "case_id": "CASE-AG-007",
+    "settlement_id": "setl_scen_002_8398",
+    "target_variance_paise": -250000,
+    "target_variance_inr": -2500.0,
+    "expected_outcome": "RESOLVED",
+    "type": "AGENTIC_ADAPTIVE_INVESTIGATION",
+    "description": "Multiple same-amount candidates; verify_membership prunes external decoys and confirms authentic refund."
+  },
+  {
+    "scenario_id": "AG-008_MULTI_STEP_FLAGSHIP",
+    "case_id": "CASE-AG-008",
+    "settlement_id": "setl_scen_004_2582",
+    "target_variance_paise": -100000,
+    "target_variance_inr": -1000.0,
+    "expected_outcome": "RESOLVED",
+    "type": "AGENTIC_ADAPTIVE_INVESTIGATION",
+    "description": "Flagship multi-step: retrieve related lines -> verify adjustment membership -> composite resolution."
+  }
+]

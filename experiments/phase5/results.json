@@ -8,9 +8,9 @@
   "partial_attribution_accuracy_pct": 100.0,
   "honest_exceptions_correct": 3,
   "honest_exception_rate_pct": 100.0,
-  "avg_latency_ms": 0.2526300000681658,
-  "median_latency_ms": 0.19175000034010736,
-  "max_latency_ms": 0.5196000001888024,
+  "avg_latency_ms": 0.2072299999781535,
+  "median_latency_ms": 0.1491499999701773,
+  "max_latency_ms": 0.44819999993706006,
   "scenario_results": [
     {
       "scenario_id": "VAR-001_REFUND_VARIANCE",
@@ -26,7 +26,7 @@
       "unexplained_inr": 0.0,
       "hypotheses_evaluated": 1,
       "hypotheses_rejected": 0,
-      "latency_ms": 0.4743999998026993
+      "latency_ms": 0.40149999995264807
     },
     {
       "scenario_id": "VAR-002_SAME_AMOUNT_DECOY",
@@ -42,7 +42,7 @@
       "unexplained_inr": 0.0,
       "hypotheses_evaluated": 1,
       "hypotheses_rejected": 0,
-      "latency_ms": 0.5196000001888024
+      "latency_ms": 0.44819999993706006
     },
     {
       "scenario_id": "VAR-003_PARTIAL_EXPLANATION",
@@ -58,7 +58,7 @@
       "unexplained_inr": -2000.0,
       "hypotheses_evaluated": 1,
       "hypotheses_rejected": 0,
-      "latency_ms": 0.20600000061676838
+      "latency_ms": 0.16539999978704145
     },
     {
       "scenario_id": "VAR-004_MULTIPLE_EVENT_EXPLANATION",
@@ -74,7 +74,7 @@
       "unexplained_inr": 0.0,
       "hypotheses_evaluated": 3,
       "hypotheses_rejected": 0,
-      "latency_ms": 0.3304999991087243
+      "latency_ms": 0.2787999997053703
     },
     {
       "scenario_id": "VAR-005_UPI_LATE_SUCCESS",
@@ -90,7 +90,7 @@
       "unexplained_inr": -3500.0,
       "hypotheses_evaluated": 1,
       "hypotheses_rejected": 0,
-      "latency_ms": 0.22340000032272656
+      "latency_ms": 0.178799999957846
     },
     {
       "scenario_id": "VAR-006_UPI_DEBIT_REVERSAL",
@@ -106,7 +106,7 @@
       "unexplained_inr": 0.0,
       "hypotheses_evaluated": 1,
       "hypotheses_rejected": 0,
-      "latency_ms": 0.17280000065511558
+      "latency_ms": 0.13290000015331316
     },
     {
       "scenario_id": "VAR-007_DELAYED_BANK_CREDIT",
@@ -122,7 +122,7 @@
       "unexplained_inr": 0.0,
       "hypotheses_evaluated": 1,
       "hypotheses_rejected": 0,
-      "latency_ms": 0.1587999995535938
+      "latency_ms": 0.12449999985619797
     },
     {
       "scenario_id": "VAR-008_WRONG_DATE_DECOY",
@@ -138,7 +138,7 @@
       "unexplained_inr": 4000.0,
       "hypotheses_evaluated": 1,
       "hypotheses_rejected": 1,
-      "latency_ms": 0.17750000006344635
+      "latency_ms": 0.13239999998404528
     },
     {
       "scenario_id": "VAR-009_WRONG_PAYMENT_DECOY",
@@ -154,7 +154,7 @@
       "unexplained_inr": 3500.0,
       "hypotheses_evaluated": 1,
       "hypotheses_rejected": 1,
-      "latency_ms": 0.14209999972081278
+      "latency_ms": 0.10920000022451859
     },
     {
       "scenario_id": "VAR-010_COMPLETELY_UNEXPLAINED",
@@ -170,7 +170,7 @@
       "unexplained_inr": 15000.0,
       "hypotheses_evaluated": 1,
       "hypotheses_rejected": 1,
-      "latency_ms": 0.12120000064896885
+      "latency_ms": 0.10060000022349413
     }
   ]
 }

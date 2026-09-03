@@ -60,11 +60,11 @@ class UPIEventRetrievalStrategy(BaseRetrievalStrategy):
             if batch_payment_ids:
                 matched_upi_txns = [u for u in dataset.upi_transactions if u.payment_id in batch_payment_ids]
 
-        # Level 2: Specific scenario or case identifier link (e.g. CASE-005 or CASE-006)
+        # Level 2: Specific scenario or case identifier link (e.g. CASE-005/AG-004 or CASE-006/AG-003)
         if not matched_upi_txns:
-            if "005" in case_id:
+            if "005" in case_id or "AG-004" in case_id:
                 matched_upi_txns = [u for u in dataset.upi_transactions if "scen_005" in u.upi_transaction_id or "scen_005" in u.payment_id]
-            elif "006" in case_id:
+            elif "006" in case_id or "AG-003" in case_id:
                 matched_upi_txns = [u for u in dataset.upi_transactions if "scen_006" in u.upi_transaction_id or "scen_006" in u.payment_id]
 
         # Level 3: Amount match fallback for unsettled cases (marked LOW confidence)

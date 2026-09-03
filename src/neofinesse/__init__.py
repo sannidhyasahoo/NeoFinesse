@@ -85,8 +85,22 @@ def main() -> None:
     print(f"Missing Ev. Surfaced:   {ai_summary.total_missing_evidence_surfaced}")
     print(f"AI Helped Cases:        {ai_summary.ai_helped_count}")
     print(f"Average AI Latency:     {ai_summary.avg_phase6_latency_ms:.2f}ms")
-    print("Results exported to 'experiments/phase6/results.json' and 'experiments/phase6/results.csv'.")
-    print("[SUCCESS] Phase 6 AI Evidence-Constrained Financial Investigator ready.")
+    print("\n[Phase 7] Running Adaptive / Agentic Evidence Investigation Benchmark...")
+    from neofinesse.agentic_investigation.benchmark import AgenticBenchmarkRunner
+    agentic_runner = AgenticBenchmarkRunner()
+    agt_scorecard = agentic_runner.run_benchmark(
+        dataset=dataset,
+        ground_truth_path=res["ground_truth_path"],
+        export_dir="experiments/phase7",
+    )
+    print(f"Phase 7 Agentic Accuracy:  {agt_scorecard.phase7_accuracy_pct:.1f}%")
+    print(f"Phase 7 False Closure Rate: {agt_scorecard.phase7_false_closure_rate_pct:.1f}% ({agt_scorecard.phase7_false_closure_rate_pct:.0f} false closures)")
+    print(f"Avg Investigation Rounds:   {agt_scorecard.avg_investigation_rounds:.1f}")
+    print(f"Avg Tool Calls per Case:    {agt_scorecard.avg_tool_calls:.1f}")
+    print(f"Revisions Surfaced:         {agt_scorecard.hypothesis_revisions_count}")
+    print(f"Average Agentic Latency:    {agt_scorecard.avg_latency_ms:.2f}ms")
+    print("Results exported to 'experiments/phase7/scenarios.json', 'results.json', and 'results.csv'.")
+    print("\n[SUCCESS] NeoFinesse Phase 1-7 End-to-End Pipeline Execution Complete.")
 
 
 if __name__ == "__main__":
