@@ -445,10 +445,13 @@
 
       <div class="evidence-prop-group">
         <div class="evidence-prop-label">Excel / CSV File Coordinate</div>
-        <div class="evidence-prop-value" style="display: flex; gap: 0.5rem; align-items: center;">
+        <div class="evidence-prop-value" style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
           <span class="cell-coordinate-badge">📄 ${evidenceItem.source_file}</span>
           <span class="cell-coordinate-badge">Sheet: ${evidenceItem.sheet}</span>
-          <span class="cell-coordinate-badge">Cell: ${evidenceItem.cell}</span>
+          <span class="cell-coordinate-badge" style="background: rgba(43, 89, 209, 0.2); color: var(--cyan-primary); font-weight: 700;">Cell: ${evidenceItem.cell}</span>
+          <button class="btn btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.725rem;" onclick='window.openSourceEvidenceModal(${JSON.stringify(evidenceItem)})'>
+            📊 View Source Context
+          </button>
         </div>
       </div>
 
@@ -586,6 +589,123 @@
       alert('Copied SHA-256 Record Hash to clipboard:\n' + hash);
     });
   };
+
+  let activeModalEvidence = null;
+
+  window.openSourceEvidenceModal = function (ev) {
+    activeModalEvidence = ev;
+    const modal = document.getElementById('source-modal');
+    if (!modal) return;
+
+    modal.style.display = 'flex';
+
+    document.getElementById('modal-filename').textContent = ev.source_file;
+    document.getElementById('modal-sheet').textContent = ev.sheet || 'Sheet1';
+    document.getElementById('modal-cell').textContent = ev.cell;
+    document.getElementById('modal-ev-id').textContent = ev.evidence_id;
+    document.getElementById('modal-ev-level').textContent = ev.evidence_level;
+    document.getElementById('modal-ev-hash').textContent = ev.record_hash;
+
+    const isRejected = ev.status === 'REJECTED';
+    const statusBadge = document.getElementById('modal-status-badge');
+    const rejBanner = document.getElementById('modal-rejection-banner');
+
+    if (isRejected) {
+      statusBadge.className = 'badge escalated';
+      statusBadge.textContent = '✕ Rejected Decoy';
+      rejBanner.style.display = 'block';
+      document.getElementById('modal-rejection-reason').textContent = ev.rejection_reason || 'Constraint validation failed.';
+    } else {
+      statusBadge.className = 'badge verified';
+      statusBadge.textContent = '✓ Provenance Verified';
+      rejBanner.style.display = 'none';
+    }
+
+    const spinner = document.getElementById('modal-loading-spinner');
+    const content = document.getElementById('modal-spreadsheet-content');
+    spinner.style.display = 'block';
+    content.innerHTML = '';
+
+    const params = new URLSearchParams({
+      file: ev.source_file,
+      sheet: ev.sheet || 'Sheet1',
+      cell: ev.cell,
+      row: String(ev.row || 1),
+      row_radius: '3',
+      column_radius: '3',
+    });
+
+    fetch(`/api/evidence/source-context?${params.toString()}`)
+      .then((res) => res.json())
+      .then((data) => {
+        spinner.style.display = 'none';
+        if (data.status === 'SUCCESS' && data.context) {
+          renderSpreadsheetMatrix(data.context, isRejected);
+        } else {
+          content.innerHTML = `<div style="padding: 2rem; color: var(--rose-primary); text-align: center;">Error loading context: ${data.error || 'Unknown'}</div>`;
+        }
+      })
+      .catch((err) => {
+        spinner.style.display = 'none';
+        content.innerHTML = `<div style="padding: 2rem; color: var(--rose-primary); text-align: center;">Network error loading spreadsheet data.</div>`;
+      });
+  };
+
+  function renderSpreadsheetMatrix(ctx, isRejected) {
+    const content = document.getElementById('modal-spreadsheet-content');
+    if (!content) return;
+
+    let html = '<table class="excel-grid-table"><thead><tr><th class="row-num-cell">#</th>';
+    for (const col of ctx.columns) {
+      html += `<th class="${col.is_target_column ? 'col-header-target' : ''}">${col.letter}<br><span style="font-size:0.65rem;font-weight:normal;">${col.header}</span></th>`;
+    }
+    html += '</tr></thead><tbody>';
+
+    for (const row of ctx.rows) {
+      html += `<tr class="${row.is_target_row ? 'row-target' : ''}"><td class="row-num-cell">${row.row_number}</td>`;
+      for (const cell of row.cells) {
+        const isTarget = cell.is_target;
+        const targetClass = isTarget ? (isRejected ? 'cell-target cell-decoy' : 'cell-target') : '';
+        const badge = isTarget ? `<span class="${isRejected ? 'decoy-target-badge' : 'evidence-target-badge'}">${isRejected ? '✕ Decoy' : '← Evidence'}</span>` : '';
+        const val = cell.value !== null && cell.value !== undefined ? (typeof cell.value === 'number' && !Number.isInteger(cell.value) ? cell.value.toFixed(2) : cell.value) : '';
+        html += `<td class="${targetClass}">${val} ${badge}</td>`;
+      }
+      html += '</tr>';
+    }
+
+    html += '</tbody></table>';
+    content.innerHTML = html;
+  }
+
+  window.closeSourceModal = function () {
+    const modal = document.getElementById('source-modal');
+    if (modal) modal.style.display = 'none';
+  };
+
+  window.copyModalCellRef = function () {
+    if (!activeModalEvidence) return;
+    const ref = `${activeModalEvidence.sheet || 'Sheet1'}!${activeModalEvidence.cell}`;
+    navigator.clipboard.writeText(ref).then(() => {
+      const btn = document.getElementById('btn-copy-ref');
+      if (btn) {
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Copied Reference!';
+        setTimeout(() => { btn.textContent = originalText; }, 2000);
+      }
+    });
+  };
+
+  // Close modal on Escape or backdrop click
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') window.closeSourceModal();
+  });
+
+  const modalBackdrop = document.getElementById('source-modal');
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) window.closeSourceModal();
+    });
+  }
 
   // Start the application
   window.addEventListener('DOMContentLoaded', init);

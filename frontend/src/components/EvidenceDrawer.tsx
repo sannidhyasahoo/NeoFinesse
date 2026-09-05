@@ -7,9 +7,10 @@ import { Copy, Check, FileSpreadsheet, ShieldAlert, ShieldCheck, Layers } from "
 interface EvidenceDrawerProps {
   evidence: EvidenceNode | null;
   className?: string;
+  onViewSource?: (evidence: EvidenceNode) => void;
 }
 
-export default function EvidenceDrawer({ evidence, className = "" }: EvidenceDrawerProps) {
+export default function EvidenceDrawer({ evidence, className = "", onViewSource }: EvidenceDrawerProps) {
   const [copied, setCopied] = useState(false);
 
   if (!evidence) {
@@ -49,14 +50,26 @@ export default function EvidenceDrawer({ evidence, className = "" }: EvidenceDra
           <FileSpreadsheet className="w-4 h-4 text-lake-blue" />
           <span className="font-serif text-lg text-off-black">Source File Record</span>
         </div>
-        <span
-          className={`px-2.5 py-0.5 rounded-pill text-[10px] font-mono uppercase tracking-wider font-semibold ${isRejected
-              ? "bg-rose-100 text-rose-800 border border-rose-200"
-              : "bg-emerald-100 text-emerald-800 border border-emerald-200"
-            }`}
-        >
-          {isRejected ? "Rejected — wrong link" : "Verified — all checks passed"}
-        </span>
+        <div className="flex items-center gap-2">
+          {onViewSource && (
+            <button
+              onClick={() => onViewSource(evidence)}
+              className="px-3 py-1 bg-parchment hover:bg-off-black hover:text-parchment border border-ash rounded-pill text-[11px] font-mono text-off-black transition-all flex items-center gap-1.5 shadow-sm font-semibold"
+              title="Inspect exact spreadsheet cell and surrounding context"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5 text-lake-blue" />
+              <span>View Source</span>
+            </button>
+          )}
+          <span
+            className={`px-2.5 py-0.5 rounded-pill text-[10px] font-mono uppercase tracking-wider font-semibold ${isRejected
+                ? "bg-rose-100 text-rose-800 border border-rose-200"
+                : "bg-emerald-100 text-emerald-800 border border-emerald-200"
+              }`}
+          >
+            {isRejected ? "Rejected — wrong link" : "Verified — all checks passed"}
+          </span>
+        </div>
       </div>
 
       {/* Property Grid */}
@@ -100,8 +113,16 @@ export default function EvidenceDrawer({ evidence, className = "" }: EvidenceDra
 
         {/* Source File, Sheet & Cell */}
         <div>
-          <div className="text-[10px] uppercase text-smoke tracking-wider mb-1">
-            Location in Original File
+          <div className="flex items-center justify-between text-[10px] uppercase text-smoke tracking-wider mb-1">
+            <span>Location in Original File</span>
+            {onViewSource && (
+              <button
+                onClick={() => onViewSource(evidence)}
+                className="text-lake-blue hover:underline font-bold flex items-center gap-1 text-[11px]"
+              >
+                <span>Open in Cell Viewer &rarr;</span>
+              </button>
+            )}
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <span className="px-2.5 py-1 bg-ash/20 rounded-lg text-off-black">

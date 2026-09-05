@@ -85,6 +85,126 @@ class NeoFinesseUIHandler(BaseHTTPRequestHandler):
             self.wfile.write(content)
             return
 
+        if path == "/api/evidence/source-context":
+            query_params = urllib.parse.parse_qs(parsed_url.query)
+            filename = query_params.get("file", [None])[0] or query_params.get("filename", [None])[0]
+            sheet = query_params.get("sheet", [None])[0]
+            cell = query_params.get("cell", [None])[0]
+            row_str = query_params.get("row", [None])[0]
+            col_str = query_params.get("column", [None])[0] or query_params.get("col", [None])[0]
+            row_radius_str = query_params.get("row_radius", ["3"])[0]
+            col_radius_str = query_params.get("column_radius", ["3"])[0]
+
+            if not filename:
+                body = json.dumps({"status": "ERROR", "error": "Missing required parameter 'file'"}).encode("utf-8")
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self._send_cors_headers()
+                self.end_headers()
+                self.wfile.write(body)
+                return
+
+            try:
+                row_val = int(row_str) if row_str else None
+                col_val = int(col_str) if (col_str and col_str.isdigit()) else col_str
+                row_radius = int(row_radius_str) if row_radius_str else 3
+                col_radius = int(col_radius_str) if col_radius_str else 3
+
+                from neofinesse.services.evidence_context_service import EvidenceContextService
+                dataset_dir = Path(__file__).parent.parent.parent.parent / "data" / "demo_dataset"
+                service = EvidenceContextService(dataset_dir)
+
+                context_data = service.get_cell_context(
+                    filename=filename,
+                    sheet=sheet,
+                    cell=cell,
+                    row=row_val,
+                    column=col_val,
+                    row_radius=row_radius,
+                    column_radius=col_radius,
+                )
+
+                body = json.dumps(context_data).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self._send_cors_headers()
+                self.end_headers()
+                self.wfile.write(body)
+                return
+            except PermissionError as pe:
+                body = json.dumps({"status": "ERROR", "error": str(pe)}).encode("utf-8")
+                self.send_response(403)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self._send_cors_headers()
+                self.end_headers()
+                self.wfile.write(body)
+                return
+            except (FileNotFoundError, ValueError) as fe:
+                body = json.dumps({"status": "ERROR", "error": str(fe)}).encode("utf-8")
+                self.send_response(404)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self._send_cors_headers()
+                self.end_headers()
+                self.wfile.write(body)
+                return
+            except Exception as e:
+                body = json.dumps({"status": "ERROR", "error": f"Internal server error: {str(e)}"}).encode("utf-8")
+                self.send_response(500)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self._send_cors_headers()
+                self.end_headers()
+                self.wfile.write(body)
+                return
+
+        if path == "/api/escalation/summary":
+            query_params = urllib.parse.parse_qs(parsed_url.query)
+            scenario_id = query_params.get("scenario_id", [None])[0] or query_params.get("case_id", [None])[0]
+
+            if not DATA_FILE.exists():
+                export_demo_data_file(DATA_FILE)
+
+            try:
+                demo_data = json.loads(DATA_FILE.read_text(encoding="utf-8"))
+                scenarios = demo_data.get("scenarios", [])
+
+                target_scen = None
+                if scenario_id:
+                    for s in scenarios:
+                        if s.get("scenario_id") == scenario_id or s.get("case_id") == scenario_id:
+                            target_scen = s
+                            break
+
+                if not target_scen:
+                    # Fallback to first escalated scenario or first scenario
+                    escalated = [s for s in scenarios if s.get("expected_outcome") == "ESCALATE"]
+                    target_scen = escalated[0] if escalated else (scenarios[0] if scenarios else {})
+
+                from neofinesse.services.escalation_summary_service import EscalationSummaryService
+                handoff = EscalationSummaryService.generate_handoff_summary(target_scen)
+
+                body = json.dumps({"status": "SUCCESS", "handoff": handoff.model_dump()}).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self._send_cors_headers()
+                self.end_headers()
+                self.wfile.write(body)
+                return
+            except Exception as e:
+                body = json.dumps({"status": "ERROR", "error": f"Failed to generate escalation summary: {str(e)}"}).encode("utf-8")
+                self.send_response(500)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self._send_cors_headers()
+                self.end_headers()
+                self.wfile.write(body)
+                return
+
         # 3. Static Files (/static/css/styles.css, /static/js/app.js)
         if path.startswith("/static/"):
             rel_path = path[len("/static/"):]

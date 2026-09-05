@@ -971,24 +971,217 @@ body {
   margin-top: auto;
 }
 
-.app-footer strong {
+/* ==============================================================================
+   SOURCE EVIDENCE SPREADSHEET VIEWER MODAL
+   ============================================================================== */
+.source-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 29, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.source-modal-container {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 960px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.source-modal-header {
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.source-modal-breadcrumbs {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.source-modal-breadcrumbs .cell-tag {
+  background: rgba(43, 89, 209, 0.15);
+  color: var(--cyan-primary);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-weight: 700;
+  border: 1px solid rgba(43, 89, 209, 0.3);
+}
+
+.source-modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.source-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.source-modal-meta {
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.modal-rejection-banner {
+  margin: 1rem 1.5rem 0 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid var(--rose-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--rose-primary);
+}
+
+.source-spreadsheet-container {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.excel-grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.excel-grid-table th,
+.excel-grid-table td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-subtle);
+  text-align: left;
+}
+
+.excel-grid-table thead tr {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.excel-grid-table th.col-header-target {
+  background: rgba(43, 89, 209, 0.2);
+  color: var(--cyan-primary);
+  font-weight: 700;
+}
+
+.excel-grid-table td.row-num-cell {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  font-weight: 700;
+  text-align: center;
+  width: 50px;
+  user-select: none;
+}
+
+.excel-grid-table tr.row-target td.row-num-cell {
+  background: rgba(43, 89, 209, 0.25);
   color: var(--cyan-primary);
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .investigation-container {
-    grid-template-columns: 1fr;
-  }
-  .comparison-grid {
-    grid-template-columns: 1fr;
-  }
-  .boundary-barrier {
-    flex-direction: row;
-    padding: 0.5rem 0;
-  }
-  .boundary-line {
-    width: 100%;
-    height: 2px;
-  }
+.excel-grid-table td.cell-target {
+  background: rgba(43, 89, 209, 0.25) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: 2px solid var(--cyan-primary) !important;
+  position: relative;
+  box-shadow: 0 0 10px rgba(43, 89, 209, 0.4);
+}
+
+.excel-grid-table td.cell-target.cell-decoy {
+  background: rgba(239, 68, 68, 0.25) !important;
+  border: 2px solid var(--rose-primary) !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.evidence-target-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.35rem;
+  background: var(--cyan-primary);
+  color: #000000;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.decoy-target-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.35rem;
+  background: var(--rose-primary);
+  color: #ffffff;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.source-modal-footer {
+  padding: 1rem 1.5rem;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

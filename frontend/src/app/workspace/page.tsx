@@ -12,6 +12,8 @@ import CaseTable from "@/components/CaseTable";
 import AIvsVerifierCard from "@/components/AIvsVerifierCard";
 import EscalationQueue from "@/components/EscalationQueue";
 import PipelineDiagram from "@/components/PipelineDiagram";
+import SourceEvidenceModal from "@/components/SourceEvidenceModal";
+import HumanReviewDossierModal from "@/components/HumanReviewDossierModal";
 import { benchmarkData } from "@/data/benchmarkData";
 import { Scenario, EvidenceNode } from "@/types";
 import {
@@ -31,6 +33,20 @@ export default function WorkspacePage() {
   const [activeDemoId, setActiveDemoId] = useState<string>("demo_1");
   const [activeScenarioId, setActiveScenarioId] = useState<string>("VAR-001_REFUND_VARIANCE");
   const [selectedEvidence, setSelectedEvidence] = useState<EvidenceNode | null>(null);
+  const [isSourceModalOpen, setIsSourceModalOpen] = useState(false);
+  const [modalEvidence, setModalEvidence] = useState<EvidenceNode | null>(null);
+  const [isDossierOpen, setIsDossierOpen] = useState(false);
+  const [dossierScenario, setDossierScenario] = useState<Scenario | null>(null);
+
+  const handleOpenSourceContext = (evidence: EvidenceNode) => {
+    setModalEvidence(evidence);
+    setIsSourceModalOpen(true);
+  };
+
+  const handleOpenReviewDossier = (scenarioToReview: Scenario) => {
+    setDossierScenario(scenarioToReview);
+    setIsDossierOpen(true);
+  };
 
   const currentScenario =
     benchmarkData.scenarios.find((s) => s.scenario_id === activeScenarioId) ||
@@ -253,7 +269,10 @@ export default function WorkspacePage() {
 
             {/* Right Col: Evidence Drawer (4 cols) */}
             <div className="lg:col-span-4 sticky top-28">
-              <EvidenceDrawer evidence={selectedEvidence} />
+              <EvidenceDrawer
+                evidence={selectedEvidence}
+                onViewSource={handleOpenSourceContext}
+              />
             </div>
           </div>
         )}
@@ -295,6 +314,7 @@ export default function WorkspacePage() {
                       <th className="py-3 px-4">Sheet & Cell</th>
                       <th className="py-3 px-4">SHA-256 Hash</th>
                       <th className="py-3 px-4">Status</th>
+                      <th className="py-3 px-4 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-ash/40">
@@ -331,6 +351,15 @@ export default function WorkspacePage() {
                                 {ev.status}
                               </span>
                             </td>
+                            <td className="py-3 px-4 text-center">
+                              <button
+                                onClick={() => handleOpenSourceContext(ev)}
+                                className="px-3 py-1 bg-parchment hover:bg-off-black hover:text-white border border-ash rounded-pill text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm"
+                                title="Inspect cell and surrounding spreadsheet context"
+                              >
+                                View Source
+                              </button>
+                            </td>
                           </tr>
                         );
                       });
@@ -356,10 +385,32 @@ export default function WorkspacePage() {
             ===================================================================== */}
         {activeTab === "escalation" && (
           <div className="space-y-6 animate-fade-in">
-            <EscalationQueue scenario={currentScenario} />
+            <EscalationQueue
+              scenario={currentScenario}
+              onViewSource={handleOpenSourceContext}
+              onOpenReviewDossier={handleOpenReviewDossier}
+              onSelectScenario={(scenId) => {
+                setActiveScenarioId(scenId);
+              }}
+            />
           </div>
         )}
       </main>
+
+      {/* Spreadsheet Cell-Level Source Evidence Modal */}
+      <SourceEvidenceModal
+        isOpen={isSourceModalOpen}
+        onClose={() => setIsSourceModalOpen(false)}
+        evidence={modalEvidence}
+      />
+
+      {/* Human Review Investigation Handoff Dossier Modal */}
+      <HumanReviewDossierModal
+        isOpen={isDossierOpen}
+        onClose={() => setIsDossierOpen(false)}
+        scenario={dossierScenario || currentScenario}
+        onViewSource={handleOpenSourceContext}
+      />
 
       <Footer />
     </div>

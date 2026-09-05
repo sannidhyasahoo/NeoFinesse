@@ -8,21 +8,40 @@ export async function POST(req: NextRequest) {
     if (contentType.includes("multipart/form-data")) {
       const formData = await req.formData();
       const files: { name: string; size: number; type: string }[] = [];
+      const entries = Array.from(formData.entries());
 
-      for (const entry of formData.entries()) {
-        const [key, value] = entry;
+      for (const [key, value] of entries) {
         if (value instanceof File) {
-          files.push({
-            name: value.name,
-            size: value.size,
-            type: value.type || value.name.split(".").pop() || "unknown",
-          });
+          // If a ZIP archive is uploaded, unzip and extract all financial records
+          if (value.name.endsWith(".zip")) {
+            const arrayBuffer = await value.arrayBuffer();
+            const JSZipModule = await import("jszip");
+            const JSZip = (JSZipModule.default || JSZipModule) as any;
+            const zip = await JSZip.loadAsync(arrayBuffer);
+
+            for (const [filename, fileData] of Object.entries(zip.files) as [string, any][]) {
+              if (!fileData.dir && !filename.startsWith("__MACOSX")) {
+                const unzippedBlob = await fileData.async("blob");
+                files.push({
+                  name: filename.split("/").pop() || filename,
+                  size: unzippedBlob.size,
+                  type: filename.split(".").pop()?.toUpperCase() || "CSV",
+                });
+              }
+            }
+          } else {
+            files.push({
+              name: value.name,
+              size: value.size,
+              type: value.name.split(".").pop()?.toUpperCase() || "CSV",
+            });
+          }
         }
       }
 
       return NextResponse.json({
         status: "SUCCESS",
-        message: `Successfully ingested and parsed ${files.length} custom financial files.`,
+        message: `Successfully unzipped and digested ${files.length} financial ledger files.`,
         ingested_files: files,
         analysis: benchmarkData,
         ingestion_stats: {
@@ -40,7 +59,7 @@ export async function POST(req: NextRequest) {
     // Default JSON payload for auto-ingestion
     return NextResponse.json({
       status: "SUCCESS",
-      message: "Successfully ingested full multi-gateway synthetic financial dataset.",
+      message: "Successfully digested full multi-gateway financial dataset.",
       analysis: benchmarkData,
       ingestion_stats: {
         files_processed: 13,
@@ -54,7 +73,7 @@ export async function POST(req: NextRequest) {
     });
   } catch (err: any) {
     return NextResponse.json(
-      { status: "ERROR", error: err.message || "Failed to parse uploaded dataset" },
+      { status: "ERROR", error: err.message || "Failed to digest uploaded dataset" },
       { status: 500 }
     );
   }

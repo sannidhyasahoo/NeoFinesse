@@ -487,12 +487,54 @@
   <!-- ==============================================================================
        APP FOOTER
        ============================================================================== -->
-  <footer class="app-footer">
-    <p>
-      <strong>NeoFinesse</strong> &bull; Razorpay Hackathon &bull; Phase 8 Demo & Audit UI &bull; 
-      Built with pure HTML/CSS/JS &bull; <em>"AI investigates. Evidence constrains. Deterministic verification decides."</em>
-    </p>
-  </footer>
+  <!-- ==============================================================================
+       CELL-LEVEL SOURCE EVIDENCE VIEWER MODAL
+       ============================================================================== -->
+  <div class="source-modal-backdrop" id="source-modal" style="display: none;">
+    <div class="source-modal-container">
+      <div class="source-modal-header">
+        <div class="source-modal-title-group">
+          <div class="source-modal-breadcrumbs">
+            <span id="modal-filename">settlements.xlsx</span> &rsaquo; 
+            <span id="modal-sheet">Settlements</span> &rsaquo; 
+            <span class="cell-tag" id="modal-cell">H42</span>
+          </div>
+          <h2 class="source-modal-title">Source Evidence Context <span id="modal-status-badge" class="badge verified">✓ Provenance Verified</span></h2>
+        </div>
+        <div class="source-modal-actions">
+          <button class="btn btn-secondary" onclick="window.copyModalCellRef()" id="btn-copy-ref">📋 Copy Cell Reference</button>
+          <button class="modal-close-btn" onclick="window.closeSourceModal()" aria-label="Close">✕</button>
+        </div>
+      </div>
+
+      <!-- Provenance integrity & Decoy Alert -->
+      <div class="source-modal-meta">
+        <div><strong>Evidence ID:</strong> <span id="modal-ev-id">E-001</span> &bull; <strong>Level:</strong> <span id="modal-ev-level">L5</span></div>
+        <div><strong>SHA-256 Hash:</strong> <code id="modal-ev-hash" style="font-size: 0.725rem;">...</code></div>
+      </div>
+
+      <div id="modal-rejection-banner" class="modal-rejection-banner" style="display: none;">
+        <div style="font-weight: 700; color: var(--rose-primary);">REJECTED EVIDENCE DECOY</div>
+        <div id="modal-rejection-reason" style="font-size: 0.8rem; margin-top: 0.25rem;">Reason: Mismatch</div>
+      </div>
+
+      <!-- Excel-Style Spreadsheet Matrix Container -->
+      <div class="source-spreadsheet-container">
+        <div id="modal-loading-spinner" style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+          Loading source spreadsheet context...
+        </div>
+        <div id="modal-spreadsheet-content"></div>
+      </div>
+
+      <!-- Footer Info -->
+      <div class="source-modal-footer">
+        <div style="font-size: 0.75rem; color: var(--text-secondary);">
+          Deterministic L5 Grounding &bull; Zero LLM Involvement &bull; Exact Raw File Record Verified
+        </div>
+        <button class="btn btn-primary" onclick="window.closeSourceModal()">Close Viewer</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Load UI Engine -->
   <script src="/static/js/app.js"></script>
