@@ -1,0 +1,15 @@
+{
+  "name": "neofinesse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NeoFinesse — Evidence-Constrained AI Financial Investigation & Reconciliation Engine",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix frontend start",
+    "lint": "npm --prefix frontend run lint"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}
