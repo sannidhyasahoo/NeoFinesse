@@ -8,6 +8,10 @@
 [![False Closure Rate](https://img.shields.io/badge/False%20Closure%20Rate-0.0%25%20Guaranteed-047857?style=for-the-badge&logo=shield&logoColor=white)](#core-invariants--guarantees)
 [![Frontend](https://img.shields.io/badge/Frontend-Next.js%2014%20%7C%20TypeScript%20%7C%20Tailwind-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](#frontend-experience)
 [![Backend](https://img.shields.io/badge/Engine-Python%203.12%20%7C%20Pydantic%20v2-3776AB?style=for-the-badge&logo=python&logoColor=white)](#backend--architecture)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-neofinesse.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://neofinesse.vercel.app/)
+[![GitHub](https://img.shields.io/badge/GitHub-sannidhyasahoo%2FNeoFinesse-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sannidhyasahoo/NeoFinesse)
+
+![NeoFinesse UI Demo](docs/assets/hero.webp)
 
 ---
 
@@ -71,6 +75,8 @@ Every payment, refund, dispute, and fee line is tied to its immutable source fil
 ```
 Auditors can open the raw Excel/CSV file and verify findings in seconds with zero black-box opacity.
 
+![Cell-Level Provenance](docs/assets/provenance.png)
+
 ### 3. Decoy Disambiguation & Relational Traversal
 Instead of matching transactions by amount alone, NeoFinesse traverses the complete causal relational graph:
 ```text
@@ -88,6 +94,8 @@ Every case must pass 5 independent deterministic mathematical checks:
 
 ### 5. Zero Financial Loss Guarantee
 The system **knows when it doesn't know**. If a variance cannot be proven with 100% certainty (due to missing supplier invoices, external deductions, or corrupted timestamps), it is safely routed to the **Tier-2 Human Audit Escalation Queue** with an immutable cryptographic evidence dossier.
+
+![Tier-2 Escalation Queue](docs/assets/escalation.png)
 
 ---
 
@@ -148,6 +156,8 @@ The engine was rigorously evaluated across 23 complex multi-gateway variance edg
 | **Live Remote Model Audit** | Remote Google Gemini Flash + Deterministic Verifier | 65.2% (15/23)* | **0.0% (0/12)** | 66.7% (8/12) | Zero False Closures (*8 infra fails) |
 
 > **0.0% False Closure Guarantee Verified:** Across all evaluation modes, NeoFinesse never produced a single false closure. Even when an external LLM encountered network or quota rate limits, the deterministic verifier safely escalated cases rather than making incorrect financial decisions.
+
+![Executive Dashboard](docs/assets/dashboard.png)
 
 ---
 
