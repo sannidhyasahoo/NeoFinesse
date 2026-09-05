@@ -26,16 +26,16 @@ export default function EscalationQueue({ scenario }: EscalationQueueProps) {
             </div>
             <div>
               <h3 className="font-serif text-2xl text-off-black">
-                Fail-Safe Escalation & Safety Queue &bull; <span className="text-lake-blue">{scenario.case_id}</span>
+                Cases Sent to Human Review &bull; <span className="text-lake-blue">{scenario.case_id}</span>
               </h3>
               <p className="text-xs font-mono text-smoke mt-0.5">
-                Demonstrating that the system <strong>knows when it doesn&rsquo;t know</strong>. Unproven variances are safely escalated to human audit.
+                When the system can&rsquo;t fully prove an explanation, it sends the case here rather than guessing. This view shows exactly why.
               </p>
             </div>
           </div>
 
           <div className="px-4 py-2 bg-parchment rounded-2xl border border-ash text-right self-start sm:self-auto">
-            <div className="text-[10px] uppercase font-mono text-smoke">Unresolved Delta</div>
+            <div className="text-[10px] uppercase font-mono text-smoke">Unresolved Amount</div>
             <div className="text-lg font-mono font-bold text-rose-600">{varFormatted}</div>
           </div>
         </div>
@@ -44,17 +44,17 @@ export default function EscalationQueue({ scenario }: EscalationQueueProps) {
         <div className="space-y-4">
           <div className="text-xs uppercase font-mono font-bold text-off-black tracking-wider flex items-center gap-2">
             <ShieldAlert className="w-4 h-4 text-rose-600" />
-            <span>Forensic Audit: Why Was This Case Escalated?</span>
+            <span>Why was this case not closed automatically?</span>
           </div>
 
           <div className="p-4 bg-parchment rounded-2xl border border-ash/70 space-y-3">
             <p className="text-xs font-mono text-off-black leading-relaxed">
-              {scenario.primary_cause || "No valid causal evidence chain satisfies all 5 deterministic financial constraints."}
+              {scenario.primary_cause || "No valid explanation satisfies all five verification checks."}
             </p>
 
             <div className="space-y-2 pt-2 border-t border-ash/40">
               <div className="text-[10px] uppercase font-mono text-smoke font-medium">
-                Failed Constraint Checks:
+                Checks that failed:
               </div>
               {(scenario.verifier_constraints || [])
                 .filter((c) => c.status === "FAIL")
@@ -82,10 +82,10 @@ export default function EscalationQueue({ scenario }: EscalationQueueProps) {
         <div className="p-4 bg-periwinkle-mist/40 rounded-2xl border border-ash flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="text-[10px] uppercase font-mono text-smoke font-medium">
-              System Action Protocol
+              Next Action
             </div>
             <div className="text-xs font-mono font-semibold text-off-black">
-              Route to Tier-2 Financial Operations Audit Queue with L5 Cell Evidence Dossier attached.
+              Assign to a human auditor. Full source file evidence is attached to the case.
             </div>
           </div>
 

@@ -1,9 +1,10 @@
 export interface EvidenceNode {
   evidence_id: string;
   entity_type: string;
-  entity_id: string;
+  entity_id?: string;
+  entity_key?: string;       // alias used in benchmark data
   amount_inr: number;
-  currency: string;
+  currency?: string;
   source_file: string;
   sheet: string;
   row: number;
@@ -11,7 +12,8 @@ export interface EvidenceNode {
   evidence_level: string;
   record_hash: string;
   relationship_path: string;
-  status: "VERIFIED" | "REJECTED";
+  status: "VERIFIED" | "REJECTED" | "UNRESOLVED";
+  role?: string;
   rejection_reason?: string;
   lesson?: string;
   description?: string;
@@ -19,10 +21,13 @@ export interface EvidenceNode {
 
 export interface AIHypothesis {
   proposed_explanation: string;
-  candidate_entities: string[];
-  requested_tools: string[];
-  confidence_score: number;
-  reasoning: string;
+  candidate_entities?: string[];
+  requested_tools?: string[];
+  tools_requested?: string[];   // alias used in benchmark data
+  ai_confidence?: string;
+  ai_status?: string;
+  confidence_score?: number;
+  reasoning?: string;
 }
 
 export interface VerifierConstraint {
@@ -30,6 +35,13 @@ export interface VerifierConstraint {
   description: string;
   status: "PASS" | "FAIL";
   details: string;
+}
+
+export interface ConstraintCheck {
+  name: string;
+  description: string;
+  status: "PASS" | "FAIL" | "WARN";
+  rule: string;
 }
 
 export interface Scenario {
@@ -40,14 +52,24 @@ export interface Scenario {
   expected_amount_inr: number;
   actual_bank_credit_inr: number;
   variance_inr: number;
-  currency: string;
+  variance_paise?: number;      // used in benchmark data
+  currency?: string;
   expected_outcome: "RESOLVED" | "VALID_DELAYED_CREDIT" | "PARTIALLY_RESOLVED" | "ESCALATE";
   primary_cause: string;
   evidence_level: string;
   evidence_nodes: EvidenceNode[];
   rejected_decoys: EvidenceNode[];
+  constraint_checks?: ConstraintCheck[];    // raw data field name
   ai_hypothesis: AIHypothesis;
-  verifier_constraints: VerifierConstraint[];
+  verifier_constraints?: VerifierConstraint[];
+  verifier_outcome?: {
+    verdict: string;
+    constraints_passed: number;
+    constraints_total: number;
+    final_decision: string;
+    authority_note: string;
+  };
+  escalation_info?: unknown;
   escalation_details?: {
     is_escalated: boolean;
     unresolved_variance_inr: number;

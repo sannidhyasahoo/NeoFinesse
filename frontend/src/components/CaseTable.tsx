@@ -49,18 +49,17 @@ export default function CaseTable({ scenarios, onInspectScenario }: CaseTablePro
             { label: "Resolved", val: "RESOLVED" },
             { label: "Delayed Credit", val: "VALID_DELAYED_CREDIT" },
             { label: "Partial", val: "PARTIALLY_RESOLVED" },
-            { label: "Escalated", val: "ESCALATE" },
+            { label: "Escalated to Human", val: "ESCALATE" },
           ].map((f) => {
             const isActive = statusFilter === f.val;
             return (
               <button
                 key={f.val}
                 onClick={() => setStatusFilter(f.val)}
-                className={`px-3 py-1.5 rounded-pill text-xs transition-all uppercase tracking-wider ${
-                  isActive
-                    ? "bg-off-black text-parchment font-medium shadow-sm"
-                    : "bg-white text-graphite hover:bg-ash/20 border border-ash/70"
-                }`}
+                className={`px-3 py-1.5 rounded-pill text-xs transition-all uppercase tracking-wider ${isActive
+                  ? "bg-off-black text-parchment font-medium shadow-sm"
+                  : "bg-white text-graphite hover:bg-ash/20 border border-ash/70"
+                  }`}
               >
                 {f.label}
               </button>
@@ -76,14 +75,14 @@ export default function CaseTable({ scenarios, onInspectScenario }: CaseTablePro
             <thead>
               <tr className="bg-parchment/70 border-b border-ash text-[11px] uppercase tracking-wider text-smoke font-semibold">
                 <th className="py-3.5 px-4">Case ID</th>
-                <th className="py-3.5 px-4">Scenario ID</th>
+                <th className="py-3.5 px-4">Scenario</th>
                 <th className="py-3.5 px-4">Settlement ID</th>
                 <th className="py-3.5 px-4">Expected</th>
                 <th className="py-3.5 px-4">Bank Credit</th>
-                <th className="py-3.5 px-4">Variance</th>
+                <th className="py-3.5 px-4">Discrepancy</th>
                 <th className="py-3.5 px-4">Outcome</th>
-                <th className="py-3.5 px-4">Root Cause</th>
-                <th className="py-3.5 px-4">Level</th>
+                <th className="py-3.5 px-4">Cause</th>
+                <th className="py-3.5 px-4">Traceability</th>
                 <th className="py-3.5 px-4 text-right">Action</th>
               </tr>
             </thead>
@@ -131,15 +130,20 @@ export default function CaseTable({ scenarios, onInspectScenario }: CaseTablePro
                     </td>
                     <td className="py-3 px-4">
                       <span
-                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
-                          isResolved
-                            ? "bg-emerald-100 text-emerald-800"
-                            : isPartial
+                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${isResolved
+                          ? "bg-emerald-100 text-emerald-800"
+                          : isPartial
                             ? "bg-amber-100 text-amber-800"
                             : "bg-rose-100 text-rose-800"
-                        }`}
+                          }`}
                       >
-                        {s.expected_outcome}
+                        {s.expected_outcome === "ESCALATE"
+                          ? "Sent to Human"
+                          : s.expected_outcome === "VALID_DELAYED_CREDIT"
+                            ? "Delayed Credit"
+                            : s.expected_outcome === "PARTIALLY_RESOLVED"
+                              ? "Partial"
+                              : "Resolved"}
                       </span>
                     </td>
                     <td className="py-3 px-4 text-[11px] text-graphite max-w-[200px] truncate">
@@ -147,7 +151,7 @@ export default function CaseTable({ scenarios, onInspectScenario }: CaseTablePro
                     </td>
                     <td className="py-3 px-4">
                       <span className="px-1.5 py-0.5 rounded bg-ash/30 text-off-black text-[10px] font-medium">
-                        {s.evidence_level}
+                        {s.evidence_level === "L5" ? "Cell-traced" : s.evidence_level === "L2" ? "Partial" : s.evidence_level === "L1" ? "Unlinked" : s.evidence_level}
                       </span>
                     </td>
                     <td className="py-3 px-4 text-right">

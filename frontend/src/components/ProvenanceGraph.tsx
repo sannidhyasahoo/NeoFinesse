@@ -49,7 +49,7 @@ export default function ProvenanceGraph({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ash/40 pb-4 mb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs uppercase font-mono text-smoke">Investigation Tree</span>
+            <span className="text-xs uppercase font-mono text-smoke">Transaction Trace</span>
             <span className="px-2 py-0.5 rounded-pill bg-periwinkle-mist/60 border border-ash text-xs font-mono font-semibold text-off-black">
               {scenario.case_id} &bull; {scenario.scenario_id}
             </span>
@@ -60,19 +60,19 @@ export default function ProvenanceGraph({
         <div className="flex flex-wrap items-center gap-4 text-xs font-mono">
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-            <span className="text-smoke">Variance Root</span>
+            <span className="text-smoke">Settlement gap</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
-            <span className="text-smoke">Verified Proof</span>
+            <span className="text-smoke">Verified transaction</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-            <span className="text-smoke">Decoy (Rejected)</span>
+            <span className="text-smoke">Wrong link (rejected)</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-lake-blue" />
-            <span className="text-smoke">5-Point Verifier</span>
+            <span className="text-smoke">Verification checks</span>
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@ export default function ProvenanceGraph({
               fontFamily="var(--font-mono)"
               letterSpacing={1}
             >
-              SETTLEMENT VARIANCE
+              SETTLEMENT DISCREPANCY
             </text>
             <text
               x={rootX}
@@ -188,7 +188,7 @@ export default function ProvenanceGraph({
                   fontWeight={700}
                   fontFamily="var(--font-mono)"
                 >
-                  {isRejected ? "✗ DECOY REJECTED" : `✓ ${ev.entity_type}`}
+                  {isRejected ? "✗ WRONG LINK" : `✓ ${ev.entity_type}`}
                 </text>
                 <text
                   x={evX}
@@ -258,7 +258,7 @@ export default function ProvenanceGraph({
               fontFamily="var(--font-mono)"
               letterSpacing={1}
             >
-              5-POINT DETERMINISTIC VERIFIER
+              FIVE VERIFICATION CHECKS
             </text>
             <text
               x={verifierX}
@@ -269,7 +269,7 @@ export default function ProvenanceGraph({
               fontWeight={600}
               fontFamily="var(--font-mono)"
             >
-              Mathematical & Relational Proof Evaluated
+              Amount · Timing · Link · State · File
             </text>
           </g>
 
@@ -307,7 +307,7 @@ export default function ProvenanceGraph({
               fontFamily="var(--font-mono)"
               letterSpacing={1}
             >
-              TERMINAL DECISION
+              FINAL DECISION
             </text>
             <text
               x={verifierX}
@@ -318,7 +318,14 @@ export default function ProvenanceGraph({
               fontWeight={700}
               fontFamily="var(--font-mono)"
             >
-              {isApproved ? `✓ ${scenario.expected_outcome}` : "🚨 SAFE ESCALATE TO HUMAN"}
+              {isApproved
+                ? `✓ ${scenario.expected_outcome === "VALID_DELAYED_CREDIT"
+                  ? "DELAYED CREDIT — VERIFIED"
+                  : scenario.expected_outcome === "PARTIALLY_RESOLVED"
+                    ? "PARTIALLY EXPLAINED"
+                    : "RESOLVED"
+                }`
+                : "🚨 SENT TO HUMAN REVIEW"}
             </text>
           </g>
         </svg>
@@ -327,10 +334,10 @@ export default function ProvenanceGraph({
       <div className="mt-4 pt-3 border-t border-ash/40 flex items-center justify-between text-[11px] font-mono text-smoke">
         <span className="flex items-center gap-1.5">
           <Info className="w-3.5 h-3.5 text-lake-blue" />
-          Click any candidate node above to inspect its exact Excel/CSV row, sheet, and SHA-256 hash.
+          Click any transaction node to inspect its exact row, sheet, and record hash in the original file.
         </span>
         <span>
-          Authority: <strong>Deterministic Financial Verifier</strong>
+          Final decision: <strong>Mathematical Verifier</strong>
         </span>
       </div>
     </div>

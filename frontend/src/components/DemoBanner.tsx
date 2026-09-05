@@ -28,7 +28,7 @@ export default function DemoBanner({
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-lake-blue" />
             <span className="text-xs uppercase font-mono tracking-wider font-semibold text-off-black">
-              Interactive Demo Cases:
+              Example Cases:
             </span>
           </div>
 
@@ -39,11 +39,10 @@ export default function DemoBanner({
                 <button
                   key={demo.demo_id}
                   onClick={() => onSelectDemo(demo.demo_id)}
-                  className={`px-3.5 py-1.5 rounded-pill text-xs font-mono transition-all uppercase tracking-wider ${
-                    isActive
-                      ? "bg-off-black text-parchment font-semibold shadow-sm"
-                      : "bg-white/80 hover:bg-white text-graphite border border-ash/60"
-                  }`}
+                  className={`px-3.5 py-1.5 rounded-pill text-xs font-mono transition-all uppercase tracking-wider ${isActive
+                    ? "bg-off-black text-parchment font-semibold shadow-sm"
+                    : "bg-white/80 hover:bg-white text-graphite border border-ash/60"
+                    }`}
                 >
                   {demo.title.split(":")[0]}: {demo.subtitle.split("(")[0]}
                 </button>
@@ -68,7 +67,7 @@ export default function DemoBanner({
           <div className="shrink-0 flex items-center gap-3">
             <div className="px-4 py-2 bg-white rounded-2xl border border-ash text-right">
               <div className="text-[10px] uppercase font-mono text-smoke">
-                {current.case_id} &bull; Variance
+                {current.case_id} &bull; Discrepancy
               </div>
               <div className="text-base font-mono font-bold text-lake-blue">
                 {current.variance_display}

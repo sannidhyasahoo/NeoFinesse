@@ -18,60 +18,60 @@ const steps: PipelineStep[] = [
   {
     id: "step-1",
     stepNumber: "Step 01",
-    title: "Multi-Gateway Ingestion",
-    subtitle: "Expected vs Actual",
-    description: "Ingests Razorpay, Cashfree, ICICI bank statements, and UPI switch payloads. Matches batch totals and registers initial delta.",
-    badge: "Input Stream",
+    title: "Files are imported",
+    subtitle: "Expected vs received",
+    description: "Your settlement files from Razorpay, Cashfree, ICICI, HDFC, or UPI are loaded. The system reads the expected payout and what was actually credited to the bank.",
+    badge: "Data Import",
     icon: <Database className="w-4 h-4 text-graphite" />,
     authority: "Settlement Ledger",
   },
   {
     id: "step-2",
     stepNumber: "Step 02",
-    title: "Variance Delta Isolation",
-    subtitle: "Paise-level discrepancy",
-    description: "Computes exact arithmetic difference (₹) per settlement batch and initializes an evidence-constrained investigation session.",
-    badge: "Delta Trigger",
+    title: "Discrepancies are found",
+    subtitle: "Amount mismatch detected",
+    description: "For each settlement batch, the system calculates the exact difference between what was expected and what arrived. Each gap gets its own investigation.",
+    badge: "Mismatch Detected",
     icon: <Search className="w-4 h-4 text-crimson" />,
     authority: "Settlement Ledger",
   },
   {
     id: "step-3",
     stepNumber: "Step 03",
-    title: "AI Hypothesis Generator",
-    subtitle: "Candidate generation",
-    description: "LLM analyzes domain rules, historical context, and proposes testable causal hypotheses without closing authority.",
-    badge: "Planner (No Closing Power)",
+    title: "AI proposes an explanation",
+    subtitle: "Hypothesis, not decision",
+    description: "The AI looks at the data and suggests what might explain the gap — a refund, a fee, a dispute. It cannot close the case itself; it can only propose.",
+    badge: "Suggestion Only",
     icon: <Cpu className="w-4 h-4 text-lake-blue" />,
     authority: "AI & Tools",
   },
   {
     id: "step-4",
     stepNumber: "Step 04",
-    title: "Bounded Tool Retrieval",
-    subtitle: "L5 cell coordinates",
-    description: "Autonomous tool execution queries refunds, adjustments, disputes, and delayed credits, retrieving SHA-256 backed cell coordinates.",
-    badge: "Evidence Collector",
+    title: "Evidence is collected",
+    subtitle: "Traced to source file",
+    description: "The system retrieves the actual transactions — refunds, adjustments, disputes — and records where each one lives in the original uploaded file.",
+    badge: "Evidence Collected",
     icon: <Database className="w-4 h-4 text-lake-blue" />,
     authority: "AI & Tools",
   },
   {
     id: "step-5",
     stepNumber: "Step 05",
-    title: "5-Point Deterministic Verifier",
-    subtitle: "Sole final authority",
-    description: "Evaluates exact mathematical sum, temporal window cut-off, relational key provenance, state legality, and completeness.",
-    badge: "Sole Authority",
+    title: "Five checks are run",
+    subtitle: "Math, time, link, state, file",
+    description: "Each piece of evidence must pass: (1) amounts add up, (2) timing is within the window, (3) the transaction links to this settlement, (4) the state is valid, (5) the record exists in the source file.",
+    badge: "All 5 Must Pass",
     icon: <ShieldCheck className="w-4 h-4 text-emerald-600" />,
     authority: "Deterministic Verifier",
   },
   {
     id: "step-6",
     stepNumber: "Step 06",
-    title: "Terminal Decision & Fail-Safe",
-    subtitle: "RESOLVED / ESCALATE",
-    description: "Either generates automated cryptographic ledger resolution or safely escalates trapped decoys to Tier-2 human audit queue.",
-    badge: "Zero False Closures",
+    title: "Resolved or escalated",
+    subtitle: "Proven close or human review",
+    description: "If all five checks pass, the case is closed with a full verified audit trail. If any check fails, the case is sent to a human reviewer with the complete evidence package.",
+    badge: "No Incorrect Closures",
     icon: <CheckCircle2 className="w-4 h-4 text-emerald-600" />,
     authority: "Deterministic Verifier",
   },
@@ -92,15 +92,15 @@ export default function PipelineDiagram() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-ash/50 pb-6">
           <div>
             <span className="text-xs uppercase tracking-wider font-mono text-lake-blue font-medium block mb-1">
-              Deterministic Architecture
+              How It Works
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl text-off-black">
-              End-to-End Investigation Architecture Flow
+              From uploaded file to verified decision — six steps
             </h2>
           </div>
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-pill bg-emerald-50 border border-emerald-300 text-xs font-mono text-emerald-800 self-start sm:self-auto">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Deterministic Safety Guaranteed</span>
+            <span>No incorrect closures, guaranteed</span>
           </div>
         </div>
 
@@ -115,11 +115,10 @@ export default function PipelineDiagram() {
               <button
                 key={step.id}
                 onClick={() => setActiveStep(step.id)}
-                className={`text-left p-4 rounded-2xl border transition-all relative flex flex-col justify-between min-h-[140px] ${
-                  isSelected
-                    ? "bg-white border-off-black ring-2 ring-off-black/10 shadow-sm"
-                    : "bg-parchment/60 hover:bg-white/80 border-ash"
-                }`}
+                className={`text-left p-4 rounded-2xl border transition-all relative flex flex-col justify-between min-h-[140px] ${isSelected
+                  ? "bg-white border-off-black ring-2 ring-off-black/10 shadow-sm"
+                  : "bg-parchment/60 hover:bg-white/80 border-ash"
+                  }`}
               >
                 <div>
                   <div className="flex items-center justify-between gap-1 mb-2">
@@ -135,13 +134,12 @@ export default function PipelineDiagram() {
 
                 <div className="mt-3 pt-2 border-t border-ash/40">
                   <span
-                    className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded-full inline-block ${
-                      isVerifier
-                        ? "bg-emerald-100 text-emerald-800 font-semibold"
-                        : isAI
+                    className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded-full inline-block ${isVerifier
+                      ? "bg-emerald-100 text-emerald-800 font-semibold"
+                      : isAI
                         ? "bg-blue-100 text-lake-blue font-medium"
                         : "bg-ash/30 text-graphite"
-                    }`}
+                      }`}
                   >
                     {step.subtitle}
                   </span>

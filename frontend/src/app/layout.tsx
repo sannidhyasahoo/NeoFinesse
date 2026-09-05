@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NeoFinesse — Evidence-Constrained AI Financial Investigation",
+  title: "NeoFinesse — Automated Settlement Reconciliation",
   description:
-    "NeoFinesse traces settlement variances across payments, refunds, disputes, UPI events, and bank transactions using active evidence retrieval and deterministic constraint verification.",
+    "NeoFinesse automatically investigates payment settlement discrepancies across gateways, traces every finding to the source file, and either resolves cases with mathematical proof or escalates to human review.",
   icons: {
     icon: "/favicon.ico",
   },

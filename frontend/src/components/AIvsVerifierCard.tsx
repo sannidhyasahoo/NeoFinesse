@@ -18,11 +18,11 @@ export default function AIvsVerifierCard({ scenario }: AIvsVerifierCardProps) {
         <div className="flex items-center gap-2">
           <Shield className="w-4 h-4 text-lake-blue" />
           <span className="text-xs font-mono text-off-black">
-            <strong>Architectural Boundary:</strong> The LLM is strictly an investigator & hypothesis generator with <strong>zero closing authority</strong>.
+            <strong>Design principle:</strong> The AI can only suggest an explanation. A separate mathematical verifier makes every final decision — the AI has <strong>no power to close a case.</strong>
           </span>
         </div>
         <span className="text-[10px] font-mono px-2 py-0.5 rounded-pill bg-white border border-ash text-graphite uppercase">
-          Zero Hallucination Guaranteed
+          No AI-Only Closures
         </span>
       </div>
 
@@ -36,29 +36,29 @@ export default function AIvsVerifierCard({ scenario }: AIvsVerifierCardProps) {
                   <Bot className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg text-off-black">AI Investigator (Planner)</h3>
-                  <div className="text-[10px] font-mono text-smoke">Proposes hypotheses & bounds tool searches</div>
+                  <h3 className="font-serif text-lg text-off-black">AI Investigation</h3>
+                  <div className="text-[10px] font-mono text-smoke">Reads the data and suggests an explanation</div>
                 </div>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-blue-50 text-lake-blue text-[10px] font-mono font-medium">
-                Advisory Only
+                Suggestion Only
               </span>
             </div>
 
             {/* Generated Hypothesis */}
             <div>
               <div className="text-[10px] uppercase font-mono text-smoke tracking-wider mb-1">
-                Generated Causal Hypothesis
+                Proposed Explanation
               </div>
               <div className="p-3 bg-parchment rounded-2xl border border-ash/60 text-xs font-mono text-off-black leading-relaxed">
-                &ldquo;{scenario.ai_hypothesis?.proposed_explanation || "Analyzing variance candidate causes against settlement window..."}&rdquo;
+                &ldquo;{scenario.ai_hypothesis?.proposed_explanation || "Analysing candidate causes against settlement window..."}&rdquo;
               </div>
             </div>
 
             {/* Requested Tools */}
             <div>
               <div className="text-[10px] uppercase font-mono text-smoke tracking-wider mb-1">
-                Requested Bounded Tool Queries
+                Data Queries Run
               </div>
               <ul className="space-y-1 text-xs font-mono">
                 {(scenario.ai_hypothesis?.requested_tools || [
@@ -77,7 +77,7 @@ export default function AIvsVerifierCard({ scenario }: AIvsVerifierCardProps) {
           </div>
 
           <div className="pt-3 border-t border-ash/40 text-[10px] font-mono text-smoke">
-            Closing Authority: <strong className="text-rose-600">NONE (Read-Only)</strong>
+            Can close a case: <strong className="text-rose-600">No — suggestion only</strong>
           </div>
         </div>
 
@@ -102,19 +102,19 @@ export default function AIvsVerifierCard({ scenario }: AIvsVerifierCardProps) {
                   <Zap className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg text-off-black">Deterministic Verifier</h3>
-                  <div className="text-[10px] font-mono text-smoke">Strict mathematical & relational constraints</div>
+                  <h3 className="font-serif text-lg text-off-black">Mathematical Verifier</h3>
+                  <div className="text-[10px] font-mono text-smoke">Makes every final decision — five independent checks</div>
                 </div>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold">
-                Sole Authority
+                Final Decision
               </span>
             </div>
 
             {/* 5-Point Checklist */}
             <div>
               <div className="text-[10px] uppercase font-mono text-smoke tracking-wider mb-2">
-                5-Point Deterministic Constraint Proof
+                Five Verification Checks
               </div>
               <div className="space-y-2">
                 {(scenario.verifier_constraints || []).map((c, idx) => {
@@ -122,11 +122,10 @@ export default function AIvsVerifierCard({ scenario }: AIvsVerifierCardProps) {
                   return (
                     <div
                       key={idx}
-                      className={`p-2.5 rounded-2xl border text-xs font-mono transition-all flex items-start justify-between gap-3 ${
-                        isPass
-                          ? "bg-emerald-50/40 border-emerald-200 text-emerald-900"
-                          : "bg-rose-50/40 border-rose-200 text-rose-900"
-                      }`}
+                      className={`p-2.5 rounded-2xl border text-xs font-mono transition-all flex items-start justify-between gap-3 ${isPass
+                        ? "bg-emerald-50/40 border-emerald-200 text-emerald-900"
+                        : "bg-rose-50/40 border-rose-200 text-rose-900"
+                        }`}
                     >
                       <div className="space-y-0.5">
                         <div className="font-bold text-[11px] flex items-center gap-1.5">
@@ -140,9 +139,8 @@ export default function AIvsVerifierCard({ scenario }: AIvsVerifierCardProps) {
                         <div className="text-[10px] opacity-80 pl-5">{c.details}</div>
                       </div>
                       <span
-                        className={`text-[9px] uppercase px-1.5 py-0.5 rounded font-bold ${
-                          isPass ? "bg-emerald-200 text-emerald-900" : "bg-rose-200 text-rose-900"
-                        }`}
+                        className={`text-[9px] uppercase px-1.5 py-0.5 rounded font-bold ${isPass ? "bg-emerald-200 text-emerald-900" : "bg-rose-200 text-rose-900"
+                          }`}
                       >
                         {c.status}
                       </span>
@@ -154,15 +152,14 @@ export default function AIvsVerifierCard({ scenario }: AIvsVerifierCardProps) {
           </div>
 
           <div className="pt-3 border-t border-ash/40 flex items-center justify-between text-xs font-mono">
-            <span className="text-smoke uppercase text-[10px] font-semibold">Verifier Verdict:</span>
+            <span className="text-smoke uppercase text-[10px] font-semibold">Final Decision:</span>
             <span
-              className={`px-3 py-1 rounded-pill font-bold uppercase text-[11px] ${
-                isApproved
-                  ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
-                  : "bg-rose-100 text-rose-800 border border-rose-300"
-              }`}
+              className={`px-3 py-1 rounded-pill font-bold uppercase text-[11px] ${isApproved
+                ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                : "bg-rose-100 text-rose-800 border border-rose-300"
+                }`}
             >
-              {isApproved ? "✓ APPROVED (Auto-Close)" : "🚨 ESCALATE (Human Audit)"}
+              {isApproved ? "✓ Resolved & Closed" : "🚨 Sent to Human Review"}
             </span>
           </div>
         </div>

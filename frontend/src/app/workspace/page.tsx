@@ -68,25 +68,25 @@ export default function WorkspacePage() {
       <Navbar />
 
       <main className="flex-1 max-w-[1432px] mx-auto px-6 lg:px-12 py-8 space-y-8 w-full relative z-10">
-        {/* Workspace Top Header & Core Principle Bar */}
+        {/* Workspace Top Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-ash/50 pb-6">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-xs uppercase font-mono tracking-wider text-smoke font-medium">
-                Live Analysis & Audit Workspace
+                Live Investigation Workspace
               </span>
             </div>
             <h1 className="font-serif text-3xl sm:text-4xl text-off-black">
-              Multi-Gateway Variance Investigation
+              Settlement Discrepancy Audit
             </h1>
           </div>
 
-          {/* Core Invariant Badge */}
+          {/* Core principle badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-white border border-ash text-xs font-mono text-off-black shadow-sm self-start md:self-auto">
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
             <span>
-              <strong>Core Invariant:</strong> AI investigates &bull; Tools retrieve &bull; Evidence constrains &bull; Deterministic verification decides
+              <strong>How it works:</strong> AI suggests &bull; Evidence is checked &bull; Math decides &bull; Unproven cases escalate
             </span>
           </div>
         </div>
@@ -104,23 +104,22 @@ export default function WorkspacePage() {
           aria-label="Workspace Views"
         >
           {[
-            { id: "dashboard", label: "Executive Dashboard", icon: <LayoutDashboard className="w-4 h-4" /> },
-            { id: "cases", label: `Variance Cases (${benchmarkData.scenarios.length})`, icon: <FileSpreadsheet className="w-4 h-4" /> },
-            { id: "graph", label: "Flagship Provenance Graph", icon: <Network className="w-4 h-4" /> },
-            { id: "evidence", label: "Cell Evidence Inspector", icon: <FileCheck className="w-4 h-4" /> },
-            { id: "comparator", label: "AI vs. Verifier Separation", icon: <Scale className="w-4 h-4" /> },
-            { id: "escalation", label: "Escalation & Safety Queue", icon: <AlertOctagon className="w-4 h-4" /> },
+            { id: "dashboard", label: "Overview", icon: <LayoutDashboard className="w-4 h-4" /> },
+            { id: "cases", label: `All Cases (${benchmarkData.scenarios.length})`, icon: <FileSpreadsheet className="w-4 h-4" /> },
+            { id: "graph", label: "Transaction Trace", icon: <Network className="w-4 h-4" /> },
+            { id: "evidence", label: "Source File Evidence", icon: <FileCheck className="w-4 h-4" /> },
+            { id: "comparator", label: "AI vs. Verifier", icon: <Scale className="w-4 h-4" /> },
+            { id: "escalation", label: "Escalation Queue", icon: <AlertOctagon className="w-4 h-4" /> },
           ].map((tab) => {
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2.5 rounded-pill text-xs font-mono uppercase tracking-wider transition-all flex items-center gap-2 whitespace-nowrap ${
-                  isActive
-                    ? "bg-off-black text-parchment font-semibold shadow-sm"
-                    : "bg-white/70 hover:bg-white text-graphite border border-ash/60"
-                }`}
+                className={`px-4 py-2.5 rounded-pill text-xs font-mono uppercase tracking-wider transition-all flex items-center gap-2 whitespace-nowrap ${isActive
+                  ? "bg-off-black text-parchment font-semibold shadow-sm"
+                  : "bg-white/70 hover:bg-white text-graphite border border-ash/60"
+                  }`}
               >
                 {tab.icon}
                 <span>{tab.label}</span>
@@ -145,14 +144,14 @@ export default function WorkspacePage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ash/40 pb-4">
                 <div>
                   <span className="text-xs uppercase font-mono text-lake-blue font-medium">
-                    Evaluation Matrix
+                    How the systems compare
                   </span>
                   <h2 className="font-serif text-2xl sm:text-3xl text-off-black">
-                    Scientific Benchmark Audit Across Evolution Phases
+                    Accuracy across three versions of the system
                   </h2>
                 </div>
                 <span className="px-3 py-1 rounded-pill bg-emerald-100 text-emerald-800 text-xs font-mono font-bold uppercase">
-                  Frozen Synthetic Benchmark
+                  23 scenarios evaluated
                 </span>
               </div>
 
@@ -160,36 +159,50 @@ export default function WorkspacePage() {
                 <table className="w-full text-left border-collapse text-xs font-mono">
                   <thead>
                     <tr className="bg-parchment/70 border-b border-ash text-[11px] uppercase tracking-wider text-smoke font-semibold">
-                      <th className="py-3 px-4">Evaluation Phase</th>
-                      <th className="py-3 px-4">Investigation Engine</th>
-                      <th className="py-3 px-4">Decision Accuracy</th>
-                      <th className="py-3 px-4">False Closure Rate</th>
-                      <th className="py-3 px-4">False Escalation</th>
-                      <th className="py-3 px-4">Benchmark Status</th>
+                      <th className="py-3 px-4">System Tested</th>
+                      <th className="py-3 px-4">Approach</th>
+                      <th className="py-3 px-4">Correct Decisions</th>
+                      <th className="py-3 px-4">Wrong Closures</th>
+                      <th className="py-3 px-4">Needless Escalations</th>
+                      <th className="py-3 px-4">Result</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-ash/40">
                     {benchmarkData.benchmarks.benchmarks_comparison.map((b, idx) => {
                       const isPrimary = b.name.includes("Phase 7 Controlled");
+                      const readableName =
+                        b.name.includes("Phase 5") ? "Rule-Based Baseline" :
+                          b.name.includes("Phase 7 Controlled") ? "AI + Verification (this system)" :
+                            b.name.includes("Phase 7") ? "Remote AI Only (no local verifier)" :
+                              b.name;
+                      const readableType =
+                        b.type.includes("Rule-based") ? "Manual rules only, no AI" :
+                          b.type.includes("Agentic") ? "AI investigation + mathematical verification" :
+                            b.type.includes("Remote") ? "External AI model, no deterministic check" :
+                              b.type;
+                      const readableStatus =
+                        b.status.includes("Frozen Baseline") ? "Baseline — superseded" :
+                          b.status.includes("Primary Authority") ? "Current — verified" :
+                            b.status.includes("Quota") ? "Partial audit (*8 infra failures)" :
+                              b.status;
                       return (
                         <tr
                           key={idx}
                           className={isPrimary ? "bg-emerald-50/40 font-medium" : "hover:bg-parchment/30"}
                         >
-                          <td className="py-3.5 px-4 font-bold text-off-black">{b.name}</td>
-                          <td className="py-3.5 px-4 text-graphite">{b.type}</td>
+                          <td className="py-3.5 px-4 font-bold text-off-black">{readableName}</td>
+                          <td className="py-3.5 px-4 text-graphite">{readableType}</td>
                           <td className="py-3.5 px-4 font-bold text-lake-blue">{b.accuracy}</td>
                           <td className="py-3.5 px-4 font-bold text-emerald-700">{b.false_closure}</td>
                           <td className="py-3.5 px-4 text-graphite">{b.false_escalation}</td>
                           <td className="py-3.5 px-4">
                             <span
-                              className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase ${
-                                isPrimary
-                                  ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
-                                  : "bg-ash/30 text-graphite"
-                              }`}
+                              className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase ${isPrimary
+                                ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                                : "bg-ash/30 text-graphite"
+                                }`}
                             >
-                              {b.status}
+                              {readableStatus}
                             </span>
                           </td>
                         </tr>
@@ -244,19 +257,19 @@ export default function WorkspacePage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ash/40 pb-4">
                 <div>
                   <span className="text-xs uppercase font-mono text-lake-blue font-medium">
-                    Raw File Grounding
+                    Source File Grounding
                   </span>
                   <h2 className="font-serif text-2xl sm:text-3xl text-off-black">
-                    Cell-Level Provenance & SHA-256 Record Traceability
+                    Where every finding lives in the original file
                   </h2>
                 </div>
                 <span className="px-3 py-1 rounded-pill bg-periwinkle-mist/40 border border-ash text-xs font-mono text-off-black">
-                  L5 Provenance Standard
+                  Cell-level traceability
                 </span>
               </div>
 
               <p className="text-xs sm:text-sm font-mono text-graphite leading-relaxed">
-                Every transaction and candidate explanation in NeoFinesse is strictly grounded in immutable source file coordinates with cryptographic SHA-256 record hashes.
+                Every transaction identified by the system is pinned to its exact location in the uploaded file — sheet name, row number, and cell. A cryptographic hash ensures the record hasn't changed since it was read.
               </p>
 
               {/* Comprehensive Evidence Table across all scenarios */}
@@ -300,11 +313,10 @@ export default function WorkspacePage() {
                             </td>
                             <td className="py-3 px-4">
                               <span
-                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                                  isRejected
-                                    ? "bg-rose-100 text-rose-800"
-                                    : "bg-emerald-100 text-emerald-800"
-                                }`}
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${isRejected
+                                  ? "bg-rose-100 text-rose-800"
+                                  : "bg-emerald-100 text-emerald-800"
+                                  }`}
                               >
                                 {ev.status}
                               </span>
