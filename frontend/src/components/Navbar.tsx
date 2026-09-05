@@ -12,9 +12,7 @@ export default function Navbar() {
       <div className="max-w-[1432px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
         {/* Brand Lockup */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-full bg-off-black text-parchment flex items-center justify-center font-mono font-bold text-sm tracking-tighter group-hover:bg-lake-blue transition-colors">
-            NF
-          </div>
+          <img src="/logo.svg" alt="NeoFinesse Logo" className="w-9 h-9 group-hover:scale-105 transition-transform" />
           <div className="flex items-center gap-2">
             <span className="font-serif text-2xl text-off-black tracking-tight font-normal">
               NeoFinesse

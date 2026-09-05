@@ -5,9 +5,6 @@ export const metadata: Metadata = {
   title: "NeoFinesse — Automated Settlement Reconciliation",
   description:
     "NeoFinesse automatically investigates payment settlement discrepancies across gateways, traces every finding to the source file, and either resolves cases with mathematical proof or escalates to human review.",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({

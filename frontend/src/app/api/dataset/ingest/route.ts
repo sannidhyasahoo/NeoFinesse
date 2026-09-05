@@ -39,6 +39,23 @@ export async function POST(req: NextRequest) {
         }
       }
 
+      // Forward the file to the live Python FastAPI backend if it's running
+      try {
+        const pythonApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+        const response = await fetch(`${pythonApiUrl}/ingest`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          const liveData = await response.json();
+          return NextResponse.json(liveData);
+        }
+      } catch (err) {
+        console.warn("Live Python backend not reachable, falling back to deterministic static demo data.");
+      }
+
+      // Fallback: Use local benchmarkData if the backend is not available
       return NextResponse.json({
         status: "SUCCESS",
         message: `Successfully unzipped and digested ${files.length} financial ledger files.`,

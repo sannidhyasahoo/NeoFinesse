@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2b59d1" />
+      <stop offset="100%" stop-color="#1a3b91" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer Node (Off-Black) -->
+  <circle cx="256" cy="256" r="256" fill="#242424"/>
+  
+  <!-- Subtle Data Pipeline Track (Ash) -->
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#cecac8" stroke-width="2" stroke-dasharray="12 12" opacity="0.3"/>
+  
+  <!-- Connection Lines (Periwinkle Mist) -->
+  <path d="M 0 256 L 156 256" stroke="#cfdaf5" stroke-width="4" opacity="0.4"/>
+  <path d="M 356 256 L 512 256" stroke="#cfdaf5" stroke-width="4" opacity="0.4"/>
+  
+  <!-- Inner Data Core (Lake Blue) -->
+  <circle cx="256" cy="256" r="110" fill="url(#blueGlow)"/>
+  
+  <!-- Reconciled Nodes (Mint & Sky Blue) -->
+  <circle cx="156" cy="256" r="16" fill="#a0b5eb"/>
+  <circle cx="356" cy="256" r="16" fill="#a7fccd"/>
+  
+  <!-- Monospace Typography (Parchment) -->
+  <text x="256" y="300" font-family="monospace" font-size="130" font-weight="600" fill="#f6f3f1" text-anchor="middle" letter-spacing="-8">NF</text>
+  
+  <!-- Small Decorative Accent (Coral) -->
+  <circle cx="390" cy="122" r="24" fill="#ff9473"/>
+</svg>
