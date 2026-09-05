@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Colors from DESIGN.md */
+  --color-parchment: #f6f3f1;
+  --color-lake-blue: #2b59d1;
+  --color-periwinkle-mist: #cfdaf5;
+  --color-sky-blue: #a0b5eb;
+  --color-mint: #a7fccd;
+  --color-coral: #ff9473;
+  --color-gold: #ecda98;
+  --color-crimson: #f37a0a;
+  --color-off-black: #242424;
+  --color-ink: #000000;
+  --color-graphite: #4e4d4d;
+  --color-smoke: #797776;
+  --color-ash: #cecac8;
+
+  /* Typography */
+  --font-mono: 'JetBrains Mono', 'ABC Diatype Mono', ui-monospace, monospace;
+  --font-serif: 'Newsreader', 'Untitled Serif', Georgia, serif;
+}
+
+body {
+  background-color: var(--color-parchment);
+  color: var(--color-off-black);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Editorial Headline Typography - strictly weight 400 with tight tracking */
+h1, h2, h3, .editorial-heading {
+  font-family: var(--font-serif);
+  font-weight: 400 !important;
+  letter-spacing: -0.02em;
+}
+
+/* Monospace body and UI */
+p, span, button, input, label, table, th, td, nav, .mono-ui {
+  font-family: var(--font-mono);
+}
+
+/* Smooth Atmospheric Gradient Blobs */
+.atmospheric-wash {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(75px);
+  pointer-events: none;
+  opacity: 0.45;
+  z-index: 0;
+}
+
+.wash-coral-sky {
+  background: radial-gradient(circle, #ff9473 0%, #a0b5eb 60%, transparent 80%);
+}
+
+.wash-sky-mint {
+  background: radial-gradient(circle, #a0b5eb 0%, #a7fccd 60%, transparent 80%);
+}
+
+.wash-periwinkle {
+  background: radial-gradient(circle, #cfdaf5 0%, #ecda98 50%, transparent 80%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-parchment);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ash);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-smoke);
+}
+
+/* Glowing Pulse Keyframes for Investigation Nodes */
+@keyframes soft-pulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 3s ease-in-out infinite;
+}

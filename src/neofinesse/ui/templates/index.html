@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeoFinesse — Evidence-Constrained AI Financial Investigation & Audit</title>
+  <meta name="description" content="NeoFinesse traces settlement variances across payments, refunds, disputes, UPI events, and bank transactions using active evidence retrieval and deterministic constraint verification.">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- ==============================================================================
+       APP HEADER & DEMO SELECTOR
+       ============================================================================== -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="brand-section">
+        <div class="logo-badge">NF</div>
+        <div>
+          <h1 class="brand-title">NeoFinesse</h1>
+          <p class="brand-subtitle">Evidence-Constrained AI Financial Investigation & Audit</p>
+        </div>
+      </div>
+
+      <div class="core-principle-badge">
+        <span>🛡️</span>
+        <span><strong>Core Invariant:</strong> AI investigates &bull; Tools retrieve &bull; Evidence constrains &bull; Deterministic verification decides</span>
+      </div>
+
+      <div class="demo-selector-bar">
+        <span class="demo-label">Demo Cases:</span>
+        <button class="demo-pill active" data-demo="demo_1" id="btn-demo-1">1. Simple Resolution</button>
+        <button class="demo-pill" data-demo="demo_2" id="btn-demo-2">2. Same-Amount Decoy</button>
+        <button class="demo-pill" data-demo="demo_3" id="btn-demo-3">3. Multi-Event Explanation</button>
+        <button class="demo-pill" data-demo="demo_4" id="btn-demo-4">4. Honest Escalation</button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" aria-label="Main Navigation">
+      <button class="tab-btn active" data-view="dashboard" id="tab-dashboard">
+        <span>📊</span> Executive Dashboard
+      </button>
+      <button class="tab-btn" data-view="cases" id="tab-cases">
+        <span>📋</span> Variance Cases (23)
+      </button>
+      <button class="tab-btn" data-view="graph" id="tab-graph">
+        <span>🔍</span> Flagship Provenance Graph
+      </button>
+      <button class="tab-btn" data-view="evidence" id="tab-evidence">
+        <span>📜</span> Cell-Level Evidence Inspector
+      </button>
+      <button class="tab-btn" data-view="comparator" id="tab-comparator">
+        <span>⚖️</span> AI vs. Verifier Separation
+      </button>
+      <button class="tab-btn" data-view="escalation" id="tab-escalation">
+        <span>🚨</span> Escalation & Safety Queue
+      </button>
+    </nav>
+  </header>
+
+  <!-- ==============================================================================
+       MAIN APPLICATION VIEWS
+       ============================================================================== -->
+  <main class="app-main">
+
+    <!-- Active Demo Hero Callout Banner -->
+    <section class="demo-banner" id="demo-banner" aria-live="polite">
+      <!-- Populated dynamically by app.js -->
+    </section>
+
+    <!-- ==========================================================================
+         VIEW 1: EXECUTIVE DASHBOARD
+         ========================================================================== -->
+    <section class="view-panel active" id="view-dashboard">
+      <!-- KPI Metric Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Settlements Analyzed</div>
+          <div class="kpi-value" id="kpi-total-settlements">19</div>
+          <div class="kpi-subtext">Multi-gateway batch payouts</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Variances Detected</div>
+          <div class="kpi-value" id="kpi-total-variances">23</div>
+          <div class="kpi-subtext">Discrepancies evaluated</div>
+        </div>
+
+        <div class="kpi-card highlight">
+          <div class="kpi-label">Observed Resolutions</div>
+          <div class="kpi-value" id="kpi-resolved-count">12 (52.2%)</div>
+          <div class="kpi-subtext">Causally proven & matched</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Safe Escalations</div>
+          <div class="kpi-value" id="kpi-escalated-count">11 (47.8%)</div>
+          <div class="kpi-subtext">Unresolvable / Decoys trapped</div>
+        </div>
+
+        <div class="kpi-card safety-highlight">
+          <div class="kpi-label">False Closure Rate</div>
+          <div class="kpi-value" id="kpi-false-closure-rate">0.0%</div>
+          <div class="kpi-subtext">Zero financial loss invariant verified</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Evidence Verification</div>
+          <div class="kpi-value" id="kpi-evidence-coverage">100%</div>
+          <div class="kpi-subtext">All decisions cell-provenance backed</div>
+        </div>
+      </div>
+
+      <!-- Pipeline Flow Diagram -->
+      <div class="pipeline-section">
+        <div class="section-header">
+          <h2 class="section-title"><span>🔄</span> End-to-End Investigation Architecture Flow</h2>
+          <span class="badge verified">Deterministic Safety Guaranteed</span>
+        </div>
+        <div class="pipeline-flow">
+          <div class="pipeline-step">
+            <div class="step-num">Step 1</div>
+            <div class="step-title">Settlement Batch</div>
+            <div class="step-role">Expected vs Actual</div>
+          </div>
+          <div class="pipeline-arrow">&rarr;</div>
+          <div class="pipeline-step">
+            <div class="step-num">Step 2</div>
+            <div class="step-title">Variance Detected</div>
+            <div class="step-role">paise-level delta</div>
+          </div>
+          <div class="pipeline-arrow">&rarr;</div>
+          <div class="pipeline-step agent-step">
+            <div class="step-num">Step 3 (AI)</div>
+            <div class="step-title">Hypothesis Proposal</div>
+            <div class="step-role">Candidate generation</div>
+          </div>
+          <div class="pipeline-arrow">&rarr;</div>
+          <div class="pipeline-step agent-step">
+            <div class="step-num">Step 4 (Tools)</div>
+            <div class="step-title">Evidence Retrieval</div>
+            <div class="step-role">Bounded tool queries</div>
+          </div>
+          <div class="pipeline-arrow">&rarr;</div>
+          <div class="pipeline-step verifier-step">
+            <div class="step-num">Step 5 (Authority)</div>
+            <div class="step-title">Deterministic Verifier</div>
+            <div class="step-role">5-point constraints</div>
+          </div>
+          <div class="pipeline-arrow">&rarr;</div>
+          <div class="pipeline-step verifier-step">
+            <div class="step-num">Step 6</div>
+            <div class="step-title">Terminal Decision</div>
+            <div class="step-role">RESOLVED / ESCALATE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparative Benchmark Matrix -->
+      <div class="benchmark-table-card">
+        <div class="section-header">
+          <h2 class="section-title"><span>📈</span> Scientific Benchmark Audit Across Evolution Phases</h2>
+          <span class="badge resolved">Frozen Synthetic Benchmark</span>
+        </div>
+        <table class="data-table" aria-label="Benchmark Comparison Table">
+          <thead>
+            <tr>
+              <th>Evaluation Phase</th>
+              <th>Investigation Engine</th>
+              <th>Decision Accuracy</th>
+              <th>False Closure Rate</th>
+              <th>False Escalation</th>
+              <th>Benchmark Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Phase 5</strong></td>
+              <td>Rule-based Deterministic Verifier</td>
+              <td>73.9% (17 / 23)</td>
+              <td><strong style="color: var(--emerald-primary);">0.0%</strong> (0 / 12)</td>
+              <td>50.0% (6 / 12)</td>
+              <td><span class="badge verified">Frozen Baseline</span></td>
+            </tr>
+            <tr style="background: rgba(16, 185, 129, 0.05);">
+              <td><strong>Phase 7 Controlled</strong></td>
+              <td>Agentic LLM + Deterministic Verifier</td>
+              <td><strong style="color: var(--emerald-primary);">100.0% (23 / 23)</strong></td>
+              <td><strong style="color: var(--emerald-primary);">0.0%</strong> (0 / 12)</td>
+              <td><strong style="color: var(--emerald-primary);">0.0%</strong> (0 / 12)</td>
+              <td><span class="badge resolved">Primary Authority</span></td>
+            </tr>
+            <tr>
+              <td><strong>Phase 7.2 Remote Live</strong></td>
+              <td>Live Google Gemini Flash</td>
+              <td>65.2% (15 / 23)*</td>
+              <td><strong style="color: var(--emerald-primary);">0.0%</strong> (0 / 12)</td>
+              <td>66.7% (8 / 12)</td>
+              <td><span class="badge partial">Quota-Limited (*8 infra fails)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         VIEW 2: VARIANCE CASE LIST
+         ========================================================================== -->
+    <section class="view-panel" id="view-cases">
+      <div class="table-filter-bar">
+        <input type="text" class="search-input" id="search-cases-input" placeholder="Search by Case ID, Settlement ID, or Cause...">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="ALL">All (23)</button>
+          <button class="filter-btn" data-filter="RESOLVED">Resolved</button>
+          <button class="filter-btn" data-filter="VALID_DELAYED_CREDIT">Delayed Credit</button>
+          <button class="filter-btn" data-filter="PARTIALLY_RESOLVED">Partial</button>
+          <button class="filter-btn" data-filter="ESCALATE">Escalated</button>
+        </div>
+      </div>
+
+      <div class="benchmark-table-card">
+        <table class="data-table" aria-label="Variance Case Table">
+          <thead>
+            <tr>
+              <th>Case ID</th>
+              <th>Scenario ID</th>
+              <th>Settlement ID</th>
+              <th>Expected</th>
+              <th>Bank Credit</th>
+              <th>Variance</th>
+              <th>Status</th>
+              <th>Root Cause</th>
+              <th>Provenance</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="case-table-body">
+            <!-- Populated dynamically by app.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         VIEW 3: FLAGSHIP INVESTIGATION VIEW (Interactive SVG Graph)
+         ========================================================================== -->
+    <section class="view-panel" id="view-graph">
+      <div class="investigation-container">
+        <!-- Interactive Graph Area -->
+        <div class="graph-card">
+          <div class="graph-header">
+            <h2 class="section-title">
+              <span>🔍</span> Investigation Provenance Graph &bull; 
+              <span id="current-case-badge" style="color: var(--cyan-primary); font-family: var(--font-mono); font-size: 0.95rem;">CASE-001</span>
+            </h2>
+            <span class="badge verified">Interactive SVG</span>
+          </div>
+
+          <div class="graph-viewport" id="provenance-svg-container">
+            <!-- SVG rendered dynamically by app.js -->
+          </div>
+
+          <div class="graph-legend">
+            <div class="legend-item"><div class="legend-dot variance"></div> Variance Root</div>
+            <div class="legend-item"><div class="legend-dot verified"></div> Verified Causal Event</div>
+            <div class="legend-item"><div class="legend-dot decoy"></div> Decoy (Rejected)</div>
+            <div class="legend-item"><div class="legend-dot constraint"></div> Verifier Constraints</div>
+          </div>
+        </div>
+
+        <!-- Cell-Level Evidence Inspector Drawer -->
+        <div class="evidence-drawer-card">
+          <div class="drawer-title">
+            <span>📜 Cell-Level Evidence Inspector</span>
+            <span class="badge verified">L5 Provenance</span>
+          </div>
+          <div id="evidence-drawer-content">
+            <!-- Populated dynamically on node click -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         VIEW 4: CELL-LEVEL EVIDENCE INSPECTOR (FULL VIEW)
+         ========================================================================== -->
+    <section class="view-panel" id="view-evidence">
+      <div class="benchmark-table-card">
+        <div class="section-header">
+          <h2 class="section-title"><span>📑</span> Cell-Level Provenance & SHA-256 Record Traceability</h2>
+          <span class="badge verified">Raw File Grounding</span>
+        </div>
+        <p style="font-size: 0.825rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          Every transaction and candidate explanation in NeoFinesse is strictly grounded in immutable source file coordinates with cryptographic SHA-256 record hashes.
+        </p>
+        <table class="data-table" aria-label="Evidence Provenance Table">
+          <thead>
+            <tr>
+              <th>Evidence ID</th>
+              <th>Entity</th>
+              <th>Relationship Path</th>
+              <th>Source File</th>
+              <th>Sheet</th>
+              <th>Row & Cell</th>
+              <th>Level</th>
+              <th>SHA-256 Hash</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color: var(--cyan-primary);">E-001</strong></td>
+              <td>REFUND</td>
+              <td>Refund ref_scen_001_9984 &rarr; Payment pay_scen_001_9984 &rarr; Settlement setl_scen_001_9984</td>
+              <td>refunds.csv</td>
+              <td>Refunds_FY25</td>
+              <td><span class="cell-coordinate-badge">Row 10, Cell F10</span></td>
+              <td><span class="badge verified">L5</span></td>
+              <td><span style="font-family: var(--font-mono); font-size: 0.725rem;">e3b0c44298fc1c149afbf4c8...</span></td>
+              <td><span class="badge resolved">VERIFIED</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--cyan-primary);">E-002A</strong></td>
+              <td>REFUND</td>
+              <td>Refund ref_scen_002_valid &rarr; Payment pay_scen_002_valid &rarr; Settlement setl_scen_002_8398</td>
+              <td>refunds.csv</td>
+              <td>Refunds_FY25</td>
+              <td><span class="cell-coordinate-badge">Row 13, Cell F13</span></td>
+              <td><span class="badge verified">L5</span></td>
+              <td><span style="font-family: var(--font-mono); font-size: 0.725rem;">a591a6d40bf420404a011733...</span></td>
+              <td><span class="badge resolved">VERIFIED</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--rose-primary);">E-002B</strong></td>
+              <td>REFUND (DECOY)</td>
+              <td>Refund ref_scen_002_decoy &rarr; Payment pay_other_999 &rarr; Settlement setl_external_888</td>
+              <td>refunds.csv</td>
+              <td>Refunds_FY25</td>
+              <td><span class="cell-coordinate-badge">Row 14, Cell F14</span></td>
+              <td><span class="badge escalated">L1</span></td>
+              <td><span style="font-family: var(--font-mono); font-size: 0.725rem;">8f434346648f6b96df89dda9...</span></td>
+              <td><span class="badge escalated">REJECTED (Unlinked)</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--cyan-primary);">E-004A</strong></td>
+              <td>REFUND</td>
+              <td>Refund ref_scen_004_partA &rarr; Payment pay_scen_004_A &rarr; Settlement setl_scen_004_9821</td>
+              <td>refunds.csv</td>
+              <td>Refunds_FY25</td>
+              <td><span class="cell-coordinate-badge">Row 19, Cell F19</span></td>
+              <td><span class="badge verified">L5</span></td>
+              <td><span style="font-family: var(--font-mono); font-size: 0.725rem;">7d793037a0760186574b0282...</span></td>
+              <td><span class="badge resolved">VERIFIED</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--cyan-primary);">E-004B</strong></td>
+              <td>ADJUSTMENT</td>
+              <td>Adjustment adj_scen_004_partB &rarr; Settlement setl_scen_004_9821</td>
+              <td>adjustments.csv</td>
+              <td>Fee_Adjustments</td>
+              <td><span class="cell-coordinate-badge">Row 21, Cell D21</span></td>
+              <td><span class="badge verified">L5</span></td>
+              <td><span style="font-family: var(--font-mono); font-size: 0.725rem;">6b86b273ff34fce19d6b804e...</span></td>
+              <td><span class="badge resolved">VERIFIED</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         VIEW 5: AI INVESTIGATOR VS DETERMINISTIC VERIFIER
+         ========================================================================== -->
+    <section class="view-panel" id="view-comparator">
+      <div class="section-header">
+        <h2 class="section-title"><span>⚖️</span> Separation of Concerns: AI Investigator vs Deterministic Verifier</h2>
+        <span class="badge verified">Architectural Safety Boundary</span>
+      </div>
+      <p style="font-size: 0.825rem; color: var(--text-secondary); margin-bottom: 1rem;">
+        The LLM functions strictly as an investigator and hypothesis generator. It has <strong>zero financial closing authority</strong>. All terminal decisions are exclusively made by the Phase 5 Deterministic Financial Verifier.
+      </p>
+
+      <div class="comparison-grid">
+        <!-- AI Investigator Side -->
+        <div class="comparator-card ai-card">
+          <div class="comparator-header">
+            <div class="comparator-icon">🤖</div>
+            <div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--violet-primary);">AI Investigator (Planner)</h3>
+              <p style="font-size: 0.725rem; color: var(--text-secondary);">Proposes hypotheses & requests bounded tools</p>
+            </div>
+          </div>
+
+          <div class="evidence-prop-group">
+            <div class="evidence-prop-label">Generated Hypothesis</div>
+            <div class="evidence-prop-value" id="ai-hypothesis-text" style="font-size: 0.85rem; line-height: 1.4; color: var(--text-primary);">
+              Variance of ₹100.00 is caused by customer refund ref_scen_001_9984.
+            </div>
+          </div>
+
+          <div class="evidence-prop-group" style="margin-top: 1rem;">
+            <div class="evidence-prop-label">Requested Tools & Queries</div>
+            <ul id="ai-tools-list" style="list-style: none; padding-left: 0; font-family: var(--font-mono); font-size: 0.75rem; color: var(--violet-primary);">
+              <li><code>retrieve_entities_by_settlement('setl_scen_001_9984')</code></li>
+              <li><code>query_temporal_window(start='-48h', end='cut_off')</code></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Barrier -->
+        <div class="boundary-barrier">
+          <div class="boundary-line"></div>
+          <div class="boundary-shield" title="Financial Safety Boundary">🛡️</div>
+          <div class="boundary-line"></div>
+        </div>
+
+        <!-- Deterministic Verifier Side -->
+        <div class="comparator-card verifier-card">
+          <div class="comparator-header">
+            <div class="comparator-icon">⚡</div>
+            <div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--emerald-primary);">Deterministic Verifier (Sole Authority)</h3>
+              <p style="font-size: 0.725rem; color: var(--text-secondary);">Strict mathematical, temporal & relational validator</p>
+            </div>
+          </div>
+
+          <div class="evidence-prop-group">
+            <div class="evidence-prop-label">5-Point Constraint Verification</div>
+            <ul class="constraint-checklist" id="verifier-constraints-list">
+              <!-- Populated dynamically by app.js -->
+            </ul>
+          </div>
+
+          <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Verifier Verdict:</span>
+            <span class="badge resolved" id="verifier-verdict-badge">APPROVED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         VIEW 6: ESCALATION & SAFETY QUEUE
+         ========================================================================== -->
+    <section class="view-panel" id="view-escalation">
+      <div class="escalation-hero">
+        <div class="escalation-hero-header">
+          <div class="escalation-icon-box">🚨</div>
+          <div>
+            <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--rose-primary);">
+              Fail-Safe Escalation Queue &bull; <span id="escalation-case-id">CASE-008</span>
+            </h2>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">
+              Demonstrates that the system <strong>knows when it doesn't know</strong>. Unproven variances are safely escalated to human audit.
+            </p>
+          </div>
+        </div>
+
+        <div style="background: rgba(0, 0, 0, 0.4); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Unresolved Variance:</span>
+            <strong style="color: var(--rose-primary); font-family: var(--font-mono); font-size: 1.1rem;" id="escalation-variance-amount">-₹500.00</strong>
+          </div>
+
+          <div class="evidence-prop-label" style="color: var(--rose-primary);">Forensic Audit — Why Was This Case Escalated?</div>
+          <p style="font-size: 0.825rem; color: var(--text-primary); margin-top: 0.25rem; margin-bottom: 0.75rem;" id="escalation-reason-text">
+            No valid causal evidence chain satisfies all 5 deterministic financial constraints.
+          </p>
+
+          <ul class="escalation-checklist" id="escalation-checklist">
+            <!-- Populated dynamically by app.js -->
+          </ul>
+
+          <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(239, 68, 68, 0.1); border: 1px solid var(--rose-border); border-radius: var(--radius-sm);">
+            <div class="evidence-prop-label" style="color: var(--rose-primary);">Recommended System Action</div>
+            <div style="font-size: 0.8rem; color: var(--text-primary);" id="escalation-action-text">
+              Route to Tier-2 Financial Operations Audit Queue.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==============================================================================
+       APP FOOTER
+       ============================================================================== -->
+  <footer class="app-footer">
+    <p>
+      <strong>NeoFinesse</strong> &bull; Razorpay Hackathon &bull; Phase 8 Demo & Audit UI &bull; 
+      Built with pure HTML/CSS/JS &bull; <em>"AI investigates. Evidence constrains. Deterministic verification decides."</em>
+    </p>
+  </footer>
+
+  <!-- Load UI Engine -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
