@@ -73,15 +73,17 @@ Auditors can open the raw Excel/CSV file and verify findings in seconds with zer
 
 ### 3. Decoy Disambiguation & Relational Traversal
 Instead of matching transactions by amount alone, NeoFinesse traverses the complete causal relational graph:
-$$\text{Refund} \xrightarrow{\text{payment\_id}} \text{Payment} \xrightarrow{\text{order\_id}} \text{Order} \xrightarrow{\text{settlement\_id}} \text{Settlement Batch}$$
+```text
+Refund ──(payment_id)──> Payment ──(order_id)──> Order ──(settlement_id)──> Settlement Batch
+```
 If a refund does not trace back to the target settlement batch, it is tagged as **`REJECTED DECOY`** with an explanatory forensic lesson.
 
 ### 4. 5-Point Constraint Verification Suite
 Every case must pass 5 independent deterministic mathematical checks:
-1. **Monetary Arithmetic:** $\sum \text{Verified Deductions} = |\text{Variance Delta}|$
-2. **Temporal Window:** $\text{Event Timestamp} \le \text{Settlement Cut-off Window}$
-3. **Relational Key Provenance:** $\text{Causal Chain Linkage} = \text{Target Batch ID}$
-4. **State Machine Legality:** $\text{Transaction Status} \in \{\text{CAPTURED, SETTLED, REFUNDED}\}$
+1. **Monetary Arithmetic:** `∑ Verified Deductions == |Variance Delta|` (Exact decimal & paise precision)
+2. **Temporal Window:** `Event Timestamp <= Settlement Cut-off Window`
+3. **Relational Key Provenance:** `Causal Chain Linkage == Target Batch ID`
+4. **State Machine Legality:** `Transaction Status ∈ {CAPTURED, SETTLED, REFUNDED}`
 5. **Ledger Completeness:** No orphaned or unaccounted fee discrepancies remain.
 
 ### 5. Zero Financial Loss Guarantee

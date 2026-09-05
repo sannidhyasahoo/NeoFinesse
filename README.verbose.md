@@ -159,20 +159,20 @@ Every entity and evidence node in NeoFinesse carries strict provenance metadata:
 The Phase 5 Verifier evaluates candidate causal branches against 5 strict rules:
 
 ### Constraint 1: Exact Monetary Balance Arithmetic
-$$\left| \text{Variance INR} \right| - \sum_{e \in \text{Evidence}} \left| \text{Amount}(e) \right| = 0.00$$
+`|Variance INR| - ∑ |Amount(e)| == 0.00`  
 Evaluated using exact Decimal arithmetic in paise to prevent IEEE 754 floating-point errors.
 
 ### Constraint 2: Temporal Window Cut-Off Compliance
-$$\text{Timestamp}(e) \le \text{Settlement Cut-off Window}$$
+`Timestamp(e) <= Settlement Cut-off Window`  
 Events occurring after batch cut-off cannot explain the variance of the current batch.
 
 ### Constraint 3: Relational Key Provenance
-The candidate transaction must link directly to the target settlement batch:
-$$\text{RelationalPath}(e) = \text{Target Settlement ID}$$
+The candidate transaction must link directly to the target settlement batch:  
+`RelationalPath(e) == Target Settlement ID`
 
 ### Constraint 4: State Machine Legality
-Entity status must be final and immutable:
-$$\text{Status}(e) \in \{\text{CAPTURED, SETTLED, REFUNDED}\}$$
+Entity status must be final and immutable:  
+`Status(e) ∈ {CAPTURED, SETTLED, REFUNDED}`
 
 ### Constraint 5: Ledger Completeness
 No unallocated residual balance or conflicting explanations may remain.
