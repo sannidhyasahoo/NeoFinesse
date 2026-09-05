@@ -33,38 +33,56 @@ export default function EscalationQueue({
     <div className="space-y-6">
       {/* Hero Banner with Direct Review Action */}
       <div className="bg-white rounded-3xl border border-ash p-6 sm:p-8 space-y-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ash/50 pb-5">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center">
-              <AlertOctagon className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-serif text-2xl text-off-black">
-                Cases Sent to Human Review &bull; <span className="text-lake-blue">{scenario.case_id}</span>
-              </h3>
-              <p className="text-xs font-mono text-smoke mt-0.5">
-                When the system can&rsquo;t fully prove an explanation, it sends the case here with a complete investigation handoff rather than guessing.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 self-start sm:self-auto">
-            <div className="px-4 py-2 bg-parchment rounded-2xl border border-ash text-right">
-              <div className="text-[10px] uppercase font-mono text-smoke">Unresolved Amount</div>
-              <div className="text-lg font-mono font-bold text-rose-600">{varFormatted}</div>
+        {isEscalated ? (
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ash/50 pb-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center">
+                <AlertOctagon className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl text-off-black">
+                  Cases Sent to Human Review &bull; <span className="text-lake-blue">{scenario.case_id}</span>
+                </h3>
+                <p className="text-xs font-mono text-smoke mt-0.5">
+                  When the system can&rsquo;t fully prove an explanation, it sends the case here with a complete investigation handoff rather than guessing.
+                </p>
+              </div>
             </div>
 
-            {onOpenReviewDossier && (
-              <button
-                onClick={() => onOpenReviewDossier(scenario)}
-                className="px-5 py-3.5 bg-rose-600 hover:bg-rose-700 text-white rounded-2xl text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2 shadow-md hover:scale-102"
-              >
-                <FileText className="w-4 h-4" />
-                <span>Review Handoff</span>
-              </button>
-            )}
+            <div className="flex items-center gap-3 self-start sm:self-auto">
+              <div className="px-4 py-2 bg-parchment rounded-2xl border border-ash text-right">
+                <div className="text-[10px] uppercase font-mono text-smoke">Unresolved Amount</div>
+                <div className="text-lg font-mono font-bold text-rose-600">{varFormatted}</div>
+              </div>
+
+              {onOpenReviewDossier && (
+                <button
+                  onClick={() => onOpenReviewDossier(scenario)}
+                  className="px-5 py-3.5 bg-rose-600 hover:bg-rose-700 text-white rounded-2xl text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2 shadow-md hover:scale-102"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>Review Handoff</span>
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ash/50 pb-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl text-off-black">
+                  Case Resolved &bull; <span className="text-lake-blue">{scenario.case_id}</span>
+                </h3>
+                <p className="text-xs font-mono text-smoke mt-0.5">
+                  This case was successfully proven and resolved automatically. It is not in the human review queue.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Forensic Audit Details */}
         <div className="space-y-4">

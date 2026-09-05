@@ -206,10 +206,10 @@ export async function GET(req: NextRequest) {
 
     // Resolve file from known data directories
     const candidateDirs = [
-      path.resolve(process.cwd(), "data"),
-      path.resolve(process.cwd(), "..", "data"),
-      path.resolve(process.cwd(), "data", "demo_dataset"),
       path.resolve(process.cwd(), "..", "data", "demo_dataset"),
+      path.resolve(process.cwd(), "data", "demo_dataset"),
+      path.resolve(process.cwd(), "..", "data"),
+      path.resolve(process.cwd(), "data"),
       path.resolve(process.cwd(), "public", "data"),
       path.resolve(process.cwd(), "..", "src", "neofinesse", "ui", "data"),
     ];

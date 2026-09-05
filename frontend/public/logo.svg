@@ -1,31 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2b59d1" />
-      <stop offset="100%" stop-color="#1a3b91" />
+    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#8b5cf6" />
     </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
   </defs>
+  <rect width="512" height="512" fill="#0f172a" rx="100" />
   
-  <!-- Outer Node (Off-Black) -->
-  <circle cx="256" cy="256" r="256" fill="#242424"/>
-  
-  <!-- Subtle Data Pipeline Track (Ash) -->
-  <circle cx="256" cy="256" r="236" fill="none" stroke="#cecac8" stroke-width="2" stroke-dasharray="12 12" opacity="0.3"/>
-  
-  <!-- Connection Lines (Periwinkle Mist) -->
-  <path d="M 0 256 L 156 256" stroke="#cfdaf5" stroke-width="4" opacity="0.4"/>
-  <path d="M 356 256 L 512 256" stroke="#cfdaf5" stroke-width="4" opacity="0.4"/>
-  
-  <!-- Inner Data Core (Lake Blue) -->
-  <circle cx="256" cy="256" r="110" fill="url(#blueGlow)"/>
-  
-  <!-- Reconciled Nodes (Mint & Sky Blue) -->
-  <circle cx="156" cy="256" r="16" fill="#a0b5eb"/>
-  <circle cx="356" cy="256" r="16" fill="#a7fccd"/>
-  
-  <!-- Monospace Typography (Parchment) -->
-  <text x="256" y="300" font-family="monospace" font-size="130" font-weight="600" fill="#f6f3f1" text-anchor="middle" letter-spacing="-8">NF</text>
-  
-  <!-- Small Decorative Accent (Coral) -->
-  <circle cx="390" cy="122" r="24" fill="#ff9473"/>
+  <g transform="translate(136, 136)" filter="url(#glow)">
+    <path d="M40,240 L40,60 C40,40 60,30 80,45 L190,130 C200,137 200,153 190,160 L80,245 C60,260 40,250 40,230 Z" fill="none" stroke="url(#neonGradient)" stroke-width="32" stroke-linejoin="round" />
+    <path d="M200,0 L200,180 C200,200 180,210 160,195 L50,110 C40,103 40,87 50,80 L160,-5 C180,-20 200,-10 200,10 Z" fill="none" stroke="#10b981" stroke-width="32" stroke-linejoin="round" opacity="0.8" />
+  </g>
 </svg>

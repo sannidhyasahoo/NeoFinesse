@@ -1,0 +1,10 @@
+id,payment_id,amount,amount_deducted,currency,reason_code,status,phase,created_at,settlement_id,reversal_settlement_id,net_financial_effect,provider
+disp_base_0001,pay_base_0147,633000,633000,INR,FRAUDULENT_TRANSACTION,lost,chargeback,2026-09-01T18:37:14,,,-633000,razorpay
+disp_base_0002,pay_base_0018,1769500,1769500,INR,FRAUDULENT_TRANSACTION,lost,chargeback,2026-08-09T23:25:50,,,-1769500,razorpay
+disp_base_0003,pay_base_0144,1259600,1259600,INR,FRAUDULENT_TRANSACTION,lost,chargeback,2026-08-31T04:16:14,,,-1259600,razorpay
+disp_base_0004,pay_base_0130,1818500,1818500,INR,FRAUDULENT_TRANSACTION,lost,chargeback,2026-08-29T09:02:55,,,-1818500,razorpay
+disp_base_0005,pay_base_0126,514500,514500,INR,FRAUDULENT_TRANSACTION,won,chargeback,2026-08-31T13:53:03,,,0,razorpay
+disp_base_0006,pay_base_0069,1368000,1368000,INR,FRAUDULENT_TRANSACTION,won,chargeback,2026-08-20T04:16:22,,,0,razorpay
+disp_base_0007,pay_base_0014,2451100,2451100,INR,FRAUDULENT_TRANSACTION,lost,chargeback,2026-08-06T04:16:22,,,-2451100,razorpay
+disp_base_0008,pay_base_0097,43200,43200,INR,FRAUDULENT_TRANSACTION,lost,chargeback,2026-08-22T18:39:22,,,-43200,razorpay
+disp_scen_009_decoy_8432,pay_scen_009_2_7878,350000,350000,INR,,open,chargeback,2026-08-27T14:00:00,setl_scen_009_other_3578,,0,razorpay
