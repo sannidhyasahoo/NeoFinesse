@@ -13,7 +13,7 @@ Unlike generic generative AI chatbots or heuristic table matchers that hallucina
 
 $$\mathbf{Plausible \neq Proven}$$
 
-NeoFinesse constructs a **relationship-aware financial evidence graph**, queries multi-source ledgers via bounded tools down to exact Excel/CSV cell coordinates (L5 provenance), and enforces a physical barrier between the AI investigator (the hypothesis proposer) and the **Phase 5 Deterministic Financial Verifier** (the sole closing authority).
+NeoFinesse constructs a **relationship-aware financial evidence graph**, queries multi-source ledgers via bounded tools down to exact Excel/CSV cell coordinates (L5 provenance), and enforces a physical barrier between the AI investigator (the hypothesis proposer) and the **Deterministic Financial Verifier** (the sole closing authority).
 
 The result is an auditable, enterprise-grade system that resolves genuine financial discrepancies with mathematical certainty while guaranteeing a **0.0% False Closure Rate**.
 
@@ -190,15 +190,15 @@ The AI operates through a set of bounded tools:
 
 ---
 
-# 9. Scientific Benchmark Suite (23 Edge Scenarios Across Phases)
+# 9. Scientific Benchmark Suite (23 Edge Scenarios)
 
 The platform was evaluated across 23 rigorous edge cases representing every known real-world reconciliation failure mode:
 
-| Evaluation Phase | Investigation Engine | Decision Accuracy | False Closure Rate | False Escalation Rate | Scientific Status |
-|:-----------------|:---------------------|:------------------|:-------------------|:----------------------|:------------------|
-| **Phase 5** | Rule-Based Deterministic Verifier | 73.9% (17/23) | **0.0% (0/12)** | 50.0% (6/12) | Frozen Baseline |
-| **Phase 7 Controlled** | Agentic LLM + Deterministic Verifier | **100.0% (23/23)** | **0.0% (0/12)** | **0.0% (0/12)** | Primary Authority (Frozen) |
-| **Phase 7.2 Remote Live** | Remote Google Gemini Flash | 65.2% (15/23)* | **0.0% (0/12)** | 66.7% (8/12) | Quota-Limited Audit (*8 infra fails) |
+| Investigation Engine | Core Architecture | Decision Accuracy | False Closure Rate | False Escalation Rate | Safety Guarantee |
+|:---------------------|:------------------|:------------------|:-------------------|:----------------------|:-----------------|
+| **Rule-Based Baseline** | Deterministic Verifier Only (No AI Search) | 73.9% (17/23) | **0.0% (0/12)** | 50.0% (6/12) | Zero False Closures |
+| **Autonomous Agent + Verifier** | Agentic LLM Discovery + Deterministic Verifier | **100.0% (23/23)** | **0.0% (0/12)** | **0.0% (0/12)** | **Optimal Authority** |
+| **Live Remote Model Audit** | Remote Google Gemini Flash + Deterministic Verifier | 65.2% (15/23)* | **0.0% (0/12)** | 66.7% (8/12) | Zero False Closures (*8 infra fails) |
 
 > **0.0% False Closure Guarantee Verified:** Across all 23 scenarios and all execution modes, NeoFinesse never produced a single false closure.
 
