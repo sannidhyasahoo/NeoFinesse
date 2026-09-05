@@ -1,0 +1,10 @@
+id,amount,currency,description,settlement_id,adjustment_type,created_at,provider
+adj_base_0001,-12500,INR,Routine reserve or manual adjustment,setl_base_0007,RISK_HOLD,2026-08-21T09:00:00,razorpay
+adj_base_0002,5100,INR,Routine reserve or manual adjustment,setl_base_0002,MANUAL_CREDIT,2026-08-06T09:00:00,razorpay
+adj_base_0003,-11600,INR,Routine reserve or manual adjustment,setl_base_0009,RISK_HOLD,2026-08-27T09:00:00,razorpay
+adj_base_0004,13900,INR,Routine reserve or manual adjustment,setl_base_0010,MANUAL_CREDIT,2026-08-29T09:00:00,razorpay
+adj_base_0005,6300,INR,Routine reserve or manual adjustment,setl_base_0004,MANUAL_CREDIT,2026-08-13T09:00:00,razorpay
+adj_base_0006,-45400,INR,Routine reserve or manual adjustment,setl_base_0008,RISK_HOLD,2026-08-20T09:00:00,razorpay
+adj_base_0007,21500,INR,Routine reserve or manual adjustment,setl_base_0003,MANUAL_CREDIT,2026-08-10T09:00:00,razorpay
+adj_base_0008,7600,INR,Routine reserve or manual adjustment,setl_base_0005,MANUAL_CREDIT,2026-08-15T09:00:00,razorpay
+adj_scen_004_8075,-30000,INR,Risk reserve hold,setl_scen_004_2582,RISK_HOLD,2026-08-12T12:00:00,razorpay

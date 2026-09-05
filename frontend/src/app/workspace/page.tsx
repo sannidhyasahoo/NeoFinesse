@@ -82,12 +82,22 @@ export default function WorkspacePage() {
             </h1>
           </div>
 
-          {/* Core principle badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-white border border-ash text-xs font-mono text-off-black shadow-sm self-start md:self-auto">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>
-              <strong>How it works:</strong> AI suggests &bull; Evidence is checked &bull; Math decides &bull; Unproven cases escalate
-            </span>
+          {/* Action & Core Invariant Badges */}
+          <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+            <Link
+              href="/connect"
+              className="px-4 py-2 rounded-pill bg-white hover:bg-off-black hover:text-white border border-ash text-xs font-mono uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-sm"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5 text-lake-blue" />
+              <span>Ingest / Insert Files</span>
+            </Link>
+
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-white border border-ash text-xs font-mono text-off-black shadow-sm">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span>
+                <strong>Core Invariant:</strong> AI investigates &bull; Tools retrieve &bull; Evidence constrains &bull; Deterministic verification decides
+              </span>
+            </div>
           </div>
         </div>
 
